@@ -1,0 +1,25 @@
+# Determining the host type is (currently) very simplistic.
+
+case "`uname -rps`" in
+    Linux*) 
+	BASH_HOST_TYPE=x86-linux2
+	;;
+    SunOS*i386) 
+	BASH_HOST_TYPE=x86-solaris2
+	;;
+    SunOS*) 
+	BASH_HOST_TYPE=sun4-solaris2
+	;;
+    BSD/OS)
+	BASH_HOST_TYPE=x86-bsdos
+	;;
+    *)
+        echo "unknown host type"
+	;;
+esac
+
+export BASH_HOST_TYPE
+
+### Local Variables: ***
+### mode:sh ***
+### End: ***

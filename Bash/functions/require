@@ -1,0 +1,248 @@
+# require.bash
+# Author: Noah Friedman <friedman@prep.ai.mit.edu>
+# Created: 1992-07-08
+# Last modified: 1993-09-29
+# Public domain
+
+# Code:
+
+# Exporting this variable would cause considerable lossage, since none of
+# the functions are exported (or at least, they're not guaranteed to be)
+# export -n FEATURES
+# export -n require_indent require_depth
+typeset +x FEATURES
+typeset +x require_indent require_depth
+
+: ${require_depth:=0}
+: ${require_indent:=1}
+
+# export require_depth require_indent
+
+#:docstring :
+# Null function.  Provided only so that one can put page breaks in source
+# files without any ill effects.
+#:end docstring:
+#
+# (\\014 == C-l)
+#eval "function $(echo -e \\014) () { : }"
+
+#:docstring featurep:
+# Usage: featurep argument
+#
+# Returns 0 (true) if argument is a provided feature.  Returns 1 (false)
+# otherwise. 
+#:end docstring:
+
+###;;;autoload
+function featurep()
+{
+    local feature="$1"
+
+    case " ${FEATURES} " in
+       *" ${feature} "* ) return 0 ;;
+    esac
+
+    return 1
+}
+
+#:docstring provide:
+# Usage: provide symbol ...
+#
+# Register a list of symbols as provided features
+#:end docstring:
+
+###;;;autoload
+function provide()
+{
+    local feature
+
+    for feature in "$@" ; do
+       if ! featurep "${feature}" ; then
+          FEATURES="${FEATURES} ${feature} "
+       fi
+    done
+
+    return 0
+}
+
+#:docstring require:
+# Usage: require feature {file}
+#
+# Load FEATURE if it is not already provided.  Note that require does not
+# call `provide' to register features.  The loaded file must do that
+# itself.  If the package does not explicitly do a `provide' after being
+# loaded, require will complain about the feature not being provided on
+# stderr.
+#
+# Optional argument FILE means to try to load FEATURE from FILE.  If no
+# file argument is given, require searches through FPATH (see fpath_search)
+# for the appropriate file.
+#
+# If the variable REQUIRE_FAILURE_FATAL is set, require will cause the
+# current shell invocation to exit, rather than merely return.  This may be
+# useful for a shell script that vitally depends on a package. 
+#
+#:end docstring:
+
+###;;;autoload
+function require()
+{
+    local verbose=1
+    local standard=0
+    local unrequire=0
+
+    OPTIND=1
+    while getopts qrs opt
+        do
+	    case "$opt" in
+		r)  unrequire=1 ;;
+		q)  verbose=0 ;;
+		s)  standard=1 ;;
+                *)  echo "require: usage: require [-q] [-s] feature [path]" >&2
+		    return 1 ;;
+	    esac
+        done
+ 
+    shift $(( $OPTIND - 1 ))
+ 
+    local feature="$1"
+    local path="$2"
+    local version="$3"
+    local file
+ 
+    [ $unrequire -eq 1 ] && unrequire $feature
+
+    if featurep "${feature}" ; then
+	return 0
+    fi
+
+    [ $standard -ne 0 ] && path=${STD_FPATH:-unknown}
+
+    file=$(fpath_search -q "${feature}" "${path}")
+
+    require_features="${require_features} ${require_depth}:${feature}:${file}"
+
+    require_depth=$(($require_depth + $require_indent))
+
+    [ ! -z $file ] && source "${file}"
+
+    require_depth=$(($require_depth - $require_indent))
+
+    if ! featurep "${feature}" ; then
+	if [ "${verbose}" = "1" ] ; then
+	    echo "require: ${feature}: feature was not provided." 1>&2
+	fi
+	if [ "${REQUIRE_FAILURE_FATAL+set}" = "set" ]; then
+	    exit 1
+	fi
+	return 1
+   fi
+
+   if [ ${require_depth} -eq 0 ] ; then
+      require_debug "${require_features}"
+      require_features=""
+   fi
+
+   return 0
+}
+
+#:docstring fpath_search:
+# Usage: fpath_search filename {path ...}
+#
+# Search $FPATH for `filename' or, if `path' (a list) is specified, search
+# those directories instead of $FPATH.  First the path is searched for an
+# occurrence of `filename.bash, then a second search is made for just
+# `filename'.
+#:end docstring:
+
+###;;;autoload
+function fpath_search() 
+{
+    local verbose=1
+    local stanard=0
+
+    OPTIND=1
+    while getopts qs opt
+        do
+	    case "$opt" in
+		q)  verbose=0 ;;
+		s)  standard=1 ;;
+                *)  echo "fpath_search: usage: fpath_search [-q] name [path]" >&2
+		    return 1 ;;
+	    esac
+        done
+ 
+    shift $(( $OPTIND - 1 ))
+ 
+    local name="$1"
+    local path="$2"
+    local suffix=".bash"
+    local file
+
+    if [ -z "${path}" ]; then path="${FPATH}"; fi
+
+    for file in "${name}${suffix}" "${name}" ; do
+       set -- $(IFS=':'
+                 set -- ${path}
+                 for p in "$@" ; do
+                    echo -n "${p:-.} "
+                 done)
+
+       while [ $# -ne 0 ]; do
+          #test -f "${1}/${file}" && { file="${1}/${file}"; break 2 }
+	  if test -f "${1}/${file}" ; then
+		file="${1}/${file}"
+		break 2
+	  fi
+          shift
+       done
+    done
+
+    if [ $# -eq 0 ]; then
+       if [ "${verbose}" = "1" ] ; then
+           echo "fpath_search: ${name}: file not found in fpath" 1>&2
+       fi
+       return 1
+    fi
+
+    echo "${file}"
+    return 0
+}
+
+function require_debug()
+{
+    [ -z "$REQUIRE_DEBUG" ] && return
+
+    local awk=awk
+    local print_filename=0
+
+    [ "$REQUIRE_DEBUG" = "2" ] && print_filename=2
+
+    case $SWT_HOST_TYPE in
+	sun4-solaris2)
+	    # sun4-solaris2 core dumps with awk??
+	    awk=nawk
+	    ;;
+	*)
+	    awk=awk
+	    ;;
+    esac
+
+    local f
+
+    for f in $@
+    do
+	if [ "$print_filename" = "2" ] ; then
+	    echo "${f}" | $awk -F: '{ printf "%*s%s (%s)\n", $1,"",$2,$3 }'
+	else
+	    echo "${f}" | $awk -F: '{ printf "%*s%s\n", $1,"",$2 }'
+	fi
+    done
+}
+
+provide require
+
+### Local Variables: ***
+### mode:sh ***
+### End: ***
+

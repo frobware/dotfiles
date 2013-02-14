@@ -1,0 +1,280 @@
+#
+# some handy path manipulation functions (from idf).
+#
+
+function in_path ()
+{
+    local path="$1"
+    local dir="$2"
+    local curpath
+
+    eval curpath="\$${path}"
+
+    case "${curpath}" in
+	${dir})		return 0 ;;
+	${dir}:*)	return 0 ;;
+	*:${dir})	return 0 ;;
+	*:${dir}:*)	return 0 ;;
+	*)		return 1 ;;
+    esac
+}
+
+function remove_from_path ()
+{
+    local path="$1"
+    local bad="$2"
+    local curpath
+
+    eval curpath="\$${path}"
+
+    if ! in_path "${path}" "${bad}" ; then
+	return
+    fi
+
+    local newpath
+
+    eval set -- $(IFS=':'
+	    set -- ${curpath}
+	    for p in "$@" ; do
+		if [ "${p}" != "${bad}" ] ; then 
+		    echo "\"${p}\""
+		fi
+	    done)
+
+    for p in "$@" ; do
+	path_append newpath "${p}"
+    done
+
+    eval ${path}="\"${newpath}\""
+}
+
+function path_prepend ()
+{
+    local path="$1"
+    local new="$2"
+    local curpath
+
+    eval curpath="\$${path}"
+
+    case "${curpath}" in
+    "")
+	eval ${path}="\"${new}\""
+	;;
+    *)
+	eval ${path}="\"${new}:${curpath}\""
+	;;
+    esac
+}
+
+function all_paths_prepend ()
+{
+    local top="$1"
+
+    path_prepend PATH "${top}/bin"
+    path_prepend LD_LIBRARY_PATH "${top}/lib"
+
+    export PATH LD_LIBRARY_PATH
+}
+
+function std_paths_prepend ()
+{
+    local top="$1"
+
+    path_prepend PATH "${top}/bin"
+
+    export PATH
+}
+
+function path_append ()
+{
+    local path="$1"
+    local new="$2"
+    local curpath
+
+    eval curpath="\$${path}"
+
+    case "${curpath}" in
+    "")
+	eval ${path}="\"${new}\""
+	;;
+    *)
+	eval ${path}="\"${curpath}:${new}\""
+	;;
+    esac
+}
+
+function all_paths_append ()
+{
+    local top="$1"
+
+    path_append PATH "${top}/bin"
+    path_append LD_LIBRARY_PATH "${top}/lib"
+
+    export PATH LD_LIBRARY_PATH
+}
+
+function std_paths_append ()
+{
+    local top="$1"
+
+    path_append PATH "${top}/bin"
+
+    export PATH
+}
+
+##############################
+# 
+# for several (all?) of the path manipulation functions we want a
+# version that ensures that the added DIR is unique.  That
+# functionality is generic but rather than call ``unique path_append
+# PATH DIR'' we generate several uniquely named functions, in this
+# case path_append_unique.  The trick used is via bash's eval which
+# allows us to create a function on the fly.
+
+function path_unique () 
+{
+    local func="$1"
+
+    eval "
+
+    function ${func}_unique ()
+    {
+	local path=\"\$1\"
+	local dir=\"\$2\"
+
+	if in_path \"\${path}\" \"\${dir}\" ; then
+	    remove_from_path \"\${path}\" \"\${dir}\"
+	fi
+
+	eval ${func} \"\${path}\" \"\${dir}\"
+    }
+
+    "
+}
+
+path_unique path_append
+path_unique std_paths_append
+path_unique path_prepend
+path_unique std_paths_prepend
+
+##############################
+#
+# trimpath -- remove duplicate entries in a path.  Note the trick
+# where an empty entry, which is implicitly a `.', is explicitly
+# changed to a `.'.  Otherwise it's a bit tricksome to spot "" inside
+# a space separated string...
+
+function trimpath ()
+{
+    local path="$1"
+    local curpath
+
+    eval curpath="\$${path}"
+
+    eval set -- $(IFS=':'
+	    set -- ${curpath}
+	    for d in $@ ; do
+		if [ "$d" != ":" -a "$d" != "" ] ; then
+		    echo "\"${d:-.}\""
+		fi
+	    done)
+
+    local dirs newpath
+
+    for d in $@ ; do
+	case ":${dirs}:" in
+	*":${d}:"*)
+	    ;;
+	*)
+	    dirs="${dirs}:${d}:"
+	    path_append newpath "${d}"
+	esac
+    done
+
+    eval ${path}="\"${newpath}\""
+}
+
+##############################
+
+# if your PATH contains drive letters then all the PATH manipulation
+# functions will create havoc as they split the PATH based on :.
+# Cygnus let you change c:/foo to //c/foo, so lets do that.
+
+function cygwin_path ()
+{
+    local path="$1"
+    local curpath
+
+    eval curpath="\$${path}"
+
+    eval set -- $(IFS=':'
+	    set -- ${curpath}
+	    for d in "$@" ; do
+		echo "\"${d:-.}\""
+	    done)
+
+    local dirs newpath drive
+
+    # WARNING -- this code does not cope with a directory in the PATH
+    # that is a single alpha character.  The reason is that you can't
+    # tell whether this is a real directory to look in, or a drive
+    # letter.
+
+    drive=
+    for d in "$@" ; do
+	case "${d}" in
+	[a-zA-Z])
+	    drive="${d}"
+	    ;;
+
+	*)
+	    if [ "${drive}" ] ; then
+		case "${d}" in
+		\/*|\\*)
+		    ;;
+
+		*)
+		    d="/${d}"
+		    ;;
+		esac
+
+		d="//${drive}${d}"
+		drive=
+	    fi
+
+	    case ":${dirs}:" in
+	    *":${d}:"*)
+		;;
+	    *)
+		dirs="${dirs}:${d}:"
+		path_append newpath "${d}"
+	    esac
+	    ;;
+
+	esac
+    done
+
+    eval ${path}="\"${newpath}\""    
+}
+
+##############################
+#
+# This function allows you to do tests like
+#
+#  if flag_set_p "i" ; then
+#    echo this shell is interactive
+#  fi
+function flag_set_p ()
+{
+  local flag="$1"
+
+  case "$-" in
+  *${flag}* ) return 0;;
+  esac
+
+  return 1
+}
+
+### Local Variables: ***
+### mode:sh ***
+### End: ***
