@@ -13,6 +13,9 @@ case "`uname -rps`" in
     BSD/OS)
 	BASH_HOST_TYPE=x86-bsdos
 	;;
+    Darwin*)
+	BASH_HOST_TYPE=x86-darwin
+	;;
     *)
         echo "unknown host type"
 	;;

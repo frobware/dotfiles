@@ -185,17 +185,6 @@
 ;; When saving files, set execute permission if #! is in first line.
 (add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
-(set-default-font "Droid Sans Mono-10")
-(setq default-frame-alist '((font . "Droid Sans Mono-10")))
-
-(set-default-font "Source Code Pro-10")
-(setq default-frame-alist '((font . "Source Code Pro-10")))
-
-;; Default font preferences.
-(if aim/is-darwin
-    (set-default-font 'default "Menlo-18")
-  (set-default-font 'default "Monospace-10"))
-
 ;; Load and/or create empty custom file.
 (let ((fn "~/.emacs-custom.el"))
   (when (not (file-exists-p fn))

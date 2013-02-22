@@ -1,7 +1,6 @@
 # -*-shell-script-*-
 
 [ -f ~/.bash_bootstrap ] && . ~/.bash_bootstrap
-[ -f /etc/profile ] && . /etc/profile
 
 . ${BASH_HOME}/functions/require
 . ${BASH_HOME}/functions/path-functions
