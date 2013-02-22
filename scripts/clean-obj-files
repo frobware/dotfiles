@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# clean-objs-files: Invoke clean-files with an expression that selects
+#	files that end in ".o".
+#
+# George Ferguson, ferguson@cs.rochester.edu, 23 Aug 1991.
+#
+
+CLEAN_FILES_CALLER="$0"
+export CLEAN_FILES_CALLER
+exec clean-files '/\.o$/' "$@"

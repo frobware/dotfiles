@@ -1,0 +1,213 @@
+;; Snippets, ideas, and even some of my own stuff collected from
+;; various places and various people over many years.  If you see your
+;; code or ideas here, and no attribution, then all I can say is,
+;; sorry, but a MASSIVE thank you!
+
+(require 'ibuffer)
+(require 'uniquify)
+
+(defun aim/revert-buffer-now ()
+  "revert-(current-buffer) asking no questions"
+  (interactive)
+  (revert-buffer nil t))
+
+(defun aim/reverse-video nil
+  "*Invert default face"
+  (interactive)
+  (let* ((fg (face-foreground 'default))
+	 (bg (face-background 'default)))
+    (set-face-foreground 'default bg)
+    (set-face-background 'default fg)))
+
+(defun aim/check-frame-colours ()
+  (interactive)
+  (and window-system
+     (if (string-equal (downcase (face-foreground 'default)) "black")
+	 (aim/reverse-video))))
+
+(when window-system
+  (aim/check-frame-colours))
+
+;; enable y/n answers
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; bootstrap el-get
+(load-file "~/.emacs.d/bootstrap-el-get.el")
+
+;; Make sure _my_ specific stuff is first on the load path.
+(add-to-list 'load-path "~/.emacs.d/lisp")
+
+;; Store all backup and autosave files in the tmp dir
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+;; nice scrolling (from prelude)
+(setq scroll-margin 0
+      scroll-conservatively 100000
+      scroll-preserve-screen-position 1)
+
+;; frame-based visualization
+(blink-cursor-mode -1)		     ; blink off!
+(setq inhibit-splash-screen t)	     ; no splash screen, thanks
+(line-number-mode -1)		     ; have line numbers and
+(column-number-mode 1)		     ; column numbers in the mode line
+(tool-bar-mode -1)		     ; no tool bar with icons
+(scroll-bar-mode -1)		     ; no scroll bars
+(global-hl-line-mode)		     ; highlight current line
+(global-linum-mode -1)		     ; add line numbers on the left
+
+;; Silence the bells.
+(setq ring-bell-function '(lambda ()))
+
+(setq aim/is-darwin (eq system-type 'darwin)
+      aim/is-windows (eq system-type 'windows-nt)
+      aim/is-linux (eq system-type 'gnu/linux))
+
+(when (or aim/is-darwin aim/is-linux)
+  (menu-bar-mode -1))
+
+;; avoid compiz manager rendering bugs
+;;(add-to-list 'default-frame-alist '(alpha . 100))
+
+;; On OSX, have Command as Meta and keep Option for localized input.
+(when aim/is-darwin
+  (setq mac-allow-anti-aliasing t
+	mac-command-modifier 'meta
+	mac-option-modifier 'none))
+
+;; Share the clipboard
+(setq x-select-enable-clipboard t)
+
+;; Navigate windows with M-<arrows>
+(windmove-default-keybindings 'meta)
+(setq windmove-wrap-around t)
+
+; winner-mode provides C-<left> to get back to previous window layout
+(winner-mode 1)
+
+;; whenever an external process changes a file underneath emacs, and there
+;; was no unsaved changes in the corresponding buffer, just revert its
+;; content to reflect what's on-disk.
+;; (global-auto-revert-mode -1)
+
+;; M-x shell is a nice shell interface to use, let's make it colorful.  If
+;; you need a terminal emulator rather than just a shell, consider M-x term
+;; instead.
+(autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
+(add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+
+;; If you do use M-x term, you will notice there's line mode that acts like
+;; emacs buffers, and there's the default char mode that will send your
+;; input char-by-char, so that curses application see each of your key
+;; strokes.
+;;
+;; The default way to toggle between them is C-c C-j and C-c C-k, let's
+;; better use just one key to do the same.
+(require 'term)
+(define-key term-raw-map  (kbd "C-'") 'term-line-mode)
+(define-key term-mode-map (kbd "C-'") 'term-char-mode)
+
+;; Have C-y act as usual in term-mode, to avoid C-' C-y C-'
+;; Well the real default would be C-c C-j C-y C-c C-k.
+(define-key term-raw-map  (kbd "C-y") 'term-paste)
+
+;; use ido for minibuffer completion
+(require 'ido)
+(ido-mode t)
+(setq ido-save-directory-list-file "~/.emacs.d/.ido.last")
+(setq ido-enable-flex-matching t)
+(setq ido-use-filename-at-point 'guess)
+(setq ido-show-dot-for-dired t)
+
+(global-set-key (kbd "C-x C-b") 'electric-buffer-list)
+
+(require 'dired-x)
+(setq-default dired-omit-files-p t) ; this is buffer-local variable
+
+;; full screen
+(defun fullscreen ()
+  (interactive)
+  (set-frame-parameter nil 'fullscreen
+		       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
+(global-set-key [f11] 'fullscreen)
+
+;; View occurrence in occur mode
+(define-key occur-mode-map (kbd "v") 'occur-mode-display-occurrence)
+(define-key occur-mode-map (kbd "n") 'next-line)
+(define-key occur-mode-map (kbd "p") 'previous-line)
+
+(mapcar '(lambda (x)
+	   (global-set-key (car x) (cdr x)))
+	'(("\C-x\C-b"      . electric-buffer-list)
+	  ("\C-x\C-j"      . dired-jump)
+	  ("\C-x\m"        . gnus-msg-mail)
+	  ([f1]            . gnus-slave)
+	  ([f2]            . aim/revert-buffer-now)
+	  ([f3]            . whitespace-cleanup)
+	  ([f4]            . aim/reverse-video)
+	  ("\C-xC"         . compile)
+	  ("\C-xg"         . goto-line)
+	  ("\C-x\C-g"      . goto-line)
+	  ("\C-ci"         . magit-status)
+	  ))
+
+;; Make new frame visible when connecting via emacsclient
+(add-hook 'server-switch-hook 'raise-frame)
+
+;; OS X doesn't use the shell PATH if it's not started from the shell.
+(defun aim/set-exec-path-from-shell-PATH ()
+  (let ((path-from-shell
+      (replace-regexp-in-string "[[:space:]\n]*$" ""
+	(shell-command-to-string "$SHELL -l -c 'echo $PATH'"))))
+    (setenv "PATH" path-from-shell)
+    (setq exec-path (split-string path-from-shell path-separator))))
+
+(when aim/is-darwin
+  (aim/set-exec-path-from-shell-PATH))
+
+;; More drugs vicar; hippie expand is dabbrev expand on steroids
+(setq hippie-expand-try-functions-list '(try-expand-dabbrev
+					 try-expand-dabbrev-all-buffers
+					 try-expand-dabbrev-from-kill
+					 try-complete-file-name-partially
+					 try-complete-file-name
+					 try-expand-all-abbrevs
+					 try-expand-list
+					 try-expand-line
+					 try-complete-lisp-symbol-partially
+					 try-complete-lisp-symbol))
+
+(global-set-key (kbd "M-/") 'hippie-expand)
+
+;; When saving files, set execute permission if #! is in first line.
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+
+(set-default-font "Droid Sans Mono-10")
+(setq default-frame-alist '((font . "Droid Sans Mono-10")))
+
+(set-default-font "Source Code Pro-10")
+(setq default-frame-alist '((font . "Source Code Pro-10")))
+
+;; Default font preferences.
+(if aim/is-darwin
+    (set-default-font 'default "Menlo-18")
+  (set-default-font 'default "Monospace-10"))
+
+;; Load and/or create empty custom file.
+(let ((fn "~/.emacs-custom.el"))
+  (when (not (file-exists-p fn))
+    (shell-command (concat "touch " fn)))
+  (setq custom-file fn)
+  (load custom-file))
+
+(load custom-file 'noerror)
+
+;; define function to shutdown emacs server instance
+(defun server-shutdown ()
+  "Save buffers, Quit, and Shutdown (kill) server"
+  (interactive)
+  (save-some-buffers)
+  (kill-emacs))

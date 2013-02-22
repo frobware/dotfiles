@@ -1,18 +1,5 @@
 #!/bin/bash
 
-DOT_FILES="
-bash_aliases
-bash_bootstrap
-bash_logout
-bash_profile
-bashrc
-"
-
-OTHER_FILES="
-Bash
-defaultzoom2.css
-"
-
 while getopts "d" opt; do
     case $opt in
 	d) dry_run=1; shift;;
@@ -35,14 +22,14 @@ function install_link() {
     case $OSTYPE in
 	darwin*)
 	    if [ $dry_run ]; then
-		echo "WOULD: " ln -hfsv "$source" "$target"
+		echo ln -hfsv "$source" "$target"
 	    else
 		ln -hfsv "$source" "$target"
 	    fi
 	    ;;
 	linux*)
 	    if [ $dry_run ]; then
-		echo "WOULD: " ln -fsv "$source" "$target"
+		echo ln -fsv "$source" "$target"
 	    else
 		ln -fsv "$source" "$target"
 	    fi
@@ -50,14 +37,36 @@ function install_link() {
     esac
 }
 
-for file in $DOT_FILES
+mkdir -p $HOME/.emacs.d $HOME/bin
+
+# Emacs
+for file in $(ls Emacs/*.el)
 do
-    install_link "$PWD/$file" "$HOME/.$file"
+    target=$(basename "$file")
+    install_link "$PWD/$file" "$HOME/.emacs.d/$target"
 done
 
-for file in $OTHER_FILES
+rm -f $HOME/.emacs.d/lisp
+install_link "$PWD/Emacs/lisp" "$HOME/.emacs.d/lisp"
+
+# Bash
+for file in $(ls Bash/bash*)
 do
-    install_link "$PWD/$file" "$HOME/$file"
+    target=$(basename "$file")
+    install_link "$PWD/$file" "$HOME/.$target"
+done
+
+# Scripts
+for file in $(ls scripts/*.sh)
+do
+    target=$(basename "$file" ".sh")
+    install_link "$PWD/$file" "$HOME/bin/$target"
+done
+
+for file in $(ls scripts/clean*)
+do
+    target=$(basename "$file")
+    install_link "$PWD/$file" "$HOME/bin/$target"
 done
 
 exit 0

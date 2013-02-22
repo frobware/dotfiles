@@ -1,0 +1,22 @@
+# -*-shell-script-*-
+
+if [[ "$DISPLAY" == "" ]]; then
+    # Can we use muti-tty?
+    emacsclient --help | grep "\-\-tty" > /dev/null
+    if [[ "$?" == "0" ]]; then
+	EMACS_CMD="emacsclient -a '' -t"
+    else
+	EMACS_CMD="emacs -nw"
+    fi
+else
+    # otherwise don't wait and open a new frame
+    EMACS_CMD="emacsclient -n -a '' -c"
+fi
+
+# Set the environment variables for the editors
+export EDITOR=${EMACS_CMD}
+export VISUAL=${EMACS_CMD}
+export ALTERNATE_EDITOR=emacs
+
+alias emacs="${EMACS_CMD}"
+alias vi="emacsclient -t"

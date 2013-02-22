@@ -1,6 +1,6 @@
 # -*-shell-script-*-
 
-export BASH_HOME=${HOME}/Bash
+export BASH_HOME=${HOME}/dotfiles/Bash
 . ${BASH_HOME}/system-id
 
 # The bash features depend on DNSDOMAIN being set.  If it is not set
