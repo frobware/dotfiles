@@ -31,3 +31,7 @@ trimpath PATH
 trimpath LD_LIBRARY_PATH
 
 export GOPATH=$HOME/mygo
+
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+fi
