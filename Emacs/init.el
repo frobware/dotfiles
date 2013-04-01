@@ -200,3 +200,7 @@
   (interactive)
   (save-some-buffers)
   (kill-emacs))
+
+(setq auto-mode-alist (cons '("\\.mm$" . c++-mode) auto-mode-alist))
+
+(add-hook 'c-mode-common-hook 'google-set-c-style)

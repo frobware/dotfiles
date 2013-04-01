@@ -43,11 +43,9 @@
 (setq
  my:el-get-packages
  '(el-get				; el-get is self-hosting
-   cscope				; cscope interface
    switch-window			; takes over C-x o
    auto-complete			; complete as you type with overlays
    color-theme				; nice looking emacs
-   ffap-
    color-theme-tango))			; check out color-theme-solarized
 
 ;;
