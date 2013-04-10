@@ -69,4 +69,6 @@ do
     install_link "$PWD/$file" "$HOME/bin/$target"
 done
 
+install_link "$PWD/Resources/.Xresources" "$HOME/.Xresources"
+
 exit 0
