@@ -1,0 +1,3 @@
+!XTerm*font: Monospace:pixelsize=17
+XTerm*faceName: Monospace:pixelsize=24
+XTerm*eightBitInput: true

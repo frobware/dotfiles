@@ -3,8 +3,15 @@
 ;; code or ideas here, and no attribution, then all I can say is,
 ;; sorry, but a MASSIVE thank you!
 
+(require 'gnus)
 (require 'ibuffer)
 (require 'uniquify)
+
+(require 'epa-file)
+(epa-file-enable)
+
+(require 'ffap)
+(ffap-bindings)
 
 (defun aim/revert-buffer-now ()
   "revert-(current-buffer) asking no questions"
@@ -52,6 +59,7 @@
 ;; frame-based visualization
 (blink-cursor-mode -1)		     ; blink off!
 (setq inhibit-splash-screen t)	     ; no splash screen, thanks
+
 (line-number-mode -1)		     ; have line numbers and
 (column-number-mode 1)		     ; column numbers in the mode line
 (tool-bar-mode -1)		     ; no tool bar with icons
@@ -203,4 +211,68 @@
 
 (setq auto-mode-alist (cons '("\\.mm$" . c++-mode) auto-mode-alist))
 
-(add-hook 'c-mode-common-hook 'google-set-c-style)
+(setq c-default-style "linux")
+
+(put 'narrow-to-region 'disabled nil)
+
+(setq user-mail-address "andrew.mcdermott@linaro.org")
+(setq user-full-name "Andrew McDermott")
+
+(defun c-lineup-arglist-tabs-only (ignored)
+  "Line up argument lists by tabs, not spaces"
+  (let* ((anchor (c-langelem-pos c-syntactic-element))
+	 (column (c-langelem-2nd-pos c-syntactic-element))
+	 (offset (- (1+ column) anchor))
+	 (steps (floor offset c-basic-offset)))
+    (* (max steps 1)
+       c-basic-offset)))
+
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            ;; Add kernel style
+            (c-add-style
+             "linux-tabs-only"
+             '("linux" (c-offsets-alist
+                        (arglist-cont-nonempty
+                         c-lineup-gcc-asm-reg
+                         c-lineup-arglist-tabs-only))))))
+
+(add-hook 'c-mode-hook
+          (lambda ()
+            (let ((filename (buffer-file-name)))
+              ;; Enable kernel mode for the appropriate files
+              (when (and filename
+			 (or
+			  (string-match (expand-file-name "~/src/linux-trees") filename)))
+                (setq indent-tabs-mode t)
+                (c-set-style "linux-tabs-only")))))
+
+(defun sudo-find-file (file-name)
+  "Like find file, but opens the file as root."
+  (interactive "FSudo Find File: ")
+  (let ((tramp-file-name (concat "/sudo::" (expand-file-name file-name))))
+    (find-file tramp-file-name)))
+
+(defun occurrences (regexp &rest ignore)
+  "Show all matches for REGEXP in an `occur' buffer."
+  ;; keep text covered by occur-prefix and match text-properties
+  (interactive (occur-read-primary-args))
+  (occur regexp)
+  (with-current-buffer (get-buffer "*Occur*")
+    (let ((inhibit-read-only t)
+	  delete-from
+	  pos)
+      (save-excursion
+	(while (setq pos (next-property-change (point)))
+	  (goto-char pos)
+	  (if (not (or (get-text-property (point) 'occur-prefix)
+		       (get-text-property (point) 'occur-match)))
+	      (if delete-from
+		  (delete-region delete-from (point))
+		(setq delete-from (point)))
+	    (when delete-from
+	      (delete-region delete-from (point))
+	      (if (get-text-property (point) 'occur-prefix)
+		  (insert "\n")
+		(insert " ")))
+	    (setq delete-from nil)))))))

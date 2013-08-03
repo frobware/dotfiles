@@ -5,23 +5,21 @@
 
 # Override/Export all of these...
 set -a
-EDITOR='emacsclient -c'
-VISUAL='emacsclient -c'
+EDITOR='emacsclient'
+VISUAL='emacsclient'
 XUSERFILESEARCHPATH=$HOME/lib/X11/app-defaults/%N%S
 RLWRAP=$HOME/.rlwrap
 PAGER="less -X -e -q -s -m"
 LESS="-X -e -q -s -m"
 BC_ENV_ARGS="$HOME/.bcrc"
 MANWIDTH=80
+ARMLMD_LICENSE_FILE=8224@127.0.0.1
 set +a
 
 require -q "${BASH_HOST_TYPE}-profile"
 require -q "${HOSTNAME}-bash-profile"
 
 [ -d $HOME/bin ] && path_prepend PATH $HOME/bin
-
-#keychain --inherit any -Q -q id_dsa id_rsa identity
-#[ -f ~/.keychain/${HOSTNAME}-sh ] && source ~/.keychain/${HOSTNAME}-sh
 
 # Load our personal bashrc.  This is located through $FPATH.
 [ -f $HOME/.bashrc ] && . $HOME/.bashrc

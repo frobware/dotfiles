@@ -8,15 +8,15 @@ export BASH_HOME=${HOME}/dotfiles/Bash
 
 case $BASH_HOST_TYPE in
     x86-linux2)
-        : ${DNSDOMAIN=`dnsdomainname`}
-        ;;
+	: ${DNSDOMAIN=`dnsdomainname`}
+	;;
     sun4-solaris2)
-        : ${DNSDOMAIN:=`domainname`}
-        ;;
+	: ${DNSDOMAIN:=`domainname`}
+	;;
     *)
-        # hit and hope!
-        : ${DNSDOMAIN:=`domainname`}
-        ;;
+	# hit and hope!
+	: ${DNSDOMAIN:=`domainname`}
+	;;
 esac
 
 FPATH=${BASH_HOME}/features:${FPATH}

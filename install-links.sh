@@ -69,6 +69,9 @@ do
     install_link "$PWD/$file" "$HOME/bin/$target"
 done
 
-install_link "$PWD/Resources/.Xresources" "$HOME/.Xresources"
+install_link "$PWD/Resources/Xresources" "$HOME/.Xresources"
+install_link "$PWD/Mail/offlineimaprc" "$HOME/.offlineimaprc"
+install_link "$PWD/Mail/offlineimap.py" "$HOME/.offlineimap.py"
+install_link "$PWD/Mail/msmtprc" "$HOME/.msmtprc"
 
 exit 0

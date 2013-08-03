@@ -1,5 +1,5 @@
 #
-# some handy path manipulation functions (from idf).
+# some handy path manipulation functions (from idf@ftel.co.uk).
 #
 
 function in_path ()

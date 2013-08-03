@@ -6,14 +6,15 @@
 . ${BASH_HOME}/functions/path-functions
 
 # for non login ssh connections
-path_append PATH /usr/X11R6/bin
+# path_prepend PATH /usr/local/sbin
+# path_append PATH /usr/X11R6/bin
 
 XUSERFILESEARCHPATH=$HOME/lib/X11/app-defaults/%N%S
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-[ -f ~/.bashrc_emacs ] && . ~/.bashrc_emacs
+# [ -f ~/.bashrc_emacs ] && . ~/.bashrc_emacs
 
 # Like many of you, I constantly have many terminals open at once. I
 # wish bash would dump every command I type there instead of seemingly
@@ -32,13 +33,14 @@ shopt -s histappend
 # single line cmd history
 shopt -s cmdhist
 export PROMPT_COMMAND='history -a'
+export HISTSIZE=5000000
 export HISTCONTROL=ignoredups
 export HISTIGNORE="&:ls:[bf]g:exit"
 
 [ -f /etc/bash_completion ] && . /etc/bash_completion
 [ -f $HOME/.bash_aliases ] && . $HOME/.bash_aliases
 
-# (Un)Graciously stolen from idf
+# Graciously stolen from idf
 function check_exit_status ()
 {
     local status="$?"
@@ -46,13 +48,13 @@ function check_exit_status ()
     local signal=""
 
     if [ ${status} -ne 0 ] ; then
-        if [ $((${status} < 128)) -ne 0 ] ; then
-            msg="exit (${status})"
-        else
-            signal="$(builtin kill -l $((${status} - 128)) 2>/dev/null)"
-            if [ "$signal" ]; then msg="kill -$signal$msg"; fi
-        fi
-        echo "[${status} => ${msg}]" 1>&2
+	if [ $((${status} < 128)) -ne 0 ] ; then
+	    msg="exit (${status})"
+	else
+	    signal="$(builtin kill -l $((${status} - 128)) 2>/dev/null)"
+	    if [ "$signal" ]; then msg="kill -$signal$msg"; fi
+	fi
+	echo "[${status} => ${msg}]" 1>&2
     fi
     return 0
 }
