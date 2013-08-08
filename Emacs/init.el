@@ -32,9 +32,6 @@
      (if (string-equal (downcase (face-foreground 'default)) "black")
 	 (aim/reverse-video))))
 
-(when window-system
-  (aim/check-frame-colours))
-
 ;; enable y/n answers
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -276,3 +273,23 @@
 		  (insert "\n")
 		(insert " ")))
 	    (setq delete-from nil)))))))
+
+(if (and (daemonp) (locate-library "edit-server"))
+    (progn
+      (require 'edit-server)
+      (setq edit-server-new-frame nil)
+      (edit-server-start)))
+
+(add-hook 'edit-server-text-mode-hook
+	  (lambda ()
+	    (auto-complete-mode 1)
+	    (flyspell-mode 1)))
+
+(add-hook 'edit-server-done-hook
+	  (lambda ()
+	    (shell-command "wmctrl -x -a google-chrome")))
+
+(add-hook 'before-make-frame-hook
+	  (lambda ()
+	    (when window-system
+	      (aim/check-frame-colours))))
