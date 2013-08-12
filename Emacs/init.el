@@ -289,7 +289,17 @@
 	  (lambda ()
 	    (shell-command "wmctrl -x -a google-chrome")))
 
-(add-hook 'before-make-frame-hook
+;; Checks frame colours when Emacs first starts.  The
+;; after-make-frame-functions is not run for the first frame hence the
+;; two hooks.
+
+(add-hook 'after-init-hook
 	  (lambda ()
 	    (when window-system
 	      (aim/check-frame-colours))))
+
+(add-hook 'after-make-frame-functions
+	  (lambda (frame)
+	    (when window-system
+	      (aim/check-frame-colours))))
+
