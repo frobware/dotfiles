@@ -1,3 +1,3 @@
 XTerm*faceName: Monospace:pixelsize=24
 XTerm*eightBitInput: true
-Xcursor.size: 256
+Xcursor.size: 512
