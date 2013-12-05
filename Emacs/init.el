@@ -317,14 +317,5 @@
 (unless (server-running-p)
   (server-start))
 
-(defadvice server-create-window-system-frame
-  (after set-window-system-frame-colours ())
-  "Set custom frame colours when creating the first frame on a display"
-  (message "Running after frame-initialize")
-  (setup-window-system-frame-colours))
-
-(ad-activate 'server-create-window-system-frame)
-(add-hook 'after-make-frame-functions 'setup-window-system-frame-colours t)
-
 (require 'git-commit)
 (add-hook 'git-commit-mode-hook 'turn-on-flyspell)
