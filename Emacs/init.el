@@ -29,8 +29,8 @@
 (defun aim/check-frame-colours ()
   (interactive)
   (and window-system
-     (if (string-equal (downcase (face-foreground 'default)) "black")
-	 (aim/reverse-video))))
+       (if (string-equal (downcase (face-foreground 'default)) "black")
+	   (aim/reverse-video))))
 
 ;; enable y/n answers
 (fset 'yes-or-no-p 'y-or-n-p)
@@ -90,7 +90,7 @@
 (windmove-default-keybindings 'meta)
 (setq windmove-wrap-around t)
 
-; winner-mode provides C-<left> to get back to previous window layout
+;; winner-mode provides C-<left> to get back to previous window layout
 (winner-mode 1)
 
 ;; whenever an external process changes a file underneath emacs, and there
@@ -165,8 +165,8 @@
 ;; OS X doesn't use the shell PATH if it's not started from the shell.
 (defun aim/set-exec-path-from-shell-PATH ()
   (let ((path-from-shell
-      (replace-regexp-in-string "[[:space:]\n]*$" ""
-	(shell-command-to-string "$SHELL -l -c 'echo $PATH'"))))
+	 (replace-regexp-in-string "[[:space:]\n]*$" ""
+				   (shell-command-to-string "$SHELL -l -c 'echo $PATH'"))))
     (setenv "PATH" path-from-shell)
     (setq exec-path (split-string path-from-shell path-separator))))
 
@@ -225,24 +225,24 @@
        c-basic-offset)))
 
 (add-hook 'c-mode-common-hook
-          (lambda ()
-            ;; Add kernel style
-            (c-add-style
-             "linux-tabs-only"
-             '("linux" (c-offsets-alist
-                        (arglist-cont-nonempty
-                         c-lineup-gcc-asm-reg
-                         c-lineup-arglist-tabs-only))))))
+	  (lambda ()
+	    ;; Add kernel style
+	    (c-add-style
+	     "linux-tabs-only"
+	     '("linux" (c-offsets-alist
+			(arglist-cont-nonempty
+			 c-lineup-gcc-asm-reg
+			 c-lineup-arglist-tabs-only))))))
 
 (add-hook 'c-mode-hook
-          (lambda ()
-            (let ((filename (buffer-file-name)))
-              ;; Enable kernel mode for the appropriate files
-              (when (and filename
+	  (lambda ()
+	    (let ((filename (buffer-file-name)))
+	      ;; Enable kernel mode for the appropriate files
+	      (when (and filename
 			 (or
 			  (string-match (expand-file-name "~/src/linux-trees") filename)))
-                (setq indent-tabs-mode t)
-                (c-set-style "linux-tabs-only")))))
+		(setq indent-tabs-mode t)
+		(c-set-style "linux-tabs-only")))))
 
 (defun sudo-find-file (file-name)
   "Like find file, but opens the file as root."
@@ -293,13 +293,38 @@
 ;; after-make-frame-functions is not run for the first frame hence the
 ;; two hooks.
 
-(add-hook 'after-init-hook
-	  (lambda ()
-	    (when window-system
-	      (aim/check-frame-colours))))
+;; (add-hook 'after-init-hook
+;;	  (lambda ()
+;;	    (when window-system
+;;	      (aim/check-frame-colours))))
 
-(add-hook 'after-make-frame-functions
-	  (lambda (frame)
-	    (when window-system
-	      (aim/check-frame-colours))))
+;; (add-hook 'server-switch-hook
+;;	  (lambda ()
+;;	    (when window-system
+;;	      (aim/check-frame-colours))))
 
+(defun setup-window-system-frame-colours (&rest frame)
+  (if window-system
+      (let ((f (if (car frame)
+		   (car frame)
+		 (selected-frame))))
+	(progn
+	  (when window-system
+	    (aim/check-frame-colours))))))
+
+(require 'server)
+
+(unless (server-running-p)
+  (server-start))
+
+(defadvice server-create-window-system-frame
+  (after set-window-system-frame-colours ())
+  "Set custom frame colours when creating the first frame on a display"
+  (message "Running after frame-initialize")
+  (setup-window-system-frame-colours))
+
+(ad-activate 'server-create-window-system-frame)
+(add-hook 'after-make-frame-functions 'setup-window-system-frame-colours t)
+
+(require 'git-commit)
+(add-hook 'git-commit-mode-hook 'turn-on-flyspell)
