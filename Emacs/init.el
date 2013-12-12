@@ -319,3 +319,6 @@
 
 (require 'git-commit)
 (add-hook 'git-commit-mode-hook 'turn-on-flyspell)
+
+;; Run commands through a single external process.
+(setq monky-process-type 'cmdserver)
