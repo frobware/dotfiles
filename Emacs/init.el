@@ -5,15 +5,25 @@
 
 (load-file "~/.emacs.d/bootstrap-el-get.el")
 
+(setq aim/is-darwin (eq system-type 'darwin)
+      aim/is-windows (eq system-type 'windows-nt)
+      aim/is-linux (eq system-type 'gnu/linux))
+
 (require 'gnus)
 (require 'ibuffer)
-(require 'uniquify)
-(require 'epa-file)
 (require 'server)
-(require 'ffap)
 
+(require 'epa-file)
 (epa-file-enable)
+
+(require 'ffap)
 (ffap-bindings)
+
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'reverse)
+(setq uniquify-separator "|")
+(setq uniquify-after-kill-buffer-p t)
+(setq uniquify-ignore-buffers-re "^\\*")
 
 (defun aim/revert-buffer-now ()
   "revert-(current-buffer) asking no questions"
@@ -33,39 +43,6 @@
   (and window-system
        (if (string-equal (downcase (face-foreground 'default)) "black")
 	   (aim/reverse-video))))
-
-;; enable y/n answers
-(fset 'yes-or-no-p 'y-or-n-p)
-
-;; Store all backup and autosave files in the tmp dir
-(setq backup-directory-alist
-      `((".*" . ,temporary-file-directory)))
-
-(setq auto-save-file-name-transforms
-      `((".*" ,temporary-file-directory t)))
-
-;; nice scrolling (from prelude)
-;; (setq scroll-margin 0
-;;       scroll-conservatively 100000
-;;       scroll-preserve-screen-position 1)
-
-;; frame-based visualization
-(blink-cursor-mode -1)		     ; blink off!
-(setq inhibit-splash-screen t)	     ; no splash screen, thanks
-
-(line-number-mode -1)		     ; have line numbers and
-(column-number-mode 1)		     ; column numbers in the mode line
-(tool-bar-mode -1)		     ; no tool bar with icons
-(scroll-bar-mode -1)		     ; no scroll bars
-;;(global-hl-line-mode)		     ; highlight current line
-(global-linum-mode -1)		     ; add line numbers on the left
-
-;; Silence the bells.
-(setq ring-bell-function '(lambda ()))
-
-(setq aim/is-darwin (eq system-type 'darwin)
-      aim/is-windows (eq system-type 'windows-nt)
-      aim/is-linux (eq system-type 'gnu/linux))
 
 (when (or aim/is-darwin aim/is-linux)
   (menu-bar-mode -1))
@@ -202,15 +179,6 @@
   (save-some-buffers)
   (kill-emacs))
 
-(setq auto-mode-alist (cons '("\\.mm$" . c++-mode) auto-mode-alist))
-
-(setq c-default-style "linux")
-
-(put 'narrow-to-region 'disabled nil)
-
-(setq user-mail-address "andrew.mcdermott@linaro.org")
-(setq user-full-name "Andrew McDermott")
-
 (defun c-lineup-arglist-tabs-only (ignored)
   "Line up argument lists by tabs, not spaces"
   (let* ((anchor (c-langelem-pos c-syntactic-element))
@@ -245,6 +213,19 @@
   (interactive "FSudo Find File: ")
   (let ((tramp-file-name (concat "/sudo::" (expand-file-name file-name))))
     (find-file tramp-file-name)))
+
+;; find file as root
+(defun djcb-find-file-as-root ()
+  "Like `ido-find-file, but automatically edit the file with
+root-privileges (using tramp/sudo), if the file is not writable by
+user."
+  (interactive)
+  (let ((file (ido-read-file-name "Edit as root: ")))
+    (unless (file-writable-p file)
+      (setq file (concat "/sudo:root@localhost:" file)))
+    (find-file file)))
+
+(global-set-key (kbd "C-x C-S-f") 'djcb-find-file-as-root)
 
 (defun occurrences (regexp &rest ignore)
   "Show all matches for REGEXP in an `occur' buffer."
@@ -306,10 +287,7 @@
 
 ;; and later
 (add-hook 'after-make-frame-functions 'aim/frame-config)
-
 (add-hook 'text-mode-hook 'turn-on-visual-line-mode)
-
-(setq vc-follow-symlinks t)
 
 ;; Make sure _my_ specific stuff is first on the load path.
 (add-to-list 'load-path "~/.emacs.d/lisp")
@@ -317,7 +295,39 @@
 (unless (server-running-p)
   (server-start))
 
-(setq default-frame-alist '((width . 80) (height . 55) (menu-bar-lines . 1)))
+;; enable y/n answers
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; Store all backup and autosave files in the tmp dir
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+;; frame-based visualization
+(blink-cursor-mode -1)		     ; blink off!
+(line-number-mode -1)		     ; have line numbers and
+(column-number-mode 1)		     ; column numbers in the mode line
+(tool-bar-mode -1)		     ; no tool bar with icons
+(scroll-bar-mode -1)		     ; no scroll bars
+;;(global-hl-line-mode)		     ; highlight current line
+(global-linum-mode -1)		     ; add line numbers on the left
 
 (and (file-exists-p "~/.emacs.d/aim-mu.el")
      (load-file "~/.emacs.d/aim-mu.el"))
+
+(setq auto-mode-alist (cons '("\\.mm$" . c++-mode) auto-mode-alist)
+      c-default-style "linux"
+      vc-follow-symlinks t
+      inhibit-splash-screen t
+      ring-bell-function '(lambda ())
+      sentence-end-double-space nil
+      require-final-newline t)
+
+(put 'narrow-to-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+
+(setq initial-frame-alist '((height . 130)))
+(setq mouse-yank-at-point t)
