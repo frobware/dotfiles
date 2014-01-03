@@ -318,3 +318,6 @@
   (server-start))
 
 (setq default-frame-alist '((width . 80) (height . 55) (menu-bar-lines . 1)))
+
+(and (file-exists-p "~/.emacs.d/aim-mu.el")
+     (load-file "~/.emacs.d/aim-mu.el"))
