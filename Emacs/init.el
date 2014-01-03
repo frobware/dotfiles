@@ -3,14 +3,17 @@
 ;; code or ideas here, and no attribution, then all I can say is,
 ;; sorry, but a MASSIVE thank you!
 
+(load-file "~/.emacs.d/bootstrap-el-get.el")
+
 (require 'gnus)
 (require 'ibuffer)
 (require 'uniquify)
-
+(require 'notmuch)
 (require 'epa-file)
-(epa-file-enable)
-
+(require 'server)
 (require 'ffap)
+
+(epa-file-enable)
 (ffap-bindings)
 
 (defun aim/revert-buffer-now ()
@@ -35,12 +38,6 @@
 ;; enable y/n answers
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;; bootstrap el-get
-(load-file "~/.emacs.d/bootstrap-el-get.el")
-
-;; Make sure _my_ specific stuff is first on the load path.
-(add-to-list 'load-path "~/.emacs.d/lisp")
-
 ;; Store all backup and autosave files in the tmp dir
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
@@ -49,9 +46,9 @@
       `((".*" ,temporary-file-directory t)))
 
 ;; nice scrolling (from prelude)
-(setq scroll-margin 0
-      scroll-conservatively 100000
-      scroll-preserve-screen-position 1)
+;; (setq scroll-margin 0
+;;       scroll-conservatively 100000
+;;       scroll-preserve-screen-position 1)
 
 ;; frame-based visualization
 (blink-cursor-mode -1)		     ; blink off!
@@ -61,7 +58,7 @@
 (column-number-mode 1)		     ; column numbers in the mode line
 (tool-bar-mode -1)		     ; no tool bar with icons
 (scroll-bar-mode -1)		     ; no scroll bars
-(global-hl-line-mode)		     ; highlight current line
+;;(global-hl-line-mode)		     ; highlight current line
 (global-linum-mode -1)		     ; add line numbers on the left
 
 ;; Silence the bells.
@@ -75,7 +72,7 @@
   (menu-bar-mode -1))
 
 ;; avoid compiz manager rendering bugs
-;;(add-to-list 'default-frame-alist '(alpha . 100))
+(add-to-list 'default-frame-alist '(alpha . 100))
 
 ;; On OSX, have Command as Meta and keep Option for localized input.
 (when aim/is-darwin
@@ -132,12 +129,11 @@
 (require 'dired-x)
 (setq-default dired-omit-files-p t) ; this is buffer-local variable
 
-;; full screen
-(defun fullscreen ()
+(defun aim/fullscreen ()
   (interactive)
   (set-frame-parameter nil 'fullscreen
 		       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
-(global-set-key [f11] 'fullscreen)
+(global-set-key [f11] 'aim/fullscreen)
 
 ;; View occurrence in occur mode
 (define-key occur-mode-map (kbd "v") 'occur-mode-display-occurrence)
@@ -188,7 +184,8 @@
 (global-set-key (kbd "M-/") 'hippie-expand)
 
 ;; When saving files, set execute permission if #! is in first line.
-(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
+(add-hook 'after-save-hook
+	  'executable-make-buffer-file-executable-if-script-p)
 
 ;; Load and/or create empty custom file.
 (let ((fn "~/.emacs-custom.el"))
@@ -289,36 +286,36 @@
 	  (lambda ()
 	    (shell-command "wmctrl -x -a google-chrome")))
 
-;; Checks frame colours when Emacs first starts.  The
-;; after-make-frame-functions is not run for the first frame hence the
-;; two hooks.
+(and (require 'git-commit nil 'noerror)
+     (add-hook 'git-commit-mode-hook 'turn-on-flyspell))
 
-;; (add-hook 'after-init-hook
-;;	  (lambda ()
-;;	    (when window-system
-;;	      (aim/check-frame-colours))))
+;; Run Mercurial commands through a single external process.
+(setq monky-process-type 'cmdserver)
 
-;; (add-hook 'server-switch-hook
-;;	  (lambda ()
-;;	    (when window-system
-;;	      (aim/check-frame-colours))))
+(defun aim/frame-config (frame)
+  "Custom behaviour for new frames."
+  (with-selected-frame frame
+    (when (display-graphic-p)
+      ;; (set-background-color "#101416")
+      ;; (set-background-color "grey50")
+      ;;(set-foreground-color "#f6f3e8")
+      (message "[%s] Wanting to change %s colors %s" (current-time-string) (selected-frame)  (face-foreground 'default)))
+    ))
 
-(defun setup-window-system-frame-colours (&rest frame)
-  (if window-system
-      (let ((f (if (car frame)
-		   (car frame)
-		 (selected-frame))))
-	(progn
-	  (when window-system
-	    (aim/check-frame-colours))))))
+;; run now
+(aim/frame-config (selected-frame))
 
-(require 'server)
+;; and later
+(add-hook 'after-make-frame-functions 'aim/frame-config)
+
+(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
+
+(setq vc-follow-symlinks t)
+
+;; Make sure _my_ specific stuff is first on the load path.
+(add-to-list 'load-path "~/.emacs.d/lisp")
 
 (unless (server-running-p)
   (server-start))
 
-(require 'git-commit)
-(add-hook 'git-commit-mode-hook 'turn-on-flyspell)
-
-;; Run commands through a single external process.
-(setq monky-process-type 'cmdserver)
+(setq default-frame-alist '((width . 80) (height . 55) (menu-bar-lines . 1)))

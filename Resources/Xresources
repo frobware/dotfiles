@@ -3,4 +3,4 @@ XTerm*eightBitInput: true
 XTerm*reverseVideo: true
 Xcursor.size: 512
 Emacs*reverseVideo: true
-Emacs*font: Monospace:pixelsize=20
+Emacs*font: Consolas:pixelsize=20

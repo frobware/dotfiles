@@ -70,10 +70,6 @@ do
 done
 
 install_link "$PWD/Resources/Xresources" "$HOME/.Xresources"
-install_link "$PWD/Mail/offlineimaprc" "$HOME/.offlineimaprc"
-install_link "$PWD/Mail/offlineimap.py" "$HOME/.offlineimap.py"
-install_link "$PWD/Mail/msmtprc" "$HOME/.msmtprc"
-
 install_link "$PWD/tmux.conf" "$HOME/.tmux.conf"
 
 exit 0

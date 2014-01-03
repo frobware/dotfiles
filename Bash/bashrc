@@ -1,5 +1,6 @@
 # -*-shell-script-*-
 
+[ -f /etc/profile.d/jdk.sh ] && . /etc/profile.d/jdk.sh
 [ -f ~/.bash_bootstrap ] && . ~/.bash_bootstrap
 
 . ${BASH_HOME}/functions/require
@@ -59,5 +60,19 @@ function check_exit_status ()
     return 0
 }
 
+[ -n "$TMUX" ] && export TERM=screen-256color
+
+
 #declare -x check_exit_status
 export PS1='[\u@\h:\w]\n: '
+
+#if [[ -z "$TMUX" ]]; then
+#   tmux has-session &> /dev/null
+#   if [ $? -eq 1 ]; then
+#	exec tmux new
+#	exit
+#   else
+#	exec tmux attach
+#	exit
+#   fi
+#fi
