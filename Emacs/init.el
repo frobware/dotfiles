@@ -331,3 +331,25 @@ user."
 
 (setq initial-frame-alist '((height . 130)))
 (setq mouse-yank-at-point t)
+(add-hook 'before-save-hook 'gofmt-before-save)
+
+;;; Go
+
+(add-to-list 'load-path
+	     (concat (getenv "GOPATH") "/src/github.com/dougm/goflymake"))
+
+(require 'go-autocomplete)
+(require 'auto-complete-config)
+(require 'go-mode)
+
+(add-hook 'go-mode-hook
+	  (lambda ()
+	    (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
+
+(add-hook 'go-mode-hook
+	  (lambda ()
+	    (local-set-key (kbd "C-c I") 'go-goto-imports)))
+
+(add-hook 'go-mode-hook 'imenu-add-menubar-index)
+
+(require 'go-flycheck)

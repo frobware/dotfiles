@@ -24,18 +24,22 @@
 (setq my-packages
       (append
        '(
-	 ag
 	 cl-lib
+	 ag
 	 dockerfile-mode
 	 edit-server
 	 el-get
 	 ffap-
+	 flycheck
 	 git-commit-mode
 	 gnus-alias
+	 go-def
 	 go-mode
+	 go-autocomplete
 	 google-maps
 	 message-x
 	 monky
+	 mu4e
 	 nxhtml
 	 org-mode
 	 package
