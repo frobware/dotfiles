@@ -8,7 +8,6 @@
 (require 'gnus)
 (require 'ibuffer)
 (require 'uniquify)
-(require 'notmuch)
 (require 'epa-file)
 (require 'server)
 (require 'ffap)
