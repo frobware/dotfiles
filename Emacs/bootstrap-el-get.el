@@ -26,6 +26,7 @@
        '(
 	 cl-lib
 	 ag
+	 darkroom-mode
 	 dockerfile-mode
 	 edit-server
 	 el-get
