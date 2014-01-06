@@ -3,6 +3,15 @@
 ;; code or ideas here, and no attribution, then all I can say is,
 ;; sorry, but a MASSIVE thank you!
 
+;; Load and/or create empty custom file.
+(let ((fn "~/.emacs-custom.el"))
+  (when (not (file-exists-p fn))
+    (shell-command (concat "touch " fn)))
+  (setq custom-file fn)
+  (load custom-file))
+
+(load custom-file 'noerror)
+
 (load-file "~/.emacs.d/bootstrap-el-get.el")
 
 (setq aim/is-darwin (eq system-type 'darwin)
@@ -157,20 +166,23 @@
 					 try-complete-lisp-symbol-partially
 					 try-complete-lisp-symbol))
 
+(setq hippie-expand-try-functions-list
+      '(yas/hippie-try-expand
+	try-complete-file-name-partially
+	try-expand-all-abbrevs
+	try-expand-dabbrev
+	try-expand-dabbrev-all-buffers
+	try-expand-dabbrev-from-kill
+	try-complete-lisp-symbol-partially
+	try-complete-lisp-symbol))
+
+(setq hippie-expand-verbose t)
+
 (global-set-key (kbd "M-/") 'hippie-expand)
 
 ;; When saving files, set execute permission if #! is in first line.
 (add-hook 'after-save-hook
 	  'executable-make-buffer-file-executable-if-script-p)
-
-;; Load and/or create empty custom file.
-(let ((fn "~/.emacs-custom.el"))
-  (when (not (file-exists-p fn))
-    (shell-command (concat "touch " fn)))
-  (setq custom-file fn)
-  (load custom-file))
-
-(load custom-file 'noerror)
 
 ;; define function to shutdown emacs server instance
 (defun server-shutdown ()
@@ -352,4 +364,31 @@ user."
 
 (add-hook 'go-mode-hook 'imenu-add-menubar-index)
 
+(add-hook 'go-mode-hook
+	  (lambda ()
+	    (local-set-key (kbd "M-.") 'godef-jump)))
+
+(add-hook 'go-mode-hook 'projectile-on)
+(add-hook 'go-mode-hook 'go-eldoc-setup)
+
+(add-hook 'go-mode-hook
+	  (lambda ()
+	    (linum-mode 1)
+	    ;; (flymake-mode 1)
+	    ;; (auto-complete-mode 1)
+	    (add-to-list 'ac-sources 'ac-source-go)
+	    ;; (call-process "gocode" nil nil nil "-s")
+	    ))
+
+(define-key ac-complete-mode-map "\C-n" 'ac-next)
+(define-key ac-complete-mode-map "\C-p" 'ac-previous)
+
+(setq ac-auto-start nil)
+(global-set-key "\M-/" 'ac-start)
+
 (require 'go-flycheck)
+
+;; (require 'package)
+;; (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+;; (package-initialize)
+;; (package-refresh-contents)
