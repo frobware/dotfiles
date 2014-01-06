@@ -155,26 +155,28 @@
   (aim/set-exec-path-from-shell-PATH))
 
 ;; More drugs vicar; hippie expand is dabbrev expand on steroids
-(setq hippie-expand-try-functions-list '(try-expand-dabbrev
-					 try-expand-dabbrev-all-buffers
-					 try-expand-dabbrev-from-kill
-					 try-complete-file-name-partially
-					 try-complete-file-name
-					 try-expand-all-abbrevs
-					 try-expand-list
-					 try-expand-line
-					 try-complete-lisp-symbol-partially
-					 try-complete-lisp-symbol))
-
 (setq hippie-expand-try-functions-list
-      '(yas/hippie-try-expand
-	try-complete-file-name-partially
-	try-expand-all-abbrevs
+      '(try-complete-lisp-symbol-partially
+	try-complete-lisp-symbol
 	try-expand-dabbrev
 	try-expand-dabbrev-all-buffers
 	try-expand-dabbrev-from-kill
-	try-complete-lisp-symbol-partially
-	try-complete-lisp-symbol))
+	try-complete-file-name-partially
+	try-complete-file-name
+	try-expand-all-abbrevs
+	try-expand-list
+	try-expand-line
+	))
+
+;; (setq hippie-expand-try-functions-list
+;;       '(yas/hippie-try-expand
+;;	try-complete-file-name-partially
+;;	try-expand-all-abbrevs
+;;	try-expand-dabbrev
+;;	try-expand-dabbrev-all-buffers
+;;	try-expand-dabbrev-from-kill
+;;	try-complete-lisp-symbol-partially
+;;	try-complete-lisp-symbol))
 
 (setq hippie-expand-verbose t)
 
@@ -353,47 +355,34 @@ user."
 (require 'go-autocomplete)
 (require 'auto-complete-config)
 (require 'go-mode)
+(require 'go-flymake)
 
 (add-hook 'go-mode-hook
 	  (lambda ()
+	    (projectile-on)
+	    (add-to-list 'ac-sources 'ac-source-go)
+	    (auto-complete-mode 1)
+	    (go-eldoc-setup)
+	    (flymake-mode 1)
+	    (local-set-key (kbd "M-.") 'godef-jump)
+	    (local-set-key (kbd "M-/") 'ac-start)
 	    (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
 
-(add-hook 'go-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "C-c I") 'go-goto-imports)))
-
-(add-hook 'go-mode-hook 'imenu-add-menubar-index)
-
-(add-hook 'go-mode-hook
-	  (lambda ()
-	    (local-set-key (kbd "M-.") 'godef-jump)))
-
-(add-hook 'go-mode-hook 'projectile-on)
-(add-hook 'go-mode-hook 'go-eldoc-setup)
-
-(add-hook 'go-mode-hook
-	  (lambda ()
-	    (linum-mode 1)
-	    ;; (flymake-mode 1)
-	    ;; (auto-complete-mode 1)
-	    (add-to-list 'ac-sources 'ac-source-go)
-	    ;; (call-process "gocode" nil nil nil "-s")
-	    ))
-
-(define-key ac-complete-mode-map "\C-n" 'ac-next)
-(define-key ac-complete-mode-map "\C-p" 'ac-previous)
-
-(setq ac-auto-start nil)
-(global-set-key "\M-/" 'ac-start)
-
-(require 'go-flycheck)
+(define-key ac-complete-mode-map (kbd "C-n") 'ac-next)
+(define-key ac-complete-mode-map (kbd "C-p") 'ac-previous)
 
 (require 'recentf)
 (recentf-mode 1)
-(setq recentf-max-menu-items 25)
-(global-set-key "\C-x \C-r" 'recentf-open-files)
+(setq recentf-max-menu-items 50)
+(global-set-key (kbd "C-x C-r") 'recentf-open-files)
 
-;; (require 'package)
-;; (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
-;; (package-initialize)
-;; (package-refresh-contents)
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+(package-initialize)
+
+;;(package-refresh-contents)
+
+(require 'auto-complete)
+(require 'auto-complete-emacs-lisp nil 'noerror)
+
+(desktop-save-mode 1)
