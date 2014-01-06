@@ -24,32 +24,24 @@
 (setq my-packages
       (append
        '(
-	 cl-lib
 	 ag
 	 darkroom-mode
 	 dockerfile-mode
 	 edit-server
 	 el-get
 	 ffap-
-	 flycheck
 	 git-commit-mode
-	 gnus-alias
-	 go-def
 	 go-mode
-	 go-autocomplete
-	 google-maps
 	 message-x
 	 monky
 	 mu4e
 	 nxhtml
-	 org-mode
 	 package
 	 projectile
 	 switch-window
 	 textile-mode
 	 xcscope
 	 yaml-mode
-	 yasnippet
 	 )
        (mapcar 'el-get-source-name el-get-sources)))
 
