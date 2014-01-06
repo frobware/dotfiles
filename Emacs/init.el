@@ -388,6 +388,11 @@ user."
 
 (require 'go-flycheck)
 
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-menu-items 25)
+(global-set-key "\C-x \C-r" 'recentf-open-files)
+
 ;; (require 'package)
 ;; (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
 ;; (package-initialize)
