@@ -26,6 +26,7 @@
        '(
 	 ag
 	 darkroom-mode
+	 diff-hl
 	 dockerfile-mode
 	 edit-server
 	 el-get
