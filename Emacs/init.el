@@ -18,6 +18,9 @@
       aim/is-windows (eq system-type 'windows-nt)
       aim/is-linux (eq system-type 'gnu/linux))
 
+(setq savehist-mode t)
+(setq history-lenth 10000)
+
 (require 'gnus)
 (require 'ibuffer)
 (require 'server)
