@@ -349,6 +349,13 @@ user."
 (setq initial-frame-alist '((height . 130)))
 (setq mouse-yank-at-point t)
 
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-menu-items 50)
+(global-set-key (kbd "C-x C-r") 'recentf-open-files)
+
+(desktop-save-mode 1)
+
 ;;; Go
 
 ;; (add-to-list 'load-path
