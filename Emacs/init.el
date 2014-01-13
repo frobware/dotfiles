@@ -335,25 +335,28 @@ user."
 
 ;;; Go
 
-;; (add-to-list 'load-path
-;;	     (concat (getenv "GOPATH") "/src/github.com/dougm/goflymake"))
+(add-to-list 'load-path
+	     (concat (getenv "GOPATH") "/src/github.com/dougm/goflymake"))
 
 (and (require 'auto-complete-mode nil 'noerror)
      (define-key ac-complete-mode-map (kbd "C-n") 'ac-next)
      (define-key ac-complete-mode-map (kbd "C-p") 'ac-previous))
 
-(and (require 'go-mode nil 'noerror)
-     (require 'go-autocomplete nil 'noerror)
-     (require 'auto-complete-config nil 'noerror)
-     (require 'go-flymake nil 'noerror)
-     (add-hook 'before-save-hook 'gofmt-before-save)
-     (add-hook 'go-mode-hook
-	       (lambda ()
-		 (projectile-on)
-		 (add-to-list 'ac-sources 'ac-source-go)
-		 (auto-complete-mode 1)
-		 (go-eldoc-setup)
-		 (flymake-mode 1)
-		 (local-set-key (kbd "M-.") 'godef-jump)
-		 (local-set-key (kbd "M-/") 'ac-start)
-		 (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports))))
+(require 'auto-complete)
+(require 'go-mode nil 'noerror)
+(require 'go-autocomplete nil 'noerror)
+(require 'auto-complete-config nil 'noerror)
+(require 'go-flymake nil 'noerror)
+
+(add-hook 'before-save-hook 'gofmt-before-save)
+
+(add-hook 'go-mode-hook
+	  (lambda ()
+	    (projectile-on)
+	    (auto-complete-mode 1)
+	    ;;(go-eldoc-setup)
+	    (flymake-mode 1)
+	    (local-set-key (kbd "M-.") 'godef-jump)
+	    (local-set-key (kbd "M-/") 'ac-start)
+	    (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
+ 
