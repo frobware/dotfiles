@@ -18,8 +18,7 @@
 ;; local sources
 (setq el-get-sources
       '((:name magit
-	       :after (global-set-key (kbd "C-c i") 'magit-status))
-	(:name lisppaste :type elpa)))
+	       :after (global-set-key (kbd "C-c i") 'magit-status))))
 
 (setq my-packages
       (append
@@ -36,7 +35,6 @@
 	 message-x
 	 monky
 	 mu4e
-	 nxhtml
 	 package
 	 projectile
 	 switch-window

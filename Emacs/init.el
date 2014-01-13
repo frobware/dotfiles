@@ -12,14 +12,72 @@
 
 (load custom-file 'noerror)
 
-(load-file "~/.emacs.d/bootstrap-el-get.el")
+(setq vc-follow-symlinks t)
 
 (setq aim/is-darwin (eq system-type 'darwin)
       aim/is-windows (eq system-type 'windows-nt)
       aim/is-linux (eq system-type 'gnu/linux))
 
+;; The order here is important.
+
+;; OS X doesn't use the shell PATH if it's not started from the shell.
+(defun aim/set-exec-path-from-shell-PATH ()
+  (let ((path-from-shell
+	 (replace-regexp-in-string "[[:space:]\n]*$" ""
+				   (shell-command-to-string "$SHELL -l -c 'echo $PATH'"))))
+    (setenv "PATH" path-from-shell)
+    (setq exec-path (split-string path-from-shell path-separator))))
+
+(when aim/is-darwin
+  (aim/set-exec-path-from-shell-PATH))
+
+(load-file (concat user-emacs-directory "aim-functions.el"))
+
+;; Do this upfront so that if there's some error then some of the less
+;; irritating things have been fixed already.
+
+(when aim/is-darwin
+  (when window-system
+    (progn
+      ;;(set-default-font "Menlo-18")
+      ;; (aim/reverse-video)
+      (setq mac-command-modifier 'meta)
+      (setq mac-option-modifier 'none))))
+
+(require 'recentf)
+(recentf-mode 1)
+(setq recentf-max-menu-items 50)
+(global-set-key (kbd "C-x C-r") 'recentf-open-files)
+(desktop-save-mode 1)
+
+(setq auto-mode-alist (cons '("\\.mm$" . c++-mode) auto-mode-alist)
+      c-default-style "linux"
+      vc-follow-symlinks t
+      inhibit-splash-screen t
+      ring-bell-function '(lambda ())
+      sentence-end-double-space nil
+      require-final-newline t)
+
+(put 'narrow-to-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+
+;; frame-based visualization
+(blink-cursor-mode -1)		     ; blink off!
+(line-number-mode -1)		     ; have line numbers and
+(column-number-mode 1)		     ; column numbers in the mode line
+(tool-bar-mode -1)		     ; no tool bar with icons
+(scroll-bar-mode -1)		     ; no scroll bars
+;;(global-hl-line-mode)		     ; highlight current line
+(global-linum-mode -1)		     ; add line numbers on the left
+
+(when (or aim/is-linux (not window-system))
+  (menu-bar-mode -1))
+
+(load-file (concat user-emacs-directory "bootstrap-el-get.el"))
+
 (setq savehist-mode t)
-(setq history-lenth 10000)
+(setq history-lenth 1000)
 
 (require 'gnus)
 (require 'ibuffer)
@@ -36,37 +94,6 @@
 (setq uniquify-separator "|")
 (setq uniquify-after-kill-buffer-p t)
 (setq uniquify-ignore-buffers-re "^\\*")
-
-(defun aim/revert-buffer-now ()
-  "revert-(current-buffer) asking no questions"
-  (interactive)
-  (revert-buffer nil t))
-
-(defun aim/reverse-video nil
-  "*Invert default face"
-  (interactive)
-  (let* ((fg (face-foreground 'default))
-	 (bg (face-background 'default)))
-    (set-face-foreground 'default bg)
-    (set-face-background 'default fg)))
-
-(defun aim/check-frame-colours ()
-  (interactive)
-  (and window-system
-       (if (string-equal (downcase (face-foreground 'default)) "black")
-	   (aim/reverse-video))))
-
-(when (or aim/is-darwin aim/is-linux)
-  (menu-bar-mode -1))
-
-;; avoid compiz manager rendering bugs
-(add-to-list 'default-frame-alist '(alpha . 100))
-
-;; On OSX, have Command as Meta and keep Option for localized input.
-(when aim/is-darwin
-  (setq mac-allow-anti-aliasing t
-	mac-command-modifier 'meta
-	mac-option-modifier 'none))
 
 ;; Share the clipboard
 (setq x-select-enable-clipboard t)
@@ -117,11 +144,8 @@
 (require 'dired-x)
 (setq-default dired-omit-files-p t) ; this is buffer-local variable
 
-(defun aim/fullscreen ()
-  (interactive)
-  (set-frame-parameter nil 'fullscreen
-		       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
-(global-set-key [f11] 'aim/fullscreen)
+(when aim/is-linux
+  (global-set-key [f11] 'aim/fullscreen))
 
 ;; View occurrence in occur mode
 (define-key occur-mode-map (kbd "v") 'occur-mode-display-occurrence)
@@ -146,22 +170,9 @@
 ;; Make new frame visible when connecting via emacsclient
 (add-hook 'server-switch-hook 'raise-frame)
 
-;; OS X doesn't use the shell PATH if it's not started from the shell.
-(defun aim/set-exec-path-from-shell-PATH ()
-  (let ((path-from-shell
-	 (replace-regexp-in-string "[[:space:]\n]*$" ""
-				   (shell-command-to-string "$SHELL -l -c 'echo $PATH'"))))
-    (setenv "PATH" path-from-shell)
-    (setq exec-path (split-string path-from-shell path-separator))))
-
-(when aim/is-darwin
-  (aim/set-exec-path-from-shell-PATH))
-
 ;; More drugs vicar; hippie expand is dabbrev expand on steroids
 (setq hippie-expand-try-functions-list
-      '(try-complete-lisp-symbol-partially
-	try-complete-lisp-symbol
-	try-expand-dabbrev
+      '(try-expand-dabbrev
 	try-expand-dabbrev-all-buffers
 	try-expand-dabbrev-from-kill
 	try-complete-file-name-partially
@@ -169,17 +180,9 @@
 	try-expand-all-abbrevs
 	try-expand-list
 	try-expand-line
+	try-complete-lisp-symbol-partially
+	try-complete-lisp-symbol
 	))
-
-;; (setq hippie-expand-try-functions-list
-;;       '(yas/hippie-try-expand
-;;	try-complete-file-name-partially
-;;	try-expand-all-abbrevs
-;;	try-expand-dabbrev
-;;	try-expand-dabbrev-all-buffers
-;;	try-expand-dabbrev-from-kill
-;;	try-complete-lisp-symbol-partially
-;;	try-complete-lisp-symbol))
 
 (setq hippie-expand-verbose t)
 
@@ -268,11 +271,12 @@ user."
 		(insert " ")))
 	    (setq delete-from nil)))))))
 
-(if (and (daemonp) (locate-library "edit-server"))
-    (progn
-      (require 'edit-server)
-      (setq edit-server-new-frame nil)
-      (edit-server-start)))
+(when aim/is-linux
+  (if (and (daemonp) (locate-library "edit-server"))
+      (progn
+	(require 'edit-server)
+	(setq edit-server-new-frame nil)
+	(edit-server-start))))
 
 (add-hook 'edit-server-text-mode-hook
 	  (lambda ()
@@ -287,7 +291,8 @@ user."
      (add-hook 'git-commit-mode-hook 'turn-on-flyspell))
 
 ;; Run Mercurial commands through a single external process.
-(setq monky-process-type 'cmdserver)
+(and (executable-find "hg")
+     (setq monky-process-type 'cmdserver))
 
 (defun aim/frame-config (frame)
   "Custom behaviour for new frames."
@@ -322,44 +327,16 @@ user."
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-;; frame-based visualization
-(blink-cursor-mode -1)		     ; blink off!
-(line-number-mode -1)		     ; have line numbers and
-(column-number-mode 1)		     ; column numbers in the mode line
-(tool-bar-mode -1)		     ; no tool bar with icons
-(scroll-bar-mode -1)		     ; no scroll bars
-;;(global-hl-line-mode)		     ; highlight current line
-(global-linum-mode -1)		     ; add line numbers on the left
-
 (and (file-exists-p "~/.emacs.d/aim-mu.el")
      (load-file "~/.emacs.d/aim-mu.el"))
 
-(setq auto-mode-alist (cons '("\\.mm$" . c++-mode) auto-mode-alist)
-      c-default-style "linux"
-      vc-follow-symlinks t
-      inhibit-splash-screen t
-      ring-bell-function '(lambda ())
-      sentence-end-double-space nil
-      require-final-newline t)
-
-(put 'narrow-to-region 'disabled nil)
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
-
-(setq initial-frame-alist '((height . 130)))
+;;(setq initial-frame-alist '((height . 130)))
 (setq mouse-yank-at-point t)
-
-(require 'recentf)
-(recentf-mode 1)
-(setq recentf-max-menu-items 50)
-(global-set-key (kbd "C-x C-r") 'recentf-open-files)
-
-(desktop-save-mode 1)
 
 ;;; Go
 
 ;; (add-to-list 'load-path
-;; 	     (concat (getenv "GOPATH") "/src/github.com/dougm/goflymake"))
+;;	     (concat (getenv "GOPATH") "/src/github.com/dougm/goflymake"))
 
 (and (require 'auto-complete-mode nil 'noerror)
      (define-key ac-complete-mode-map (kbd "C-n") 'ac-next)
@@ -380,10 +357,3 @@ user."
 		 (local-set-key (kbd "M-.") 'godef-jump)
 		 (local-set-key (kbd "M-/") 'ac-start)
 		 (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports))))
-
-(require 'recentf)
-(recentf-mode 1)
-(setq recentf-max-menu-items 50)
-(global-set-key (kbd "C-x C-r") 'recentf-open-files)
-
-(desktop-save-mode 1)
