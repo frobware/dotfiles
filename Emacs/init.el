@@ -61,6 +61,7 @@
 (put 'narrow-to-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+(put 'set-goal-column 'disabled nil)
 
 ;; frame-based visualization
 (blink-cursor-mode -1)		     ; blink off!
@@ -360,3 +361,11 @@ user."
 	    (local-set-key (kbd "M-/") 'ac-start)
 	    (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
  
+
+(setq interpreter-mode-alist
+      (cons '("python" . python-mode) interpreter-mode-alist)
+      python-mode-hook '(lambda () (progn
+				     (set-variable 'require-final-newline nil)
+				     (set-variable 'py-indent-offset 4)
+				     (set-variable 'indent-tabs-mode nil))))
+
