@@ -11,7 +11,8 @@ end
 -- The set of global shortcuts we don't want to swap cmd/alt.
 
 global_excludes = Set{ "shift-cmd-tab",
-		       "cmd-tab" }
+		       "cmd-tab",
+		       "shift-control-cmd-space" }
 
 -- The set of apps we want to consider swapping keys for, with some
 -- notable exclusions. The exclusion means that a "cmd-w" will do the
