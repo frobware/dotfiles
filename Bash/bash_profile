@@ -28,7 +28,7 @@ require -q "${HOSTNAME}-bash-profile"
 trimpath PATH
 trimpath LD_LIBRARY_PATH
 
-export GOPATH=$HOME/imac-go/imac-stuff/mygo
+export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 
 if [ -x /usr/local/bin/brew ]; then
