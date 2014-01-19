@@ -30,7 +30,9 @@
 	 edit-server
 	 el-get
 	 ffap-
+	 flycheck
 	 git-commit-mode
+	 go-def
 	 go-mode
 	 message-x
 	 monky

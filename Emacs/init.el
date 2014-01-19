@@ -4,6 +4,7 @@
 ;; sorry, but a MASSIVE thank you!
 
 ;; Load and/or create empty custom file.
+
 (let ((fn "~/.emacs-custom.el"))
   (when (not (file-exists-p fn))
     (shell-command (concat "touch " fn)))
@@ -347,16 +348,19 @@ user."
 (require 'go-mode nil 'noerror)
 (require 'go-autocomplete nil 'noerror)
 (require 'auto-complete-config nil 'noerror)
-(require 'go-flymake nil 'noerror)
 
 (add-hook 'before-save-hook 'gofmt-before-save)
+
+(defun aim/run-go-buffer ()
+  (interactive)
+  (shell-command (format "go run %s" (buffer-file-name (current-buffer)))))
 
 (add-hook 'go-mode-hook
 	  (lambda ()
 	    (projectile-on)
 	    (auto-complete-mode 1)
-	    ;;(go-eldoc-setup)
 	    (flymake-mode 1)
+	    (local-set-key (kbd "C-M-x") 'aim/run-go-buffer)
 	    (local-set-key (kbd "M-.") 'godef-jump)
 	    (local-set-key (kbd "M-/") 'ac-start)
 	    (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
