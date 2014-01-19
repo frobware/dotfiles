@@ -34,7 +34,8 @@ apps = {
                                "cmd-`",
 			 } },
    Eclipse  = { exclude = {} },
-   Xcode    = { exclude = {} },
+   AppCode  = { exclude = {} },
+   Xcode    = { exclude = { "cmd-`"} },
    TextMate = { exclude = Set { "cmd-1",
 				"cmd-2",
 				"cmd-3",
@@ -43,6 +44,8 @@ apps = {
 				"cmd-fn-right",
 				"cmd-fn-left",
 			  } },
+
+   ["Sublime Text 2"] = { exclude = {} },
 --   ["NX Player for OS X"] = { exclude = Set{ "control-alt-k" } },
 }
 
@@ -64,7 +67,7 @@ apps = {
 
 function swap_keys(t)
    -- for i,v in pairs(t) do print(i,v) end
-   -- print(t.appname)
+   print(t.appname)
    if set_contains(global_excludes, t.key_str_seq) then
       return false
    end
