@@ -46,3 +46,6 @@ dconf write /org/gnome/settings-daemon/peripherals/touchpad/natural-scroll true
 
 # Compiz
 dconf write /org/compiz/profiles/unity/plugins/unityshell/icon-size 16
+
+# Terminal
+dconf write /org/gnome/desktop/interface/cursor-blink false
