@@ -301,8 +301,8 @@ user."
   (with-selected-frame frame
     (when (display-graphic-p)
       ;; (set-background-color "#101416")
-      ;; (set-background-color "grey50")
-      ;;(set-foreground-color "#f6f3e8")
+      (set-background-color "grey10")
+      (set-foreground-color "grey90")
       (message "[%s] Wanting to change %s colors %s" (current-time-string) (selected-frame)  (face-foreground 'default)))
     ))
 
@@ -335,7 +335,7 @@ user."
 ;;(setq initial-frame-alist '((height . 130)))
 (setq mouse-yank-at-point t)
 
-;;; Go
+;;; Go (yay!)
 
 (add-to-list 'load-path
 	     (concat (getenv "GOPATH") "/src/github.com/dougm/goflymake"))
@@ -364,7 +364,6 @@ user."
 	    (local-set-key (kbd "M-.") 'godef-jump)
 	    (local-set-key (kbd "M-/") 'ac-start)
 	    (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
- 
 
 (setq interpreter-mode-alist
       (cons '("python" . python-mode) interpreter-mode-alist)
@@ -372,4 +371,3 @@ user."
 				     (set-variable 'require-final-newline nil)
 				     (set-variable 'py-indent-offset 4)
 				     (set-variable 'indent-tabs-mode nil))))
-
