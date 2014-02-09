@@ -30,8 +30,8 @@
 	 edit-server
 	 el-get
 	 ffap-
-	 flycheck
 	 git-commit-mode
+	 gnus-harvest
 	 go-def
 	 go-mode
 	 message-x
