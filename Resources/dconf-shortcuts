@@ -4,7 +4,7 @@ set -xe
 
 dconf load /org/gnome/settings-daemon/plugins/media-keys/ <<EOF
 [/]
-custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/epiphany/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/emacs/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/']
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/emacs/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/browser/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/maxvertically/']
 
 [custom-keybindings/emacs]
 binding='<Alt><Shift>e'
@@ -15,4 +15,14 @@ name='Emacs'
 binding='<Alt><Shift>n'
 command="sh -c 'wmctrl -x -a gnome-terminal.Gnome-terminal || gnome-terminal'"
 name='Terminal'
+
+[custom-keybindings/browser]
+binding='<Control><Alt><Shift>n'
+command="sh -c 'wmctrl -x -a google-chrome || google-chrome'"
+name='Browser'
+
+[custom-keybindings/maxvertically]
+binding='<Control><Alt><Shift>v'
+command="wmctrl -r :ACTIVE: -b toggle,maximized_vert"
+name='MaxVertically'
 EOF
