@@ -21,31 +21,14 @@ dconf write /org/gnome/nautilus/preferences/sort-directories-first true
 # Caps Lock, Alt, Win, et al.
 dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:ctrl_modifier', 'altwin:swap_alt_win']"
 
-# Keyboard shortcuts
-dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/']"
-
-dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding "'<Alt><Shift>e'"
-dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command "'wmctrl -x -a Emacs'"
-dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name "'Switch to Emacs'"
-
-dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/binding "'<Alt><Shift>n'"
-dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/command "'wmctrl -x -a Terminal'"
-dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/name "'Switch to Terminal'"
-
-dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/binding "'<Ctrl><Alt><Shift>n'"
-dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/command "'wmctrl -x -a google-chrome'"
-dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/name "'Switch to Browser'"
-
-dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/binding "'<Ctrl><Shift><Alt>v'"
-dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/command "'wmctrl -r :ACTIVE: -b toggle,maximized_vert'"
-dconf write /org/gnome/settings-daemon/plugins/media-keys/custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/name "'Maximize Vertically'"
-
 # Mouse and Touchpad
 dconf write /org/gnome/settings-daemon/peripherals/touchpad/tap-to-click false
 dconf write /org/gnome/settings-daemon/peripherals/touchpad/natural-scroll true
 
 # Compiz
 dconf write /org/compiz/profiles/unity/plugins/unityshell/icon-size 16
+dconf write /org/compiz/profiles/unity/plugins/core/active-plugins "['core', 'composite', 'opengl', 'compiztoolbox', 'decor', 'commands', 'place', 'mousepoll', 'wall', 'session', 'regex', 'grid', 'move', 'animation', 'resize', 'copytex', 'workarounds', 'neg', 'snap', 'gnomecompat', 'imgpng', 'vpswitch', 'fade', 'unitymtgrabhandles', 'expo', 'scale', 'ezoom', 'unityshell']"
+dconf write /org/compiz/profiles/unity/plugins/neg/screen-toggle-key "'<Shift><Control><Super>m'"
 
 # Terminal
 dconf write /org/gnome/desktop/interface/cursor-blink false
