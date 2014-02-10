@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -xe
+
+dconf load /org/gnome/settings-daemon/plugins/media-keys/ <<EOF
+[/]
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/epiphany/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/emacs/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/']
+
+[custom-keybindings/emacs]
+binding='<Alt><Shift>e'
+command="sh -c 'wmctrl -x -a emacs.Emacs || emacs'"
+name='Emacs'
+
+[custom-keybindings/terminal]
+binding='<Alt><Shift>n'
+command="sh -c 'wmctrl -x -a gnome-terminal.Gnome-terminal || gnome-terminal'"
+name='Terminal'
+EOF
