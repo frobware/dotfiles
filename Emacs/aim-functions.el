@@ -1,3 +1,8 @@
+(defun aim/load-file-if-exists (filename)
+  (interactive)
+  (and (file-exists-p filename)
+     (load-file filename)))
+
 (defun aim/reverse-video nil
   "*Invert default face"
   (interactive)

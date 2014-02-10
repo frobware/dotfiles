@@ -210,26 +210,6 @@
     (* (max steps 1)
        c-basic-offset)))
 
-(add-hook 'c-mode-common-hook
-	  (lambda ()
-	    ;; Add kernel style
-	    (c-add-style
-	     "linux-tabs-only"
-	     '("linux" (c-offsets-alist
-			(arglist-cont-nonempty
-			 c-lineup-gcc-asm-reg
-			 c-lineup-arglist-tabs-only))))))
-
-(add-hook 'c-mode-hook
-	  (lambda ()
-	    (let ((filename (buffer-file-name)))
-	      ;; Enable kernel mode for the appropriate files
-	      (when (and filename
-			 (or
-			  (string-match (expand-file-name "~/src/linux-trees") filename)))
-		(setq indent-tabs-mode t)
-		(c-set-style "linux-tabs-only")))))
-
 (defun sudo-find-file (file-name)
   "Like find file, but opens the file as root."
   (interactive "FSudo Find File: ")
@@ -301,7 +281,7 @@ user."
   (with-selected-frame frame
     (when (display-graphic-p)
       ;; (set-background-color "#101416")
-      (set-background-color "grey10")
+      (set-background-color "grey20")
       (set-foreground-color "grey90")
       (message "[%s] Wanting to change %s colors %s" (current-time-string) (selected-frame)  (face-foreground 'default)))
     ))
@@ -329,45 +309,70 @@ user."
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-(and (file-exists-p "~/.emacs.d/aim-mu.el")
-     (load-file "~/.emacs.d/aim-mu.el"))
+(aim/load-file-if-exists (concat user-emacs-directory "aim-mu.el"))
 
 ;;(setq initial-frame-alist '((height . 130)))
-(setq mouse-yank-at-point t)
+(aim/load-file-if-exists (concat user-emacs-directory "aim-python.el"))
 
-;;; Go (yay!)
+(when aim/is-linux
+  (if (and (daemonp) (locate-library "edit-server"))
+      (progn
+	(require 'edit-server)
+	(setq edit-server-new-frame nil)
+	(edit-server-start))))
 
-(add-to-list 'load-path
-	     (concat (getenv "GOPATH") "/src/github.com/dougm/goflymake"))
-
-(and (require 'auto-complete-mode nil 'noerror)
-     (define-key ac-complete-mode-map (kbd "C-n") 'ac-next)
-     (define-key ac-complete-mode-map (kbd "C-p") 'ac-previous))
-
-(require 'auto-complete)
-(require 'go-mode nil 'noerror)
-(require 'go-autocomplete nil 'noerror)
-(require 'auto-complete-config nil 'noerror)
-
-(add-hook 'before-save-hook 'gofmt-before-save)
-
-(defun aim/run-go-buffer ()
-  (interactive)
-  (shell-command (format "go run %s" (buffer-file-name (current-buffer)))))
-
-(add-hook 'go-mode-hook
+(add-hook 'edit-server-text-mode-hook
 	  (lambda ()
-	    (projectile-on)
 	    (auto-complete-mode 1)
-	    (flymake-mode 1)
-	    (local-set-key (kbd "C-M-x") 'aim/run-go-buffer)
-	    (local-set-key (kbd "M-.") 'godef-jump)
-	    (local-set-key (kbd "M-/") 'ac-start)
-	    (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
+	    (flyspell-mode 1)))
 
-(setq interpreter-mode-alist
-      (cons '("python" . python-mode) interpreter-mode-alist)
-      python-mode-hook '(lambda () (progn
-				     (set-variable 'require-final-newline nil)
-				     (set-variable 'py-indent-offset 4)
-				     (set-variable 'indent-tabs-mode nil))))
+(add-hook 'edit-server-done-hook
+	  (lambda ()
+	    (shell-command "wmctrl -x -a google-chrome")))
+
+(and (require 'git-commit nil 'noerror)
+     (add-hook 'git-commit-mode-hook 'turn-on-flyspell))
+
+;; Run Mercurial commands through a single external process.
+(and (executable-find "hg")
+     (setq monky-process-type 'cmdserver))
+
+(defun aim/frame-config (frame)
+  "Custom behaviour for new frames."
+  (with-selected-frame frame
+    (when (display-graphic-p)
+      ;; (set-background-color "#101416")
+      (set-background-color "grey20")
+      (set-foreground-color "grey90")
+      (message "[%s] Wanting to change %s colors %s" (current-time-string) (selected-frame)  (face-foreground 'default)))
+    ))
+
+;; run now
+(aim/frame-config (selected-frame))
+
+;; and later
+(add-hook 'after-make-frame-functions 'aim/frame-config)
+(add-hook 'text-mode-hook 'turn-on-visual-line-mode)
+
+;; Make sure _my_ specific stuff is first on the load path.
+(add-to-list 'load-path "~/.emacs.d/lisp")
+
+(unless (server-running-p)
+  (server-start))
+
+;; enable y/n answers
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; Store all backup and autosave files in the tmp dir
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
+(aim/load-file-if-exists (concat user-emacs-directory "aim-mu.el"))
+
+(aim/load-file-if-exists (concat user-emacs-directory "aim-python.el"))
+
+(and (executable-find "go")
+     (aim/load-file-if-exists (concat user-emacs-directory "aim-go.el")))
