@@ -18,3 +18,4 @@
 		(setq indent-tabs-mode t)
 		(c-set-style "linux-tabs-only")))))
 
+(provide 'aim-c)
