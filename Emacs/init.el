@@ -56,3 +56,7 @@
 
 (unless (server-running-p)
   (server-start))
+
+(defvar short-system-name
+  (car (split-string (system-name) "\\."))
+  "Returns the short form of (system-name)")
