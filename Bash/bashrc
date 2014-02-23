@@ -62,6 +62,8 @@ function check_exit_status ()
 
 [ -n "$TMUX" ] && export TERM=screen-256color
 
+[ -e /usr/local/Cellar/go/1.2/etc/bash_completion.d/go-completion.bash ] && \
+    . /usr/local/Cellar/go/1.2/etc/bash_completion.d/go-completion.bash
 
 #declare -x check_exit_status
 export PS1='[\u@\h:\w]\n: '
