@@ -8,7 +8,7 @@ custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybin
 
 [custom-keybindings/emacs]
 binding='<Alt><Shift>e'
-command="sh -c 'wmctrl -x -a emacs.Emacs || emacs'"
+command="sh -c 'wmctrl -x -a emacs.Emacs || emacs -rv'"
 name='Emacs'
 
 [custom-keybindings/terminal]
