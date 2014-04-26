@@ -19,7 +19,14 @@
   (with-selected-frame frame
     (when (display-graphic-p)
       (set-background-color "grey20")
-      (set-foreground-color "grey90"))))
+      (set-foreground-color "grey90"))
+    (when aim/is-darwin
+      (when window-system
+	(progn
+	  (set-default-font "Menlo-18")
+	  ;; (aim/reverse-video)
+	  (setq mac-command-modifier 'meta)
+	  (setq mac-option-modifier 'none))))))
 
 ;; run now
 ;;(aim/frame-config (selected-frame))

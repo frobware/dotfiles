@@ -1,40 +1,28 @@
-;;; Go (yay!)
-
-;; (add-to-list 'load-path
-;; 	     (concat (getenv "GOPATH") "/src/github.com/dougm/goflymake"))
-
-;; (and (require 'auto-complete-mode nil 'noerror)
-;;      (define-key ac-complete-mode-map (kbd "C-n") 'ac-next)
-;;      (define-key ac-complete-mode-map (kbd "C-p") 'ac-previous))
-
-;; (and (require 'company)
-;;      (define-key company-mode-map (kbd "C-n") 'company-select-next)
-;;      (define-key company-mode-map (kbd "C-p") 'company-select-previous))
-
-(require 'company)                                   ; load company mode
-(require 'company-go)                                ; load company mode go backend
-(setq company-tooltip-limit 20)                      ; bigger popup window
-(setq company-minimum-prefix-length 0)               ; autocomplete right after '.'
-(setq company-idle-delay .3)                         ; shorter delay before autocompletion popup
-(setq company-echo-delay 0)                          ; removes annoying blinking
-(setq company-begin-commands '(self-insert-command)) ; start autocompletion only after typing
+(require 'flymake-go)
+(require 'go-mode)
+(require 'company-go)
 
 (setq gofmt-command "goimports")
-(add-to-list 'load-path "/home/you/goroot/misc/emacs/")
+(add-to-list 'load-path (expand-file-name "~/.gotools/bin"))
+
 (require 'go-mode-load)
 (add-hook 'before-save-hook 'gofmt-before-save)
 
 (add-hook 'go-mode-hook
 	  (lambda ()
 	    (set (make-local-variable 'company-backends) '(company-go))
+	    (flymake-mode-on)
 	    (company-mode)))
 
 (defun aim/run-go-buffer ()
   (interactive)
   (shell-command (format "go run %s" (buffer-file-name (current-buffer)))))
 
+;;(require 'go-direx) ;; Don't need to require, if you install by package.el
+
 (add-hook 'go-mode-hook
 	  (lambda ()
+	    (define-key go-mode-map (kbd "C-c C-j") 'go-direx-pop-to-buffer)
 	    (electric-pair-mode 1)
 	    (flymake-mode 1)
 	    (local-set-key (kbd "C-M-x") 'aim/run-go-buffer)

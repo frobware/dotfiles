@@ -48,6 +48,7 @@ done
 
 rm -f $HOME/.emacs.d/lisp
 install_link "$PWD/Emacs/lisp" "$HOME/.emacs.d/lisp"
+install_link "$PWD/Emacs/Cask" "$HOME/.emacs.d/Cask"
 
 # Bash
 for file in $(ls Bash/bash*)
