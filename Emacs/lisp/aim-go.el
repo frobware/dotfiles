@@ -22,6 +22,7 @@
 
 (add-hook 'go-mode-hook
 	  (lambda ()
+	    (setq truncate-lines t)
 	    (define-key go-mode-map (kbd "C-c C-j") 'go-direx-pop-to-buffer)
 	    (electric-pair-mode 1)
 	    (flymake-mode 1)
