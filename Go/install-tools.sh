@@ -7,6 +7,8 @@ set -xu
 : ${TOOLS_DIR:=${HOME}/.gotools}
 
 export GOPATH=$TOOLS_DIR
+export GOBIN=$GOPATH/bin
+
 mkdir -p $TOOLS_DIR
 
 go get ${UPDATE:-} launchpad.net/godeb
