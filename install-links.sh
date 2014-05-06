@@ -37,18 +37,7 @@ function install_link() {
     esac
 }
 
-mkdir -p $HOME/.emacs.d $HOME/bin
-
-# Emacs
-for file in $(ls Emacs/*.el)
-do
-    target=$(basename "$file")
-    install_link "$PWD/$file" "$HOME/.emacs.d/$target"
-done
-
-rm -f $HOME/.emacs.d/lisp
-install_link "$PWD/Emacs/lisp" "$HOME/.emacs.d/lisp"
-install_link "$PWD/Emacs/Cask" "$HOME/.emacs.d/Cask"
+mkdir -p $HOME/bin
 
 # Bash
 for file in $(ls Bash/bash*)
