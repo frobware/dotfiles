@@ -1,5 +1,7 @@
 # -*-shell-script-*-
 
+export JAVA_HOME=$(dirname $(dirname $(which java)))
+
 [ -f /etc/profile.d/jdk.sh ] && . /etc/profile.d/jdk.sh
 [ -f ~/.bash_bootstrap ] && . ~/.bash_bootstrap
 
