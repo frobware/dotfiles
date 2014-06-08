@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt-get install curl bzr -y
+sudo apt-get install curl bzr golang mercurial -y
 
 set -xu
 
@@ -19,3 +19,4 @@ go get ${UPDATE:-} github.com/dougm/goflymake
 go get ${UPDATE:-} github.com/jstemmer/gotags
 go get ${UPDATE:-} github.com/kisielk/errcheck
 go get ${UPDATE:-} github.com/nsf/gocode
+go get ${UPDATE:-} github.com/inconshreveable/gonative
