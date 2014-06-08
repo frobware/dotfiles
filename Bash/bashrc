@@ -1,6 +1,8 @@
 # -*-shell-script-*-
 
-export JAVA_HOME=$(dirname $(dirname $(which java)))
+if [[ `which java` ]]; then
+    export JAVA_HOME=$(dirname $(dirname $(which java)))
+fi
 
 [ -f /etc/profile.d/jdk.sh ] && . /etc/profile.d/jdk.sh
 [ -f ~/.bash_bootstrap ] && . ~/.bash_bootstrap
@@ -82,4 +84,3 @@ export PS1='[\u@\h:\w]\n: '
 #fi
 
 shopt -s checkwinsize
-
