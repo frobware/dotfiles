@@ -54,10 +54,8 @@
 (setq root-dir (file-name-directory
 		(or (buffer-file-name) load-file-name)))
 
-;; Theme
-;; https://github.com/bbatsov/zenburn-emacs
-(load-theme 'zenburn t)
-(set-cursor-color "yellow")
+;;(load-theme 'zenburn t)
+;;(set-cursor-color "yellow")
 
 ;; Font
 ;; https://www.mozilla.org/en-US/styleguide/products/firefox-os/typeface/#download-primary
@@ -75,7 +73,7 @@
   (exec-path-from-shell-initialize))
 
 ;; Git
-(require 'magit)
+(require 'magit nil 'noerror)
 (eval-after-load 'magit
   (progn '(global-set-key (kbd "C-c i") 'magit-status)))
 
@@ -151,7 +149,6 @@
 (require 'aim-uniquify)
 (require 'aim-global-keybindings)
 (require 'aim-whatever)
-(require 'aim-color-theme)
 (require 'aim-go)
 (require 'server)
 
