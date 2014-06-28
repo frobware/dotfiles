@@ -43,7 +43,7 @@
 ;; /This/ file (~init.el~) that you are reading
 ;; should be in this folder
 ;; Make sure _my_ specific stuff is first on the load path.
-(add-to-list 'load-path user-emacs-directory)
+;; (add-to-list 'load-path user-emacs-directory)
 
 ;; Keeps ~Cask~ file in sync with the packages
 ;; that you install/uninstall via ~M-x list-packages~
@@ -68,9 +68,9 @@
 (setq echo-keystrokes 0.02)
 
 ;; Path
-(require 'exec-path-from-shell)
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
+(and (require 'exec-path-from-shell nil 'noerror)
+     (when (memq window-system '(mac ns))
+       (exec-path-from-shell-initialize)))
 
 ;; Git
 (require 'magit nil 'noerror)
@@ -78,15 +78,15 @@
   (progn '(global-set-key (kbd "C-c i") 'magit-status)))
 
 ;; flx-ido completion system, recommended by Projectile
-(require 'flx-ido)
-(flx-ido-mode 1)
-;; change it if you have a fast processor.
-(setq flx-ido-threshhold 1000)
+(and (require 'flx-ido nil 'noerror)
+     (flx-ido-mode 1)
+     ;; change it if you have a fast processor.
+     (setq flx-ido-threshhold 1000))
 
 ;; Project management
-(require 'ack-and-a-half)
-(require 'projectile)
-(projectile-global-mode)
+(require 'ack-and-a-half nil 'noerror)
+(and (require 'projectile nil 'noerror)
+     (projectile-global-mode))
 
 ;; Snippets
 ;; https://github.com/capitaomorte/yasnippet
@@ -95,9 +95,9 @@
 ;; (yas-global-mode 1)
 
 ;; Python editing
-(require 'elpy)
-(elpy-enable)
-(elpy-use-ipython)
+(and (require 'elpy nil 'noerror)
+     (elpy-enable)
+     (elpy-use-ipython))
 
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'none)
