@@ -1,11 +1,16 @@
 # -*-shell-script-*-
 
+function source_if_exists {
+    local fname=$1
+    [[ -f $fname ]] && . $fname
+}
+
 if [[ `which java` ]]; then
     export JAVA_HOME=$(dirname $(dirname $(which java)))
 fi
 
-[ -f /etc/profile.d/jdk.sh ] && . /etc/profile.d/jdk.sh
-[ -f ~/.bash_bootstrap ] && . ~/.bash_bootstrap
+source_if_exists /etc/profile.d/jdk.sh
+source_if_exists ~/.bash_bootstrap
 
 . ${BASH_HOME}/functions/require
 . ${BASH_HOME}/functions/path-functions
@@ -66,8 +71,7 @@ function check_exit_status ()
 
 [ -n "$TMUX" ] && export TERM=screen-256color
 
-[ -e /usr/local/Cellar/go/1.2/etc/bash_completion.d/go-completion.bash ] && \
-    . /usr/local/Cellar/go/1.2/etc/bash_completion.d/go-completion.bash
+source_if_exists /usr/local/Cellar/go/1.2/etc/bash_completion.d/go-completion.bash
 
 #declare -x check_exit_status
 export PS1='[\u@\h:\w]\n: '
