@@ -24,6 +24,8 @@ XUSERFILESEARCHPATH=$HOME/lib/X11/app-defaults/%N%S
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+eval $(keychain --nogui --eval)
+
 # [ -f ~/.bashrc_emacs ] && . ~/.bashrc_emacs
 
 # Like many of you, I constantly have many terminals open at once. I
@@ -75,6 +77,7 @@ source_if_exists /usr/local/Cellar/go/1.2/etc/bash_completion.d/go-completion.ba
 
 #declare -x check_exit_status
 export PS1='[\u@\h:\w]\n: '
+export PS1='\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@\h:\w\n: '
 
 #if [[ -z "$TMUX" ]]; then
 #   tmux has-session &> /dev/null
