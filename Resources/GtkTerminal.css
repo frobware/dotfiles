@@ -1,0 +1,22 @@
+# Copy this file to: ~/.config/gtk-3.0/gtk.css
+
+@define-color active-yellow #ffff00;
+@define-color active-yellow #ffff00;
+
+TerminalWindow .notebook {
+  border: 0;
+  padding: 0;
+  color: #fff;
+}
+
+TerminalWindow .notebook tab:active {
+  border: 1px solid darker(#ff0);
+  border-radius: 0px;
+  background-color: darker(darker(darker(darker(#0f0))));
+}
+
+TerminalWindow .notebook tab {
+  border-radius: 0px;
+  background-color: #000;
+  padding: 3px;
+}
