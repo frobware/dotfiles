@@ -24,8 +24,6 @@ XUSERFILESEARCHPATH=$HOME/lib/X11/app-defaults/%N%S
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-eval $(keychain --nogui --eval)
-
 # [ -f ~/.bashrc_emacs ] && . ~/.bashrc_emacs
 
 # Like many of you, I constantly have many terminals open at once. I
@@ -118,3 +116,7 @@ case "$TERM" in
     *)
     ;;
 esac
+
+if hash keychain >/dev/null 2>&1; then
+    eval $(keychain --eval --inherit any)
+fi
