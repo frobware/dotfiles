@@ -11,7 +11,7 @@ fi
 # Unity) they only seem to switch if you invoke it twice.
 
 window=$1; shift
-program=$2; shift
+program=$1; shift
 
 wmctrl -x -a $window
 wmctrl -x -a $window || $program "$@"
