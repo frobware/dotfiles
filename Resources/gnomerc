@@ -1,0 +1,3 @@
+#!/bin/bash -l
+
+# The -l[ogin] ensures $HOME/.bash_profile is read when Unity starts.
