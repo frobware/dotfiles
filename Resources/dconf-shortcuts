@@ -8,17 +8,17 @@ custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybin
 
 [custom-keybindings/emacs]
 binding='<Alt><Shift>e'
-command="sh -c 'wmctrl -x -a emacs.Emacs || emacs -rv'"
+command="$HOME/bin/switch-to-window emacs.Emacs emacs -rv"
 name='Emacs'
 
 [custom-keybindings/terminal]
 binding='<Alt><Shift>n'
-command="sh -c 'wmctrl -x -a gnome-terminal.Gnome-terminal || gnome-terminal'"
+command="$HOME/bin/switch-to-window gnome-terminal.Gnome-terminal gnome-terminal"
 name='Terminal'
 
 [custom-keybindings/browser]
 binding='<Control><Alt><Shift>n'
-command="sh -c 'wmctrl -x -a google-chrome || google-chrome'"
+command="$HOME/bin/switch-to-window google-chrome google-chrome"
 name='Browser'
 
 [custom-keybindings/maxvertically]
