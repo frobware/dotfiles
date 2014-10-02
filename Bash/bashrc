@@ -48,7 +48,6 @@ export HISTCONTROL=ignoredups
 export HISTIGNORE="&:ls:[bf]g:exit"
 
 [ -f /etc/bash_completion ] && . /etc/bash_completion
-[ -f $HOME/.bash_aliases ] && . $HOME/.bash_aliases
 
 # Graciously stolen from idf
 function check_exit_status ()
@@ -57,7 +56,7 @@ function check_exit_status ()
     local msg=""
     local signal=""
 
-    if [ ${status} -ne 0 ] ; then
+    if [ ${status} -ne 0 ]; then
 	if [ $((${status} < 128)) -ne 0 ] ; then
 	    msg="exit (${status})"
 	else
@@ -71,9 +70,7 @@ function check_exit_status ()
 
 [ -n "$TMUX" ] && export TERM=screen-256color
 
-source_if_exists /usr/local/Cellar/go/1.2/etc/bash_completion.d/go-completion.bash
-
-#declare -x check_exit_status
+declare -x check_exit_status
 export PS1='[\u@\h:\w]\n: '
 export PS1='\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@\h:\w\n: '
 
@@ -117,6 +114,8 @@ case "$TERM" in
     ;;
 esac
 
-if hash keychain >/dev/null 2>&1; then
-    eval $(keychain --eval --inherit any)
-fi
+# if hash keychain >/dev/null 2>&1; then
+#     eval $(keychain --eval --inherit any)
+# fi
+
+[ -f $HOME/.bash_aliases ] && . $HOME/.bash_aliases

@@ -2,7 +2,7 @@
 
 set -ex
 
-dconf write /org/gnome/desktop/interface/text-scaling-factor 1.25
+dconf write /org/gnome/desktop/interface/text-scaling-factor 1.2
 
 # Emacs everywhere!
 dconf write /org/gnome/desktop/interface/gtk-key-theme "'Emacs'"
@@ -19,7 +19,9 @@ dconf write /org/gnome/desktop/privacy/show-full-name-in-top-bar false
 dconf write /org/gnome/nautilus/preferences/sort-directories-first true
 
 # Caps Lock, Alt, Win, et al.
-dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:ctrl_modifier', 'altwin:swap_alt_win']"
+dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:ctrl_modifier']"
+
+#dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:ctrl_modifier', 'altwin:swap_alt_win']"
 
 # Mouse and Touchpad
 dconf write /org/gnome/settings-daemon/peripherals/touchpad/tap-to-click false

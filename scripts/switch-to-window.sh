@@ -14,4 +14,4 @@ window=$1; shift
 program=$1; shift
 
 wmctrl -x -a $window
-wmctrl -x -a $window || $program "$@"
+wmctrl -x -a $window || exec $program "$@"

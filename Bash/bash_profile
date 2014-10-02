@@ -16,6 +16,8 @@ MANWIDTH=80
 ARMLMD_LICENSE_FILE=8224@127.0.0.1
 set +a
 
+[ -f $HOME/.bcrc ] || touch $HOME/.bcrc
+
 require -q "${BASH_HOST_TYPE}-profile"
 require -q "${HOSTNAME}-bash-profile"
 
@@ -31,13 +33,9 @@ trimpath LD_LIBRARY_PATH
 # Go
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$HOME/.gotools/bin:$PATH
-export PATH=/usr/local/Cellar/go/1.2.1/libexec/bin:$PATH
 
 if [ -x /usr/local/bin/brew ]; then
     if [ -f $(brew --prefix)/etc/bash_completion ]; then
 	. $(brew --prefix)/etc/bash_completion
     fi
 fi
-
-# Added by ~/.emacs.d/install.sh
-export PATH=$HOME/.cask/bin:$PATH
