@@ -37,3 +37,5 @@ dconf write /org/gnome/desktop/interface/cursor-blink false
 
 # Power Management
 dconf write /com/canonical/indicator/power/show-time true
+
+dconf write /org/compiz/profiles/unity/plugins/unityshell/icon-size 32
