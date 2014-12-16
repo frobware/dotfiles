@@ -118,4 +118,10 @@ esac
 #     eval $(keychain --eval --inherit any)
 # fi
 
+if type -p brew 2>/dev/null >/dev/null; then
+    if [ -f $(brew --prefix)/etc/bash_completion ]; then
+	. $(brew --prefix)/etc/bash_completion
+    fi
+fi
+
 [ -f $HOME/.bash_aliases ] && . $HOME/.bash_aliases
