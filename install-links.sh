@@ -62,6 +62,7 @@ done
 install_link "$PWD/Resources/Xresources" "$HOME/.Xresources"
 install_link "$PWD/tmux.conf" "$HOME/.tmux.conf"
 install_link "$PWD/cmd-key-happy.lua" "$HOME/.cmd-key-happy.lua"
+install_link "$PWD/cmd-key-happy.rc" "$HOME/.cmd-key-happy.rc"
 install_link "$PWD/Resources/gnomerc" "$HOME/.gnomerc"
 
 exit 0

@@ -1,0 +1,16 @@
+# -*- mode: fundamental -*-
+
+swap_cmdalt Terminal cmd-` shift-cmd-q shift-cmd-[ shift-cmd-] shift-cmd-{ shift-cmd-}
+
+swap_cmdalt Atom cmd-`
+
+# swap_cmdalt Terminal cmd-c cmd-v cmd-w
+# swap_cmdalt Terminal shift-cmd-[ shift-cmd-]
+# swap_cmdalt Terminal cmd-1 cmd-2 cmd-3
+# swap_cmdalt Terminal cmd-t cmd-n
+# swap_cmdalt Terminal cmd-` cmd-- cmd-+
+
+# swap_cmdalt Eclipse
+#swap_cmdalt Xcode cmd-` cmd-c cmd-v cmd-x
+# swap_cmdalt "Xamarin Studio" cmd-` cmd-c cmd-v cmd-x
+#switchto Emacs cmd-shift-e
