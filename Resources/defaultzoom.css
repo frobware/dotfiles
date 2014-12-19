@@ -1,5 +1,8 @@
+html {
+    zoom: 120%;
+}
+
 body {
-  defaultzoom: 130%;
-  zoom: 130%;
+    zoom: 120%;
 }
 
