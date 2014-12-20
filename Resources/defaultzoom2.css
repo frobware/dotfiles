@@ -1,5 +1,6 @@
 html {
   -webkit-filter: invert(100%);
+  zoom: 130%;
   /* -webkit-perspective: 1000; */
   /* -webkit-backface-visibility: hidden; */
 }
@@ -8,12 +9,12 @@ img {
   -webkit-filter: invert(100%) !important;
 }
 
-body {
-  /* defaultzoom: 130%; */
+/* body { */
+/*   /\* defaultzoom: 130%; *\/ */
   zoom: 130%;
-  /* color: #FAEBD7 !important; */
-  /* background: white !important; */
-}
+/*   /\* color: #FAEBD7 !important; *\/ */
+/*   /\* background: white !important; *\/ */
+/* } */
 
 object {
   -webkit-filter: invert(100%) !important;
