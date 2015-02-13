@@ -9,7 +9,7 @@ if [[ `which java` ]]; then
     export JAVA_HOME=$(dirname $(dirname $(which java)))
 fi
 
-source_if_exists /etc/profile.d/jdk.sh
+#source_if_exists /etc/profile.d/jdk.sh
 source_if_exists ~/.bash_bootstrap
 
 . ${BASH_HOME}/functions/require
