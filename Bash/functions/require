@@ -240,9 +240,15 @@ function require_debug()
     done
 }
 
+function unrequire()
+{
+    :
+}
+
 provide require
 
 ### Local Variables: ***
 ### mode:sh ***
 ### End: ***
+
 
