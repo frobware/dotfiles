@@ -4,7 +4,7 @@ set -xe
 
 dconf load /org/gnome/settings-daemon/plugins/media-keys/ <<EOF
 [/]
-custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/emacs/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/browser/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/maxvertically/']
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/emacs/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/terminal/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/browser/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/pdf/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/maxvertically/']
 
 [custom-keybindings/emacs]
 binding='<Alt><Shift>e'
@@ -20,6 +20,11 @@ name='Terminal'
 binding='<Control><Alt><Shift>n'
 command="$HOME/bin/switch-to-window google-chrome google-chrome"
 name='Browser'
+
+[custom-keybindings/pdf]
+binding='<Control><Alt><Shift>p'
+command="$HOME/bin/switch-to-window evince evince"
+name='PDF Viewer'
 
 [custom-keybindings/maxvertically]
 binding='<Control><Alt><Shift>v'
