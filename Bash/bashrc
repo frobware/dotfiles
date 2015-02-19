@@ -1,5 +1,10 @@
 # -*-shell-script-*-
 
+# If not running interactively, don't do anything
+[ -z "$PS1" ] && return
+
+[ -f /etc/skel/.bashrc ] && . /etc/skel/.bashrc
+
 function source_if_exists {
     local fname=$1
     [[ -f $fname ]] && . $fname
@@ -20,9 +25,6 @@ source_if_exists ~/.bash_bootstrap
 # path_append PATH /usr/X11R6/bin
 
 XUSERFILESEARCHPATH=$HOME/lib/X11/app-defaults/%N%S
-
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
 
 # [ -f ~/.bashrc_emacs ] && . ~/.bashrc_emacs
 
@@ -125,3 +127,7 @@ if type -p brew 2>/dev/null >/dev/null; then
 fi
 
 [ -f $HOME/.bash_aliases ] && . $HOME/.bash_aliases
+
+# Base16 Shell
+# BASE16_SHELL="$HOME/.config/base16-shell/base16-default.dark.sh"
+# [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
