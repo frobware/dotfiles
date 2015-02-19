@@ -23,3 +23,7 @@ alias emacs="${EMACS_CMD}"
 function vi {
     TERM=xterm-mono emacsclient -t $*
 }
+
+function emacs-mono {
+    TERM=xterm-mono emacsclient -t $*
+}
