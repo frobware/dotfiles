@@ -1,3 +1,3 @@
 #!/usr/bin/env osascript
 
-do shell script "open -a Emacs.app --args -r"
+do shell script "open -a Emacs.app --args -rv"
