@@ -41,7 +41,7 @@ apps = {
 			 } },
    Eclipse  = { exclude = {} },
    AppCode  = { exclude = {} },
-   Xcode    = { exclude = { "cmd-`"} },
+   Xcode    = { exclude = Set { "cmd-`"} },
    TextMate = { exclude = Set { "cmd-1",
 				"cmd-2",
 				"cmd-3",
