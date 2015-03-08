@@ -8,7 +8,7 @@ custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybin
 
 [custom-keybindings/emacs]
 binding='<Alt><Shift>e'
-command="$HOME/bin/switch-to-window emacs.Emacs emacs -rv"
+command="$HOME/bin/switch-to-window emacs.Emacs emacs -rv -fh"
 name='Emacs'
 
 [custom-keybindings/terminal]
