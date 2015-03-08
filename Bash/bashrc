@@ -73,8 +73,8 @@ function check_exit_status ()
 [ -n "$TMUX" ] && export TERM=screen-256color
 
 declare -x check_exit_status
-export PS1='[\u@\h:\w]\n$ '
-export PS1='\[\e]0;\u@\h$ \w\a\]${debian_chroot:+($debian_chroot)}\u@\h:\w\n: '
+# export PS1='[\u@\h:\w]\n$ '
+# export PS1='\[\e]0;\u@\h$ \w\a\]${debian_chroot:+($debian_chroot)}\u@\h:\w\n: '
 
 #if [[ -z "$TMUX" ]]; then
 #   tmux has-session &> /dev/null
