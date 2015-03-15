@@ -12,7 +12,7 @@ export GOROOT=$TOP_DIR/go
 go env
 
 #export GOPATH=$(mktemp -d)
-export GOPATH=/tmp/tmp.VfXokl3LZM
+export GOPATH=$TOP_DIR/tools
 mkdir -p $GOPATH
 
 trap "exit 1;" SIGINT
