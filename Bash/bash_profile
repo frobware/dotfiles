@@ -32,7 +32,7 @@ trimpath LD_LIBRARY_PATH
 
 # Go
 export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$HOME/.gotools/bin:$PATH
+export PATH=$GOPATH/bin:$PATH
 
 if [ -x /usr/local/bin/brew ]; then
     if [ -f $(brew --prefix)/etc/bash_completion ]; then
