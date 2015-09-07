@@ -22,6 +22,7 @@ require -q "${BASH_HOST_TYPE}-profile"
 require -q "${HOSTNAME}-bash-profile"
 
 [ -d $HOME/bin ] && path_prepend PATH $HOME/bin
+[ -d $HOME/dotfiles/scripts ] && path_append PATH $HOME/dotfiles/scripts
 
 # Load our personal bashrc.  This is located through $FPATH.
 [ -f $HOME/.bashrc ] && . $HOME/.bashrc
