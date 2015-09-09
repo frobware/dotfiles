@@ -10,23 +10,10 @@ function source_if_exists {
     [[ -f $fname ]] && . $fname
 }
 
-if [[ `which java` ]]; then
-    export JAVA_HOME=$(dirname $(dirname $(which java)))
-fi
-
-#source_if_exists /etc/profile.d/jdk.sh
 source_if_exists ~/.bash_bootstrap
 
 . ${BASH_HOME}/functions/require
 . ${BASH_HOME}/functions/path-functions
-
-# for non login ssh connections
-# path_prepend PATH /usr/local/sbin
-# path_append PATH /usr/X11R6/bin
-
-XUSERFILESEARCHPATH=$HOME/lib/X11/app-defaults/%N%S
-
-# [ -f ~/.bashrc_emacs ] && . ~/.bashrc_emacs
 
 # Like many of you, I constantly have many terminals open at once. I
 # wish bash would dump every command I type there instead of seemingly
@@ -116,10 +103,6 @@ case "$TERM" in
     ;;
 esac
 
-# if hash keychain >/dev/null 2>&1; then
-#     eval $(keychain --eval --inherit any)
-# fi
-
 if type -p brew 2>/dev/null >/dev/null; then
     if [ -f $(brew --prefix)/etc/bash_completion ]; then
 	. $(brew --prefix)/etc/bash_completion
@@ -131,3 +114,5 @@ fi
 # Base16 Shell
 # BASE16_SHELL="$HOME/.config/base16-shell/base16-default.dark.sh"
 # [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+
+# [ -f ~/.bashrc_emacs ] && . ~/.bashrc_emacs
