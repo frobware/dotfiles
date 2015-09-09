@@ -31,6 +31,9 @@ require -q "${HOSTNAME}-bash-profile"
 trimpath PATH
 trimpath LD_LIBRARY_PATH
 
+# Go1.4.2
+# export PATH=/usr/local/go1.4.2/bin:$PATH
+
 # Go
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
