@@ -31,4 +31,4 @@ alias dockercleandangling='docker rmi $(docker images -q --filter "dangling=true
 #alias docker_stop_and_remove_all_containers_including_running_containers="docker rm -f $(docker ps -a -q)"
 
 alias nukegopkg='[ -d "$GOPATH/pkg" ] && rm -rf $GOPATH/pkg'
-alias rebuild-juju='[ -f $PWD/juju/api.go ] && { nukegopkg; make clean; godeps -u dependencies.tsv; make install; }'
+alias rebuild-juju='[ -f $PWD/juju/api.go ] && { set -e; nukegopkg; make clean; godeps -u dependencies.tsv; make install; }'
