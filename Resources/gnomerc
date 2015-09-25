@@ -1,5 +1,5 @@
 #!/bin/bash -li
 
-#[ -e $HOME/.bash_profile ] && . $HOME/.bash_profile
+[ -e $HOME/.bash_profile ] && . $HOME/.bash_profile
 
 # The -l[ogin] ensures $HOME/.bash_profile is read when Unity starts.
