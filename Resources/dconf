@@ -8,8 +8,8 @@ dconf write /org/gnome/desktop/interface/text-scaling-factor 1.0
 dconf write /org/gnome/desktop/interface/gtk-key-theme "'Emacs'"
 
 # Terminal
-# dconf write /org/gnome/Terminal/Legacy/Settings/menu-accelerator-enabled false
-# dconf write /org/gnome/Terminal/Legacy/Settings/default-show-menubar false
+dconf write /org/gnome/Terminal/Legacy/Settings/menu-accelerator-enabled false
+dconf write /org/gnome/Terminal/Legacy/Settings/default-show-menubar true
 
 # Desktop
 dconf write /org/gnome/desktop/interface/clock-show-date true
@@ -19,8 +19,12 @@ dconf write /org/gnome/desktop/privacy/show-full-name-in-top-bar false
 dconf write /org/gnome/nautilus/preferences/sort-directories-first true
 
 # Caps Lock, Alt, Win, et al.
-dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:ctrl_modifier']"
-dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:ctrl_modifier', 'altwin:swap_alt_win']"
+
+if [[ "$HOSTNAME" = "spicy" ]]; then
+    dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:ctrl_modifier', 'altwin:swap_alt_win']"
+else
+    dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:ctrl_modifier']"
+fi
 
 # Mouse and Touchpad
 dconf write /org/gnome/settings-daemon/peripherals/touchpad/tap-to-click false
