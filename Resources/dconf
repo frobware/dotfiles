@@ -2,7 +2,7 @@
 
 set -ex
 
-dconf write /org/gnome/desktop/interface/text-scaling-factor 1.2
+dconf write /org/gnome/desktop/interface/text-scaling-factor 1.0
 
 # Emacs everywhere!
 dconf write /org/gnome/desktop/interface/gtk-key-theme "'Emacs'"
@@ -38,3 +38,5 @@ dconf write /org/gnome/desktop/interface/cursor-blink false
 dconf write /com/canonical/indicator/power/show-time true
 
 dconf write /org/compiz/profiles/unity/plugins/unityshell/icon-size 32
+
+dconf write /org/compiz/integrated/show-hud "['disabled']"
