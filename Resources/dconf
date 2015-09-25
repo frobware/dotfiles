@@ -20,8 +20,7 @@ dconf write /org/gnome/nautilus/preferences/sort-directories-first true
 
 # Caps Lock, Alt, Win, et al.
 dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:ctrl_modifier']"
-
-#dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:ctrl_modifier', 'altwin:swap_alt_win']"
+dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:ctrl_modifier', 'altwin:swap_alt_win']"
 
 # Mouse and Touchpad
 dconf write /org/gnome/settings-daemon/peripherals/touchpad/tap-to-click false
