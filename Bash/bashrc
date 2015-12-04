@@ -8,7 +8,7 @@ function source_if_exists {
     [[ -f $fname ]] && . $fname
 }
 
-source_if_exists /etc/skel/.bashrc 
+source_if_exists /etc/skel/.bashrc
 source_if_exists /etc/profile
 source_if_exists ~/.bash_bootstrap
 
@@ -78,7 +78,7 @@ declare -x current_juju_environment
 export PROMPT_COMMAND="current_juju_environment; $PROMPT_COMMAND"
 
 declare -x check_exit_status
-export PS1='\[\e]0;\u@\h$ \w\a\]${debian_chroot:+($debian_chroot)}\u@\h:\w${jjenv:+" [${jjenv}]"}\n$ '
+export PS1='\[\e]0;\u@\h$ \w\a\]${debian_chroot:+($debian_chroot)}\u@\h:\w$(__git_ps1) ${jjenv:+"(${jjenv})"}\n$ '
 
 shopt -s checkwinsize
 
