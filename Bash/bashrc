@@ -3,13 +3,13 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-[ -f /etc/skel/.bashrc ] && . /etc/skel/.bashrc
-
 function source_if_exists {
     local fname=$1
     [[ -f $fname ]] && . $fname
 }
 
+source_if_exists /etc/skel/.bashrc 
+source_if_exists /etc/profile
 source_if_exists ~/.bash_bootstrap
 
 . ${BASH_HOME}/functions/require
@@ -23,15 +23,12 @@ source_if_exists ~/.bash_bootstrap
 # Make bash history persistent across terminal sessions.
 
 # First we instruct Bash not to store history by overwriting but to
-# append lines. PROMPT_COMMAND is an environment variable which holds
-# list of commands that will be executed before Bash begins accepting
-# input for the next command, by calling 'history -a' we store all
-# commands to disk.
+# append lines.
 
 shopt -s histappend
 # single line cmd history
 shopt -s cmdhist
-export PROMPT_COMMAND='history -a'
+export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 export HISTSIZE=5000000
 export HISTCONTROL=ignoredups
 export HISTIGNORE="&:ls:[bf]g:exit"
@@ -59,49 +56,31 @@ function check_exit_status ()
 
 [ -n "$TMUX" ] && export TERM=screen-256color
 
-declare -x check_exit_status
-# export PS1='[\u@\h:\w]\n$ '
-export PS1='\[\e]0;\u@\h$ \w\a\]${debian_chroot:+($debian_chroot)}\u@\h:\w\n$ '
+bold()          { ansi 1 "$@"; }
+italic()        { ansi 3 "$@"; }
+underline()     { ansi 4 "$@"; }
+strikethrough() { ansi 9 "$@"; }
+red()           { ansi 31 "$@"; }
+ansi()          { echo -e "\e[${1}m${*:2}\e[0m"; }
 
-#if [[ -z "$TMUX" ]]; then
-#   tmux has-session &> /dev/null
-#   if [ $? -eq 1 ]; then
-#	exec tmux new
-#	exit
-#   else
-#	exec tmux attach
-#	exit
-#   fi
-#fi
+current_juju_environment() {
+    local juju_home=${JUJU_HOME:-$HOME/.juju}
+    if [[ -f ${juju_home}/current-environment ]]; then
+	read -r jjenv < ${juju_home}/current-environment
+	if [[ ! -f ${juju_home}/environments/${jjenv}.jenv ]]; then
+	    jjenv=$(strikethrough $jjenv)
+	fi
+    fi
+}
+
+declare -x current_juju_environment
+
+export PROMPT_COMMAND="current_juju_environment; $PROMPT_COMMAND"
+
+declare -x check_exit_status
+export PS1='\[\e]0;\u@\h$ \w\a\]${debian_chroot:+($debian_chroot)}\u@\h:\w${jjenv:+" [${jjenv}]"}\n$ '
 
 shopt -s checkwinsize
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-    xterm*|rxvt*)
-	PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
-
-	# Show the currently running command in the terminal title:
-	# http://www.davidpashley.com/articles/xterm-titles-with-bash.html
-	show_command_in_title_bar()
-	{
-	    case "$BASH_COMMAND" in
-		*\033]0*)
-		# The command is trying to set the title bar as well;
-		# this is most likely the execution of $PROMPT_COMMAND.
-		# In any case nested escapes confuse the terminal, so don't
-		# output them.
-		    ;;
-		*)
-		    echo -ne "\033]0;${USER}@${HOSTNAME}: ${BASH_COMMAND}\007"
-		    ;;
-	   esac
-	}
-    trap show_command_in_title_bar DEBUG
-    ;;
-    *)
-    ;;
-esac
 
 if type -p brew 2>/dev/null >/dev/null; then
     if [ -f $(brew --prefix)/etc/bash_completion ]; then
