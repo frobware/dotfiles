@@ -54,6 +54,8 @@ function check_exit_status ()
     return 0
 }
 
+declare -x check_exit_status
+
 [ -n "$TMUX" ] && export TERM=screen-256color
 
 bold()          { ansi 1 "$@"; }
@@ -77,7 +79,6 @@ declare -x current_juju_environment
 
 export PROMPT_COMMAND="current_juju_environment; $PROMPT_COMMAND"
 
-declare -x check_exit_status
 export PS1='\[\e]0;\u@\h$ \w\a\]${debian_chroot:+($debian_chroot)}\u@\h:\w$(__git_ps1) ${jjenv:+"(${jjenv})"}\n$ '
 
 shopt -s checkwinsize
