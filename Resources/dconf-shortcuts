@@ -13,7 +13,7 @@ name='Emacs'
 
 [custom-keybindings/terminal]
 binding='<Alt><Shift>n'
-command="$HOME/bin/switch-to-window gnome-terminal.Gnome-terminal gnome-terminal"
+command="$HOME/bin/switch-to-window Gnome-terminal gnome-terminal"
 name='Terminal'
 
 [custom-keybindings/browser]
