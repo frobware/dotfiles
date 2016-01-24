@@ -32,3 +32,5 @@ alias dockercleandangling='docker rmi $(docker images -q --filter "dangling=true
 
 alias nukegopkg='[ -d "$GOPATH/pkg" ] && rm -rf $GOPATH/pkg'
 alias rebuild-juju='[ -f $PWD/juju/api.go ] && { nukegopkg; make clean; godeps -u dependencies.tsv; make install; }'
+
+alias gnus='emacs -f gnus --name gnus'
