@@ -1,0 +1,8 @@
+#!/bin/bash
+
+(cat << EOF
+#cloud-config
+ssh_authorized_keys:
+ - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/GNzqCV/gN/ANutYvGzWDfjQvc+u6sTSY4gnxb8owKy7wNRI/d/BVaD9ZDVAWxD3dcpDMWK6Pp6GuCYou+PfVZ4GNCpFG62hD8ECOcjLoKKKpJ71Ucia7I3qywQAqk5mDDXrjSUHr0pZv55kOrRX+1TwHEqDOcnWcskLikyzzFXk/R37c7ljuHN+SOsXnZPWw5bhrgIYnO3HjFfHmlMIMKXBxrljqbp5jne03WUKVki6TWoABBqgCQvLhSC0W/g3cGcgUupaViRgW1sT4WJRtKoPW6Ir5c8KDPpCi8jMv0UGPgicU5TYUwkV1PVBKYWePdr+L1lXT1dyO/2NiznE3 aim@mint13
+EOF
+) | lxc config set $1 user.user-data -
