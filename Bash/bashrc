@@ -66,9 +66,9 @@ red()           { ansi 31 "$@"; }
 ansi()          { echo -e "\e[${1}m${*:2}\e[0m"; }
 
 current_juju_environment() {
-    local juju_home=${JUJU_HOME:-$HOME/.juju}
-    if [[ -f ${juju_home}/current-environment ]]; then
-	read -r jjenv < ${juju_home}/current-environment
+    local juju_home=${JUJU_HOME:-$HOME/.local/share/juju}
+    if [[ -f ${juju_home}/current-controller ]]; then
+	read -r jjenv < ${juju_home}/current-controller
 	if [[ ! -f ${juju_home}/environments/${jjenv}.jenv ]]; then
 	    jjenv=$(strikethrough $jjenv)
 	fi
