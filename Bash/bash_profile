@@ -36,3 +36,5 @@ if [ -x /usr/local/bin/brew ]; then
 	. $(brew --prefix)/etc/bash_completion
     fi
 fi
+
+#gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps']"
