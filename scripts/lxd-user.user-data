@@ -2,7 +2,40 @@
 
 (cat << EOF
 #cloud-config
+runcmd:
+  - sed -i /archive.ubuntu.com/192.168.1.1:3142/ /etc/apt/sources.list
+write_files:
+  - content: |
+     Acquire::http::Proxy "http://192.168.1.1:3142/";
+    path: /etc/apt/apt.conf.d/02cache
+packages:
+  - avahi-daemon
+  - tmux
+runcmd:
+  - sed -i /rlimit-nproc=3/d /etc/avahi/avahi-daemon.conf || true
+  - systemctl stop avahi-daemon || true
+  - systemctl start avahi-daemon
+  - systemctl enable avahi-daemon
 ssh_authorized_keys:
- - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/GNzqCV/gN/ANutYvGzWDfjQvc+u6sTSY4gnxb8owKy7wNRI/d/BVaD9ZDVAWxD3dcpDMWK6Pp6GuCYou+PfVZ4GNCpFG62hD8ECOcjLoKKKpJ71Ucia7I3qywQAqk5mDDXrjSUHr0pZv55kOrRX+1TwHEqDOcnWcskLikyzzFXk/R37c7ljuHN+SOsXnZPWw5bhrgIYnO3HjFfHmlMIMKXBxrljqbp5jne03WUKVki6TWoABBqgCQvLhSC0W/g3cGcgUupaViRgW1sT4WJRtKoPW6Ir5c8KDPpCi8jMv0UGPgicU5TYUwkV1PVBKYWePdr+L1lXT1dyO/2NiznE3 aim@mint13
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/GNzqCV/gN/ANutYvGzWDfjQvc+u6sTSY4gnxb8owKy7wNRI/d/BVaD9ZDVAWxD3dcpDMWK6Pp6GuCYou+PfVZ4GNCpFG62hD8ECOcjLoKKKpJ71Ucia7I3qywQAqk5mDDXrjSUHr0pZv55kOrRX+1TwHEqDOcnWcskLikyzzFXk/R37c7ljuHN+SOsXnZPWw5bhrgIYnO3HjFfHmlMIMKXBxrljqbp5jne03WUKVki6TWoABBqgCQvLhSC0W/g3cGcgUupaViRgW1sT4WJRtKoPW6Ir5c8KDPpCi8jMv0UGPgicU5TYUwkV1PVBKYWePdr+L1lXT1dyO/2NiznE3 aim@mint13
+EOF
+) | echo
+
+#echo "network: {config: disabled}" | tee /etc/cloud/cloud.cfg.d/99-juju-no-cloud-init-networking.cfg
+
+(cat << EOF
+#cloud-config
+write_files:
+  - content: |
+      network:
+        config: disabled
+    path: /etc/cloud/cloud.cfg.d/99-juju-no-cloud-init-networking.cfg
+  - content: |
+      # removed by Juju
+    path: /etc/network/interfaces.d/50-cloud-init.cfg
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/GNzqCV/gN/ANutYvGzWDfjQvc+u6sTSY4gnxb8owKy7wNRI/d/BVaD9ZDVAWxD3dcpDMWK6Pp6GuCYou+PfVZ4GNCpFG62hD8ECOcjLoKKKpJ71Ucia7I3qywQAqk5mDDXrjSUHr0pZv55kOrRX+1TwHEqDOcnWcskLikyzzFXk/R37c7ljuHN+SOsXnZPWw5bhrgIYnO3HjFfHmlMIMKXBxrljqbp5jne03WUKVki6TWoABBqgCQvLhSC0W/g3cGcgUupaViRgW1sT4WJRtKoPW6Ir5c8KDPpCi8jMv0UGPgicU5TYUwkV1PVBKYWePdr+L1lXT1dyO/2NiznE3 aim@mint13
+runcmd:
+  - ifup -a
 EOF
 ) | lxc config set $1 user.user-data -
