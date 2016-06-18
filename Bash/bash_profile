@@ -37,4 +37,9 @@ if [ -x /usr/local/bin/brew ]; then
     fi
 fi
 
+juju_machines ()
+{
+    juju list-machines | awk /^[1-9]+/ | awk '{print $1}'
+}
+
 #gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps']"
