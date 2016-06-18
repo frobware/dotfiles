@@ -7,3 +7,8 @@ emacs.reverseVideo: true
 emacs.font: Monospace:pixelsize=24
 !Emacs*font: Consolas:pixelsize=22
 !emacs.font: Consolas:pixelsize=22
+gnus.reverseVideo: true
+!Gnus*font: Monospace:pixelsize=22
+gnus.font: Monospace:pixelsize=24
+!Gnus*font: Consolas:pixelsize=22
+!gnus.font: Consolas:pixelsize=22
