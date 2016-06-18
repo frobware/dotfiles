@@ -33,6 +33,9 @@ export HISTSIZE=5000000
 export HISTCONTROL=ignoredups
 export HISTIGNORE="&:ls:[bf]g:exit"
 
+GPG_TTY=$(tty)
+export GPG_TTY
+
 [ -f /etc/bash_completion ] && . /etc/bash_completion
 
 # Graciously stolen from idf
