@@ -34,4 +34,4 @@ alias nukegopkg='[ -d "$GOPATH/pkg" ] && rm -rf $GOPATH/pkg'
 alias rebuild-juju='[ -f $PWD/juju/api.go ] && { nukegopkg; make clean; godeps -u dependencies.tsv; make install;}'
 
 alias wjsm='watch juju show-machines'
-alias gnus='emacs -f gnus --name gnus -rv'
+alias gnus='exec emacs -f gnus --name gnus -rv'
