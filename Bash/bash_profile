@@ -42,4 +42,7 @@ juju_machines ()
     juju list-machines | awk /^[1-9]+/ | awk '{print $1}'
 }
 
+#eval `keychain --inherit any --quick --quiet --agents gpg,ssh --eval id_rsa id_launchpad_rsa id_github_frobware_rsa 3F583FBB`
+eval `keychain --inherit any --quick --quiet --agents ssh --eval id_rsa id_launchpad_rsa id_github_frobware_rsa`
+
 #gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps']"
