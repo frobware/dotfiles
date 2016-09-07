@@ -123,3 +123,5 @@ man() {
 		man "$@"
 }
 
+export DEBFULLNAME="Andrew McDermott"
+export DEBEMAIL="andrew.mcdermott@canonical.com"
