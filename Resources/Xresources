@@ -2,12 +2,12 @@ XTerm*faceName: Monospace:pixelsize=24
 XTerm*eightBitInput: true
 XTerm*reverseVideo: true
 Xcursor.size: 512
-emacs.reverseVideo: true
+!emacs.reverseVideo: true
 !Emacs*font: Monospace:pixelsize=22
 emacs.font: Monospace:pixelsize=24
 !Emacs*font: Consolas:pixelsize=22
 !emacs.font: Consolas:pixelsize=22
-gnus.reverseVideo: true
+!gnus.reverseVideo: true
 !Gnus*font: Monospace:pixelsize=22
 gnus.font: Monospace:pixelsize=24
 !Gnus*font: Consolas:pixelsize=22
