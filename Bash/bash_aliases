@@ -35,3 +35,4 @@ alias rebuild-juju='[ -f $PWD/juju/api.go ] && { nukegopkg; make clean; godeps -
 
 alias wjsm='watch juju show-machines'
 alias gnus='exec emacs -f gnus --name gnus -rv'
+alias tmux="env TERM=xterm-256color tmux"
