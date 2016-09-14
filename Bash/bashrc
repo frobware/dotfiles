@@ -106,11 +106,15 @@ fi
 
 [ -f $HOME/.bash_aliases ] && . $HOME/.bash_aliases
 
-# Base16 Shell
-# BASE16_SHELL="$HOME/.config/base16-shell/base16-default.dark.sh"
-# [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+# type -p keychain 2>/dev/null && eval `keychain --quick --quiet --agents gpg,ssh --eval id_rsa id_github_frobware_rsa 3F583FBB`
+# source_if_exists $HOME/.keychain/${HOSTNAME}-sh
+# source_if_exists $HOME/.keychain/${HOSTNAME}-sh-gpg
 
-# [ -f ~/.bashrc_emacs ] && . ~/.bashrc_emacs
+# Base16 Shell
+BASE16_SHELL="$HOME/.config/base16-shell/base16-default.dark.sh"
+[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+
+[ -f ~/.bashrc_emacs ] && . ~/.bashrc_emacs
 
 man() {
 	env \
