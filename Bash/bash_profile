@@ -14,6 +14,10 @@ LESS="-X -e -q -s -m"
 BC_ENV_ARGS="$HOME/.bcrc"
 MANWIDTH=80
 ARMLMD_LICENSE_FILE=8224@127.0.0.1
+
+# For 24-bit Emacs terminals
+ITERM_24BIT=yes
+KONSOLE_DBUS_SESSION=1
 set +a
 
 [ -f $HOME/.bcrc ] || touch $HOME/.bcrc
