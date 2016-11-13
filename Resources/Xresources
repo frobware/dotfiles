@@ -1,8 +1,8 @@
 XTerm*faceName: Monospace:pixelsize=24
 XTerm*eightBitInput: true
 XTerm*reverseVideo: true
-Xcursor.size: 512
-!emacs.reverseVideo: true
+Xcursor.size: 64
+emacs.reverseVideo: true
 !Emacs*font: Monospace:pixelsize=22
 emacs.font: Monospace:pixelsize=24
 !Emacs*font: Consolas:pixelsize=22
