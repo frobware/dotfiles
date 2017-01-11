@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 progname=$(basename $0)
 
@@ -12,6 +12,10 @@ fi
 
 window=$1; shift
 program=$1; shift
+ 
+#if [[ "$window" = "emacs.Emacs" ]]; then
+#    exit 0
+#fi
 
 wmctrl -x -a $window
 wmctrl -x -a $window || exec $program "$@"
