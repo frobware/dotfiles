@@ -48,6 +48,7 @@ juju_machines ()
 
 export GOPATH=$HOME/go
 std_paths_prepend /usr/local/go1.8.1
+std_paths_prepend /usr/local/go1.8.3
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
