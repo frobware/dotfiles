@@ -84,7 +84,7 @@ export PROMPT_COMMAND="current_juju_environment; $PROMPT_COMMAND"
 
 function __vpn_active() {
     if [ -e /proc/sys/net/ipv4/conf/tun0 ]; then
-	vpn_active=$(red $(bold "VPN ACTIVE"))
+	vpn_active=$(red $(bold "VPN"))
     else
 	vpn_active=
     fi
@@ -94,7 +94,20 @@ declare -x __vpn_active
 
 export PROMPT_COMMAND="__vpn_active; $PROMPT_COMMAND"
 
-export PS1='${vpn_active:+[${vpn_active}] }${debian_chroot:+($debian_chroot)}\u@\h:\w$(__git_ps1) ${jjenv:+"(${jjenv})"}\n$ '
+if ! type __git_ps1 &> /dev/null && [ -e /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
+        . /usr/share/git-core/contrib/completion/git-prompt.sh
+fi
+
+if type __git_ps1 &> /dev/null; then
+        export GIT_PS1_SHOWDIRTYSTATE=1
+        export GIT_PS1_SHOWUNTRACKEDFILES=1
+        export GIT_PS1_SHOWCOLORHINTS=1
+        # export PROMPT_DIRTRIM=2
+        # export PROMPT_COMMAND='__git_ps1 "\w" "\\\$ "'
+fi
+
+#export PS1='${vpn_active:+[${vpn_active}] }\u@\h:\w$(__git_ps1)\n$ '
+export PS1='${vpn_active:+[${vpn_active}] }\u@\h:\w\n$ '
 
 shopt -s checkwinsize
 
