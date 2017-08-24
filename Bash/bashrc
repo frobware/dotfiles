@@ -66,6 +66,7 @@ italic()        { ansi 3 "$@"; }
 underline()     { ansi 4 "$@"; }
 strikethrough() { ansi 9 "$@"; }
 red()           { ansi 31 "$@"; }
+green()         { ansi 32 "$@"; }
 ansi()          { echo -e "\e[${1}m${*:2}\e[0m"; }
 
 current_juju_environment() {
