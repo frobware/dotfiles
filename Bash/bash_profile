@@ -47,7 +47,7 @@ juju_machines ()
     juju list-machines | awk /^[1-9]+/ | awk '{print $1}'
 }
 
-export GOPATH=$HOME/go
+#export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
 # std_paths_prepend /usr/local/go1.8.3
 
