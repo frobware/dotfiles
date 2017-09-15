@@ -4,7 +4,7 @@ XTerm*reverseVideo: true
 Xcursor.size: 64
 emacs.reverseVideo: true
 !Emacs*font: Monospace:pixelsize=22
-emacs.font: Monospace:pixelsize=24
+!emacs.font: Monospace:pixelsize=24
 !Emacs*font: Consolas:pixelsize=22
 !emacs.font: Consolas:pixelsize=22
 !gnus.reverseVideo: true
