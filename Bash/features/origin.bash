@@ -1,16 +1,14 @@
 export GOPATH=$HOME/go-projects/origin
-export PATH=$PATH:$GOPATH/bin
+export PATH=$GOPATH/bin:$PATH
 export OS_OUTPUT_GOPATH=1
 
-d=$GOPATH/src/github.com/openshift/origin
-cd $d
+cd $GOPATH/src/github.com/openshift/origin
 
-export PATH=/usr/local/go1.9/go/bin:$PATH
-export PATH=/home/aim/repos/github/golang/go/bin:$PATH
+# Go1.9 gives better debug support
+# export PATH=/usr/local/go1.9/go/bin:$PATH
+# export PATH=/home/aim/repos/github/golang/go/bin:$PATH
 
 export PATH="$(source hack/lib/init.sh; echo "${OS_OUTPUT_BINPATH}/$(os::build::host_platform)/"):${PATH}"
-
-unset d
 
 function os_write_config() {
     openshift start master --write-config=openshift.local.config/master
