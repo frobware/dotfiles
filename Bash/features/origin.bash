@@ -11,7 +11,7 @@ cd $GOPATH/src/github.com/openshift/origin
 export PATH="$(source hack/lib/init.sh; echo "${OS_OUTPUT_BINPATH}/$(os::build::host_platform)/"):${PATH}"
 
 function os_master_write_config() {
-    openshift start master --write-config=openshift.local.config/master
+    openshift start master --write-config=openshift.local.config/master "$@"
 }
 
 function os_master_start() {
