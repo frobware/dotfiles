@@ -19,7 +19,8 @@ function os_master_start() {
 }
 
 function os_node_oadm() {
-    oadm create-node-config --node-dir openshift.local.config/node-$(uname -n) --node=node-$(uname -n) --hostnames=$(uname -n),127.0.0.1
+    # e.g., --dns-ip=127.0.0.1
+    oadm create-node-config --node-dir openshift.local.config/node-$(uname -n) --node=node-$(uname -n) --hostnames=$(uname -n),127.0.0.1 "$@"
 }
 
 function os_node_start() {
