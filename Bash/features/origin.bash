@@ -15,7 +15,7 @@ function os_master_write_config() {
 }
 
 function os_master_start() {
-    openshift start master --config=openshift.local.config/master/master-config.yaml
+    openshift start master --config=openshift.local.config/master/master-config.yaml "$@"
 }
 
 function os_node_oadm() {
