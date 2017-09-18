@@ -10,6 +10,8 @@ cd $GOPATH/src/github.com/openshift/origin
 
 export PATH="$(source hack/lib/init.sh; echo "${OS_OUTPUT_BINPATH}/$(os::build::host_platform)/"):${PATH}"
 
+export KUBECONFIG=$PWD/openshift.local.config/master/admin.kubeconfig
+
 function os_master_write_config() {
     openshift start master --write-config=openshift.local.config/master "$@"
 }
