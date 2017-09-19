@@ -3,6 +3,15 @@ function x {
     go test -i -x -gcflags "-N -l" && go test -c -x -gcflags "-N -l";
 }
 
+function clone_tree {
+    local working_dir=$1/src/k8s.io
+    local user=frobware
+    mkdir -p $working_dir
+    cd $working_dir
+    git clone https://github.com/$user/kubernetes.git
+    git remote set-url --push upstream no_push
+}
+
 function localkube {
     export KUBERNETES_PROVIDER=local
     export PATH=$HOME/go/src/k8s.io/kubernetes/cluster:$PATH
