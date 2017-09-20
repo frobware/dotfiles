@@ -141,7 +141,4 @@ man() {
 		man "$@"
 }
 
-export DEBFULLNAME="Andrew McDermott"
-export DEBEMAIL="andrew.mcdermott@canonical.com"
-
 type -p direnv &>/dev/null && eval "$(direnv hook bash)"
