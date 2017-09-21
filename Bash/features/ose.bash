@@ -1,11 +1,6 @@
-: ${PROJECT:=ose}
+: ${GOPATH:?you-did-not-set-gopath}
 
-export GOPATH=$HOME/go-projects/$PROJECT
-export PATH=$GOPATH/bin:$PATH
-export OS_OUTPUT_GOPATH=1
-
-mkdir -p $GOPATH/src/github.com/openshift/ose
-cd $GOPATH/src/github.com/openshift/ose
+cd $GOPATH/src/github.com/openshift/origin
 
 # git clone git@github.com:frobware/ose origin
 
@@ -15,8 +10,7 @@ cd $GOPATH/src/github.com/openshift/ose
 # export PATH=/usr/local/go1.9/go/bin:$PATH
 # export PATH=/home/aim/repos/github/golang/go/bin:$PATH
 
-export PATH="${PATH}:$( source hack/lib/init.sh; echo "${OS_OUTPUT_BINPATH}/$( os::build::host_platform )/" )"
-
+export PATH="$(source hack/lib/init.sh; echo "${OS_OUTPUT_BINPATH}/$( os::build::host_platform )/":${PATH})"
 export KUBECONFIG=$PWD/openshift.local.config/master/admin.kubeconfig
 
 function os_master_write_config() {

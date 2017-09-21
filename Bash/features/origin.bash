@@ -1,6 +1,4 @@
-export GOPATH=$HOME/go-projects/origin
-export PATH=$GOPATH/bin:$PATH
-export OS_OUTPUT_GOPATH=1
+: ${GOPATH:?you-did-not-set-gopath}
 
 cd $GOPATH/src/github.com/openshift/origin
 
