@@ -39,6 +39,6 @@ function localkubeproxy {
 export PATH=$GOPATH/src/k8s.io/kubernetes/_output/local/go/bin:$PATH
 export PATH=$GOPATH/src/k8s.io/kubernetes/third_party/etcd:${PATH}
 
-source <(kubectl completion bash) 
+type -p kubectl >& /dev/null && source <(kubectl completion bash) 
 
 provide kube
