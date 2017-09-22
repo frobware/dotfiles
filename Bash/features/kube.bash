@@ -1,10 +1,13 @@
-: ${GOPATH:?you-did-not-set-gopath}
-
-declare -x -f x
+: ${GOPATH:?/var/tmp/you-did-not-set-gopath}
 
 function x {
     rm -f *.test;
     go test -i -x -gcflags "-N -l" && go test -c -x -gcflags "-N -l";
+}
+
+function xr {
+    rm -f *.test;
+    go test -i -race -gcflags "-N -l" && go test -race -c -x -gcflags "-N -l";
 }
 
 function clone_tree {
@@ -18,7 +21,11 @@ function clone_tree {
 
 function localkube {
     export KUBERNETES_PROVIDER=local
-    export PATH=$GOPATH/src/k8s.io/kubernetes/cluster:$PATH
+    export PATH=$GOPATH/src/k8s.io/kubernetes:$PATH
+    sudo chmod 777 /var/run/kubernetes
+    sudo chmod +r /var/run/kubernetes/server-ca.crt
+    sudo chmod +r /var/run/kubernetes/client-admin.crt
+    sudo chmod +r /var/run/kubernetes/client-admin.key
     kubectl.sh config set-cluster local --server=https://localhost:6443 --certificate-authority=/var/run/kubernetes/server-ca.crt
     kubectl.sh config set-credentials myself --client-key=/var/run/kubernetes/client-admin.key --client-certificate=/var/run/kubernetes/client-admin.crt
     kubectl.sh config set-context local --cluster=local --user=myself
@@ -26,10 +33,12 @@ function localkube {
 }
 
 function localkubeproxy {
-    kubectl.sh -s http://127.0.0.1:8080 proxy --port=8081
+    kubectl.sh -s http://127.0.0.1:6443 proxy --port=8081
 }
 
 export PATH=$GOPATH/src/k8s.io/kubernetes/_output/local/go/bin:$PATH
 export PATH=$GOPATH/src/k8s.io/kubernetes/third_party/etcd:${PATH}
+
+source <(kubectl completion bash) 
 
 provide kube
