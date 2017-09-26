@@ -36,6 +36,7 @@ function localkubeproxy {
     kubectl.sh -s http://127.0.0.1:6443 proxy --port=8081
 }
 
+export KUBECONFIG=/var/run/kubernetes/admin.kubeconfig
 export PATH=$GOPATH/src/k8s.io/kubernetes/_output/local/go/bin:$PATH
 export PATH=$GOPATH/src/k8s.io/kubernetes/third_party/etcd:${PATH}
 
