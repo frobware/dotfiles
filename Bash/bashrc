@@ -142,3 +142,6 @@ man() {
 }
 
 type -p direnv &>/dev/null && eval "$(direnv hook bash)"
+
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+
