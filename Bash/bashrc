@@ -141,7 +141,9 @@ man() {
 		man "$@"
 }
 
-type -p direnv &>/dev/null && eval "$(direnv hook bash)"
-
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 
+type -p direnv &>/dev/null && eval "$(direnv hook bash)"
+type -p minikube &>/dev/null && source <(minikube completion bash)
+type -p kubectl &>/dev/null && source <(kubectl completion bash)
+type -p oc &>/dev/null && source <(oc completion bash)
