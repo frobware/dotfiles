@@ -3,8 +3,8 @@
 cd $GOPATH/src/github.com/openshift/origin
 
 # Go1.9 gives better debug support
-export PATH=/usr/local/go1.9/go/bin:$PATH
-export PATH=$HOME/repos/github/golang/go/bin:$PATH
+# export PATH=/usr/local/go1.9/go/bin:$PATH
+# export PATH=$HOME/repos/github/golang/go/bin:$PATH
 
 export PATH="$(source hack/lib/init.sh; echo "${OS_OUTPUT_BINPATH}/$(os::build::host_platform)/"):${PATH}"
 
@@ -26,5 +26,7 @@ function os_node_oadm() {
 function os_node_start() {
     sudo "$(/usr/bin/which openshift)" start node --config=openshift.local.config/node-$(uname -n)/node-config.yaml "$@"
 }
+
+type -p trimpath && trimpath PATH
 
 provide origin

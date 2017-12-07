@@ -17,4 +17,6 @@ program=$1; shift
 # Why the double call? Because when apps are in full screen mode (in
 # Unity) they only seem to switch if you invoke it twice.
 #wmctrl -x -a $window
+echo "$@" >> /tmp/s
 wmctrl -x -a $window || exec $program "$@"
+

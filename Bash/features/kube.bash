@@ -21,15 +21,16 @@ function clone_tree {
 
 function localkube {
     export KUBERNETES_PROVIDER=local
-    export PATH=$GOPATH/src/k8s.io/kubernetes:$PATH
+    export PATH=$GOPATH/src/k8s.io/kubernetes/hack:$PATH
     sudo chmod 777 /var/run/kubernetes
+    sudo chmod +r /var/run/kubernetes/admin.kubeconfig
     sudo chmod +r /var/run/kubernetes/server-ca.crt
     sudo chmod +r /var/run/kubernetes/client-admin.crt
     sudo chmod +r /var/run/kubernetes/client-admin.key
-    kubectl.sh config set-cluster local --server=https://localhost:6443 --certificate-authority=/var/run/kubernetes/server-ca.crt
-    kubectl.sh config set-credentials myself --client-key=/var/run/kubernetes/client-admin.key --client-certificate=/var/run/kubernetes/client-admin.crt
-    kubectl.sh config set-context local --cluster=local --user=myself
-    kubectl.sh config use-context local
+    ./cluster/kubectl.sh config set-cluster local --server=https://localhost:6443 --certificate-authority=/var/run/kubernetes/server-ca.crt
+    ./cluster/kubectl.sh config set-credentials myself --client-key=/var/run/kubernetes/client-admin.key --client-certificate=/var/run/kubernetes/client-admin.crt
+    ./cluster/kubectl.sh config set-context local --cluster=local --user=myself
+    ./cluster/kubectl.sh config use-context local
 }
 
 function localkubeproxy {
