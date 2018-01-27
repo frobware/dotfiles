@@ -46,6 +46,27 @@ juju_machines ()
 {
     juju list-machines | awk /^[1-9]+/ | awk '{print $1}'
 }
+if [ ! -f ~/.terminfo/x/xterm-24bit ]; then
+    cat <<EOF > /tmp/xterm-24bit-$$.src
+# Use colon separators.
+xterm-24bit|xterm with 24-bit direct color mode,
+   use=xterm-256color,
+   setb24=\E[48:2:%p1%{65536}%/%d:%p1%{256}%/%{255}%&%d:%p1%{255}%&%dm,
+   setf24=\E[38:2:%p1%{65536}%/%d:%p1%{256}%/%{255}%&%d:%p1%{255}%&%dm,
+EOF
+    tic -x -o ~/.terminfo /tmp/xterm-24bit-$$.src
+fi
+
+if [ ! -f ~/.terminfo/x/xterm-24bits ]; then
+    cat <<EOF > /tmp/xterm-24bits-$$.src
+# Use semicolon separators; this seems to work better with tmux.
+xterm-24bits|xterm with 24-bit direct color mode,
+   use=xterm-256color,
+   setb24=\E[48;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
+   setf24=\E[38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
+EOF
+    tic -x -o ~/.terminfo /tmp/xterm-24bits-$$.src
+fi
 
 #export GOPATH=$HOME/go
 std_paths_prepend /usr/local/go
