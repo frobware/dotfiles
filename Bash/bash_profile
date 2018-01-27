@@ -64,12 +64,6 @@ EOF
     tic -x -o ~/.terminfo /tmp/xterm-24bits-$$.src
 fi
 
-#export GOPATH=$HOME/go
 std_paths_prepend /usr/local/go
-
-#eval `keychain --inherit any --quick --quiet --agents gpg,ssh --eval id_rsa id_launchpad_rsa id_github_frobware_rsa 3F583FBB`
-# eval `keychain --inherit any --quick --quiet --agents ssh --eval id_rsa id_launchpad_rsa id_github_frobware_rsa`
-
-#gsettings set org.gnome.desktop.input-sources xkb-options "['ctrl:nocaps']"
 
 export PATH="$HOME/.cargo/bin:$PATH"
