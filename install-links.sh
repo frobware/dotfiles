@@ -1,21 +1,23 @@
 #!/bin/bash
 
-# Invoke this as:#
+# Invoke this as:
 #
 # cd $HOME
 # ./dotfiles/install-links.sh
-#
 
 THISDIR="$(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P)"
 
 while getopts "d" opt; do
     case $opt in
-	d) dry_run=1; shift;;
-	\?) echo ${USAGE}
+	d) dry_run=echo;
+	   shift
+	   ;;
+	\?)
 	    exit 1
 	    ;;
     esac
 done
+
 
 function install_link() {
     local source=$1
@@ -29,50 +31,24 @@ function install_link() {
     fi
     case $OSTYPE in
 	darwin*)
-	    if [ $dry_run ]; then
-		echo ln -hfsv "$source" "$target"
-	    else
-		ln -hfsv "$source" "$target"
-	    fi
+	    ${dry_run} ln -hfsv "$source" "$target"
 	    ;;
 	linux*)
-	    if [ $dry_run ]; then
-		echo rm -f "$target"
-		echo ln -fsv "$source" "$target"
-	    else
-		rm -f "$target"
-		ln -fsvr "$source" "$target"
-	    fi
+	    ${dry_run} rm -f "$target"
+	    ${dry_run} ln -fsvr "$source" "$target"
 	    ;;
     esac
 }
 
-mkdir -p $HOME/bin
-
-# Bash
-for file in $(ls $THISDIR/Bash/bash*)
-do
-    target=$(basename "$file")
-    install_link "${file}" ".${target}"
-done
-
-# Scripts
-for file in $(ls $THISDIR/scripts/*.sh)
-do
-    target=$(basename "$file" .sh)
-    install_link "$file" "bin/$target"
-done
-
-for file in $(ls $THISDIR/scripts/clean*)
-do
-    target=$(basename "$file")
-    install_link "$file" "bin/$target"
-done
-
 install_link "$THISDIR/Resources/Xresources" ".Xresources"
 install_link "$THISDIR/tmux.conf" ".tmux.conf"
-install_link "$THISDIR/cmd-key-happy.lua" ".cmd-key-happy.lua"
-install_link "$THISDIR/cmd-key-happy.rc" ".cmd-key-happy.rc"
-install_link "$THISDIR/Resources/gnomerc" ".gnomerc"
+
+install_link $THISDIR/.bash_aliases .bash_aliases
+install_link $THISDIR/.bash_bootstrap .bash_bootstrap
+install_link $THISDIR/.bash_profile .bash_profile
+install_link $THISDIR/.bashrc .bashrc
+install_link $THISDIR/.bashrc_emacs .bashrc_emacs
+install_link $THISDIR/.bash_functions .bash_functions
+install_link $THISDIR/.bash_features .bash_features
 
 exit 0

@@ -10,10 +10,11 @@ function source_if_exists {
 
 source_if_exists /etc/skel/.bashrc
 source_if_exists /etc/profile
-source_if_exists ~/.bash_bootstrap
 
-. ${BASH_HOME}/functions/require
-. ${BASH_HOME}/functions/path-functions
+#source_if_exists ~/.bash_bootstrap
+
+. ${BASH_HOME}/.bash_functions/require
+. ${BASH_HOME}/.bash_functions/path-functions
 
 # Like many of you, I constantly have many terminals open at once. I
 # wish bash would dump every command I type there instead of seemingly
