@@ -11,8 +11,6 @@ function source_if_exists {
 source_if_exists /etc/skel/.bashrc
 source_if_exists /etc/profile
 
-#source_if_exists ~/.bash_bootstrap
-
 . ${BASH_HOME}/.bash_functions/require
 . ${BASH_HOME}/.bash_functions/path-functions
 
@@ -99,15 +97,15 @@ declare -x __vpn_active
 export PROMPT_COMMAND="__vpn_active; $PROMPT_COMMAND"
 
 if ! type __git_ps1 &> /dev/null && [ -e /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
-        . /usr/share/git-core/contrib/completion/git-prompt.sh
+    . /usr/share/git-core/contrib/completion/git-prompt.sh
 fi
 
 if type __git_ps1 &> /dev/null; then
-        export GIT_PS1_SHOWDIRTYSTATE=1
-        export GIT_PS1_SHOWUNTRACKEDFILES=1
-        export GIT_PS1_SHOWCOLORHINTS=1
-        # export PROMPT_DIRTRIM=2
-        # export PROMPT_COMMAND='__git_ps1 "\w" "\\\$ "'
+    export GIT_PS1_SHOWDIRTYSTATE=1
+    export GIT_PS1_SHOWUNTRACKEDFILES=1
+    export GIT_PS1_SHOWCOLORHINTS=1
+    # export PROMPT_DIRTRIM=2
+    # export PROMPT_COMMAND='__git_ps1 "\w" "\\\$ "'
 fi
 
 #export PS1='${vpn_active:+[${vpn_active}] }\u@\h:\w$(__git_ps1)\n$ '
@@ -130,14 +128,14 @@ BASE16_SHELL="$HOME/.config/base16-shell/base16-default.dark.sh"
 # [ -f ~/.bashrc_emacs ] && . ~/.bashrc_emacs
 
 man() {
-	env \
-		LESS_TERMCAP_md=$'\e[1;36m' \
-		LESS_TERMCAP_me=$'\e[0m' \
-		LESS_TERMCAP_se=$'\e[0m' \
-		LESS_TERMCAP_so=$'\e[1;40;92m' \
-		LESS_TERMCAP_ue=$'\e[0m' \
-		LESS_TERMCAP_us=$'\e[1;32m' \
-		man "$@"
+    env \
+	LESS_TERMCAP_md=$'\e[1;36m' \
+	LESS_TERMCAP_me=$'\e[0m' \
+	LESS_TERMCAP_se=$'\e[0m' \
+	LESS_TERMCAP_so=$'\e[1;40;92m' \
+	LESS_TERMCAP_ue=$'\e[0m' \
+	LESS_TERMCAP_us=$'\e[1;32m' \
+	man "$@"
 }
 
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
