@@ -64,6 +64,4 @@ EOF
     tic -x -o ~/.terminfo /tmp/xterm-24bits-$$.src
 fi
 
-std_paths_prepend /usr/local/go
-
 export PATH="$HOME/.cargo/bin:$PATH"
