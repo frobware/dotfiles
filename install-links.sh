@@ -43,12 +43,12 @@ function install_link() {
 install_link "$THISDIR/Resources/Xresources" ".Xresources"
 install_link "$THISDIR/tmux.conf" ".tmux.conf"
 
-install_link $THISDIR/.bash_aliases .bash_aliases
-install_link $THISDIR/.bash_bootstrap .bash_bootstrap
-install_link $THISDIR/.bash_profile .bash_profile
-install_link $THISDIR/.bashrc .bashrc
-install_link $THISDIR/.bashrc_emacs .bashrc_emacs
-install_link $THISDIR/.bash_functions .bash_functions
-install_link $THISDIR/.bash_features .bash_features
+install_link $THISDIR/bash_aliases .bash_aliases
+install_link $THISDIR/bash_bootstrap .bash_bootstrap
+install_link $THISDIR/bash_profile .bash_profile
+install_link $THISDIR/bashrc .bashrc
+install_link $THISDIR/bashrc_emacs .bashrc_emacs
+install_link $THISDIR/bash_functions .bash_functions
+install_link $THISDIR/bash_features .bash_features
 
 exit 0
