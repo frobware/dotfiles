@@ -1,9 +1,6 @@
 # -*-shell-script-*-
 
 export BASH_HOME="$(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P)"
-echo $BASH_HOME
-# export BASH_HOME=$(readlink -f "${BASH_SOURCE[0]}")
-# BASH_HOME="$(cd -P "$(dirname "$BASH_HOME")" && pwd)"
 
 . ${BASH_HOME}/.bash_functions/system-id
 
