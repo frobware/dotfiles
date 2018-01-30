@@ -58,8 +58,6 @@ function check_exit_status ()
 
 declare -x check_exit_status
 
-[ -f ~/.terminfo/x/xterm-24bits ] && export TERM=xterm-24bits
-
 [ -n "$TMUX" ] && export TERM=xterm-256color
 
 bold()          { ansi 1 "$@"; }

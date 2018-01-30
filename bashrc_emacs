@@ -1,16 +1,22 @@
 # -*-shell-script-*-
 
+EMACS_TERM="${TERM:=xterm-256}"
+
+if [[ -f ~/.terminfo/x/xterm-24bits ]]; then
+    EMACS_TERM="xterm-24bits"
+fi
+
 if [[ "$DISPLAY" == "" ]]; then
     # Can we use muti-tty?
     emacsclient --help | grep "\-\-tty" > /dev/null
     if [[ "$?" == "0" ]]; then
-	EMACS_CMD="emacsclient -a '' -t"
+	EMACS_CMD="env TERM=$EMACS_TERM emacsclient -a '' -t"
     else
-	EMACS_CMD="emacs -nw"
+	EMACS_CMD="env TERM=$EMACS_TERM emacs -nw"
     fi
 else
     # otherwise don't wait and open a new frame
-    EMACS_CMD="emacsclient -n -a '' -c"
+    EMACS_CMD="env TERM=$EMACS_TERM emacsclient -n -a '' -c"
 fi
 
 # Set the environment variables for the editors
