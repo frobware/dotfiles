@@ -5,7 +5,7 @@
 
 function source_if_exists() {
     local fname=$1
-    [[ -r $(readlink -f $fname) ]] && . $fname
+    [[ -r $(readlink -f $fname) ]] && source $fname
 }
 
 if [ -z "$BASH_HOME" ]; then
@@ -20,7 +20,6 @@ shopt -s histappend
 
 # single line cmd history
 shopt -s cmdhist
-export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 export HISTSIZE=5000000
 export HISTCONTROL=ignoredups
 export HISTIGNORE="&:ls:[bf]g:exit"
@@ -36,9 +35,9 @@ if [ -x /usr/local/bin/brew ]; then
 fi
 
 # Graciously stolen from idf
-function check_exit_status ()
+function resolve_exit_status()
 {
-    local status="$?"
+    local status="$1"
     local msg=""
     local signal=""
 
@@ -47,20 +46,20 @@ function check_exit_status ()
 	    msg="exit (${status})"
 	else
 	    signal="$(builtin kill -l $((${status} - 128)) 2>/dev/null)"
-	    if [ "$signal" ]; then msg="kill -$signal$msg"; fi
+	    if [ -n "$signal" ]; then
+		msg="kill -$signal$msg";
+	    fi
 	fi
-	echo "[${status} => ${msg}]" 1>&2
+	echo "[$status => $msg]"
     fi
-    return 0
 }
-
-declare -x check_exit_status
 
 [ -n "$TMUX" ] && export TERM=xterm-256color
 
 bold()          { ansi 1 "$@"; }
 italic()        { ansi 3 "$@"; }
 underline()     { ansi 4 "$@"; }
+reversevideo()  { ansi 7 "$@"; }
 strikethrough() { ansi 9 "$@"; }
 red()           { ansi 31 "$@"; }
 green()         { ansi 32 "$@"; }
@@ -75,9 +74,6 @@ function __vpn_active() {
 }
 
 declare -x __vpn_active
-
-export PROMPT_COMMAND="__vpn_active; $PROMPT_COMMAND"
-export PS1='${vpn_active:+[${vpn_active}] }\u@\h:\w\n$ '
 
 shopt -s checkwinsize
 
@@ -113,3 +109,16 @@ function cover() {
     local t="/tmp/go-cover.$$.tmp"
     go test -coverprofile=$t $@ && go tool cover -html=$t && unlink $t
 }
+
+export PROMPT_COMMAND="__vpn_active; history -a; $PROMPT_COMMAND"
+export PS1='${vpn_active:+[${vpn_active}]}\u@\h:\w'
+
+GITAWAREPROMPT="$HOME/.bash/git-aware-prompt"
+
+if [[ -f "$GITAWAREPROMPT/main.sh" ]]; then
+    source "${GITAWAREPROMPT}/main.sh"
+    PS1+=" \[$bldylw\]\$git_branch\[$txtcyn\]\$git_dirty\[$txtrst\] "
+fi
+
+PS1+="\$(RET=\$?; [[ \$RET != 0 ]] && echo \$(reversevideo \$(red \$(bold \$(resolve_exit_status \$RET)))))"
+PS1+="\n$ "
