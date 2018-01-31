@@ -1,27 +1,6 @@
-# -*-shell-script-*-
+# -*- shell-script -*-
 
-export BASH_HOME="$(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P)"
-
-. ${BASH_HOME}/.bash_functions/system-id
-
-# The bash features depend on DNSDOMAIN being set.  If it is not set
-# we try and obtain a value based on the host we are running on.
-
-case $BASH_HOST_TYPE in
-    x86-linux2)
-	: ${DNSDOMAIN=`dnsdomainname`}
-	;;
-    sun4-solaris2)
-	: ${DNSDOMAIN:=`domainname`}
-	;;
-    *)
-	# hit and hope!
-	: ${DNSDOMAIN:=`domainname`}
-	;;
-esac
-
-FPATH=${BASH_HOME}/.bash_features:${FPATH}
-export FPATH
+export FPATH=${BASH_HOME:?unset}/.bash_features:${FPATH}
 
 # The `require' functionality which drives FPATH.
 . ${BASH_HOME}/.bash_functions/require
@@ -29,4 +8,4 @@ export FPATH
 # An always available set of path manipulation functions.
 . ${BASH_HOME}/.bash_functions/path-functions
 
-export BASH_HOME FPATH
+trimpath FPATH

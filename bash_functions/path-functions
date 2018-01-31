@@ -269,7 +269,7 @@ function flag_set_p ()
   local flag="$1"
 
   case "$-" in
-  *${flag}* ) return 0;;
+      *${flag}* ) return 0;;
   esac
 
   return 1
