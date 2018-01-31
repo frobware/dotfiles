@@ -51,4 +51,6 @@ install_link $THISDIR/bashrc_emacs .bashrc_emacs
 install_link $THISDIR/bash_functions .bash_functions
 install_link $THISDIR/bash_features .bash_features
 
+install_link $THISDIR/gitconfig .gitconfig
+
 exit 0
