@@ -43,17 +43,24 @@ path_prepend PATH $HOME/bin
 
 set -a
 ALTERNATE_EDITOR=""
-EDITOR="emacsclient -t"                  # $EDITOR should open in terminal
-VISUAL="emacsclient -c -a emacs"         # $VISUAL opens in GUI with non-daemon as alternate
 XUSERFILESEARCHPATH=$HOME/lib/X11/app-defaults/%N%S
 RLWRAP=$HOME/.rlwrap
-
 PAGER="less -X -e -q -s -m"
 LESS="-X -e -q -s -m"
 BC_ENV_ARGS="$HOME/.bcrc"
 MANWIDTH=80
 LIBVIRT_DEFAULT_URI=qemu:///system
 set +a
+
+if type -p emacs &>/dev/null; then
+    # $EDITOR should open in terminal 
+    export EDITOR="emacsclient -t"
+fi
+
+if type -p emacsclient &>/dev/null; then
+    # $VISUAL opens in GUI with non-daemon as alternate
+    export VISUAL="emacsclient -c -a emacs"
+fi
 
 trimpath PATH
 trimpath LD_LIBRARY_PATH
