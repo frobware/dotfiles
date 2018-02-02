@@ -4,6 +4,7 @@ reauthor = !sh -c 'eval `git log --reverse --topo-order --pretty=format:\"git ch
 
 [user]
 name = Andrew McDermott
+email = aim@frobware.com
 
 [color]
 ui = auto
