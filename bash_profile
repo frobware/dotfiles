@@ -40,6 +40,7 @@ source_if_exists $HOME/.bash_aliases
 path_append PATH $HOME/.cargo/bin
 path_append PATH $HOME/dotfiles/scripts
 path_prepend PATH $HOME/bin
+path_prepend PATH /usr/libexec/openssh
 
 set -a
 ALTERNATE_EDITOR=""
