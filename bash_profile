@@ -64,7 +64,5 @@ if type -p emacsclient &>/dev/null; then
     export VISUAL="emacsclient -c -a emacs"
 fi
 
-require sga
-
 trimpath PATH
 trimpath LD_LIBRARY_PATH
