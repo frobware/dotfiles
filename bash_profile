@@ -50,6 +50,7 @@ PAGER="less -X -e -q -s -m"
 LESS="-X -e -q -s -m"
 BC_ENV_ARGS="$HOME/.bcrc"
 MANWIDTH=80
+# https://serverfault.com/questions/803283/how-do-i-list-virsh-networks-without-sudo/803298
 LIBVIRT_DEFAULT_URI=qemu:///system
 set +a
 
