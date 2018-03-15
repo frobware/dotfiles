@@ -40,3 +40,6 @@ alias wrap='tput smam'
 alias nowrap='tput rmam'
 
 alias render_template='python -c "from jinja2 import Template; import sys; print(Template(sys.stdin.read()).render());"'
+
+alias gdb='gdb -q'
+alias rust-gdb='rust-gdb -q'
