@@ -110,15 +110,4 @@ function cover() {
     go test -coverprofile=$t $@ && go tool cover -html=$t && unlink $t
 }
 
-export PROMPT_COMMAND="__vpn_active; history -a; $PROMPT_COMMAND"
-export PS1='${vpn_active:+[${vpn_active}]}\u@\h:\w'
-
-GITAWAREPROMPT="$HOME/.bash/git-aware-prompt"
-
-if [[ -f "$GITAWAREPROMPT/main.sh" ]]; then
-    source "${GITAWAREPROMPT}/main.sh"
-    PS1+=" \[$bldylw\]\$git_branch\[$txtcyn\]\$git_dirty\[$txtrst\] "
-fi
-
-PS1+="\$(RET=\$?; [[ \$RET != 0 ]] && echo \$(reversevideo \$(red \$(bold \$(resolve_exit_status \$RET)))))"
-PS1+="\n$ "
+export PS1="\u@\h:\w\n$ "
