@@ -1,2 +1,2 @@
-path_prepend PATH $HOME/sdk/go1.10rc1/bin
+path_prepend PATH $HOME/go1.10.1/bin
 provide go1.10
