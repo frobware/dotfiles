@@ -1,4 +1,4 @@
-# Sets environment variables and aliases to enable ssh guardian gent
+# Sets environment variables and aliases to enable ssh guardian agent
 # for commonly used tools
 
 # Set environment variables overriding the ssh program
