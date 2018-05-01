@@ -77,7 +77,7 @@ declare -x __vpn_active
 
 shopt -s checkwinsize
 
-if type -p brew 2>/dev/null >/dev/null; then
+if type -P brew 2>/dev/null >/dev/null; then
     if [ -f $(brew --prefix)/etc/bash_completion ]; then
 	. $(brew --prefix)/etc/bash_completion
     fi
@@ -89,10 +89,20 @@ source_if_exists "$HOME/.bash_aliases"
 source_if_exists '$HOME/Downloads/google-cloud-sdk/path.bash.inc'
 source_if_exists '$HOME/Downloads/google-cloud-sdk/completion.bash.inc'
 
-type -p direnv &>/dev/null && eval "$(direnv hook bash)"
-type -p minikube &>/dev/null && source <(minikube completion bash)
-type -p kubectl &>/dev/null && source <(kubectl completion bash)
-type -p oc &>/dev/null && source <(oc completion bash)
+# type -P: means run these helpers only if the respective binary exists.
+type -P direnv &>/dev/null && eval "$(direnv hook bash)"
+
+function kubectl_completion() {
+    type -p kubectl 2>&1 >/dev/null && source <(kubectl completion bash)
+}
+
+function oc_completion() {
+    type -p oc 2>&1 >/dev/null && source <(oc completion bash)
+}
+
+function ocadm_completion() {
+    type -p oc adm 2>&1 >/dev/null && source <(oc adm completion bash)
+}
 
 function man() {
     env \
