@@ -9,6 +9,6 @@ Emacs*font: Monospace:pixelsize=26
 !emacs.font: Consolas:pixelsize=22
 !gnus.reverseVideo: true
 !Gnus*font: Monospace:pixelsize=22
-gnus.font: Monospace:pixelsize=24
+gnus.font: Monospace:pixelsize=28
 !Gnus*font: Consolas:pixelsize=22
 !gnus.font: Consolas:pixelsize=22
