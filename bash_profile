@@ -67,3 +67,5 @@ fi
 
 trimpath PATH
 trimpath LD_LIBRARY_PATH
+
+export PATH="$HOME/.cargo/bin:$PATH"
