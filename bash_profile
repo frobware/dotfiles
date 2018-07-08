@@ -64,7 +64,7 @@ fi
 
 if type -p emacsclient &>/dev/null; then
     # $VISUAL opens in GUI with non-daemon as alternate
-    export VISUAL="emacsclient -c -a emacs"
+    export VISUAL='emacsclient -c --alternate-editor="" --frame-parameters="((reverse . t))"'
 fi
 
 trimpath PATH
