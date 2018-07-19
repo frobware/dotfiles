@@ -1,5 +1,7 @@
 # -*-shell-script-*-
 
+export GPG_TTY=$(tty)
+
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
@@ -23,8 +25,6 @@ shopt -s cmdhist
 export HISTSIZE=5000000
 export HISTCONTROL=ignoredups
 export HISTIGNORE="&:ls:[bf]g:exit"
-
-export GPG_TTY=$(tty)
 
 source_if_exists /etc/bash_completion
 
