@@ -50,7 +50,7 @@ cmd = kdiff3 --L1 \"$MERGED (Base)\" --L2 \"$MERGED (Local)\" --L3 \"$MERGED (Re
     whitespace = fix
 
 [color "diff"]
-        meta = yellow bold
+        #meta = yellow bold
         frag = magenta bold # line info
         old = red           # deletions
         new = green         # additions
