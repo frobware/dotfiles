@@ -45,7 +45,6 @@ path_prepend PATH $HOME/bin
 path_prepend PATH /usr/libexec/openssh
 
 set -a
-ALTERNATE_EDITOR=""
 XUSERFILESEARCHPATH=$HOME/lib/X11/app-defaults/%N%S
 RLWRAP=$HOME/.rlwrap
 PAGER="less -X -e -q -s -m"
