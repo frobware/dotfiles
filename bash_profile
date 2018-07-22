@@ -30,6 +30,20 @@ EOF
     rm /tmp/xterm-24bit-$$.src
 fi
 
+if [ ! -f $HOME/.terminfo/x/tmux-24bit ]; then
+    cat <<EOF > /tmp/tmux-24bit-$$.src
+# Use colon separators.
+tmux-24bit|tmux with 24-bit direct color mode,
+   use=tmux-256color,
+   sitm=\E[3m,
+   ritm=\E[23m,
+   setb24=\E[48;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
+   setf24=\E[38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
+EOF
+    tic -x -o $HOME/.terminfo /tmp/tmux-24bit-$$.src
+    rm /tmp/tmux-24bit-$$.src
+fi
+
 if [ ! -f $HOME/.terminfo/x/xterm-24bits ]; then
     cat <<EOF > /tmp/xterm-24bits-$$.src
 # Use semicolon separators; this seems to work better with tmux.
@@ -42,7 +56,7 @@ EOF
     rm /tmp/xterm-24bits-$$.src
 fi
 
-if [ -f $HOME/.terminfo/x/xterm-24bit ]; then
+if [[ -z "$TMUX" ]] && [[ -f $HOME/.terminfo/x/xterm-24bit ]]; then
     export TERM=xterm-24bit
 fi
 

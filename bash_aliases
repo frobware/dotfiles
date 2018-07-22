@@ -34,7 +34,7 @@ alias nukegopkg='[ -d "$GOPATH/pkg" ] && rm -rf $GOPATH/pkg'
 
 alias wjsm='watch juju show-machine'
 alias gnus='exec emacs -f gnus --name gnus -rv'
-alias tmux="env TERM=xterm-24bit tmux"
+alias tmux="env TERM=tmux-24bit tmux"
 
 alias wrap='tput smam'
 alias nowrap='tput rmam'
