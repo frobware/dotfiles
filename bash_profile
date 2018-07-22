@@ -65,7 +65,7 @@ RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 set +a
 
 if type -p emacs &>/dev/null; then
-    # $EDITOR should open in terminal 
+    # $EDITOR should open in terminal
     export EDITOR="emacsclient -t"
 fi
 
@@ -78,3 +78,8 @@ trimpath PATH
 trimpath LD_LIBRARY_PATH
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+if [[ "$HOSTNAME" =~ "t470s" ]]; then
+    gpgconf --launch gpg-agent
+    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+fi
