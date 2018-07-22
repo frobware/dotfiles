@@ -10,13 +10,13 @@ export BASH_HOME="$(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P)"
 source_if_exists $BASH_HOME/.bash_bootstrap
 source_if_exists /etc/profile
 
-if [ ! -f $HOME/.terminfo/x/xterm-24bit ]; then
-# Addition of:https://github.com/syl20bnr/spacemacs/wiki/Terminal
+# Addition of:
 #
 #  sitm=\E[3m,
 #  ritm=\E[23m,
 #
 # comes from: https://github.com/syl20bnr/spacemacs/wiki/Terminal
+if [ ! -f $HOME/.terminfo/x/xterm-24bit ]; then
     cat <<EOF > /tmp/xterm-24bit-$$.src
 # Use colon separators.
 xterm-24bit|xterm with 24-bit direct color mode,
@@ -40,6 +40,10 @@ xterm-24bits|xterm with 24-bit direct color mode,
 EOF
     tic -x -o $HOME/.terminfo /tmp/xterm-24bits-$$.src
     rm /tmp/xterm-24bits-$$.src
+fi
+
+if [ -f $HOME/.terminfo/x/xterm-24bit ]; then
+    export TERM=xterm-24bit
 fi
 
 [ -f $HOME/.bcrc ] || touch $HOME/.bcrc
