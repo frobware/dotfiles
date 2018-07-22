@@ -2,8 +2,8 @@
 
 EMACS_TERM="${TERM:=xterm-256}"
 
-if [[ -f ~/.terminfo/x/xterm-24bits ]]; then
-    EMACS_TERM="xterm-24bits"
+if [[ -f ~/.terminfo/x/xterm-24bit ]]; then
+    EMACS_TERM="xterm-24bit"
 fi
 
 if [[ "$DISPLAY" == "" ]]; then
