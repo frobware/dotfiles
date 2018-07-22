@@ -54,8 +54,6 @@ function resolve_exit_status()
     fi
 }
 
-[ -n "$TMUX" ] && export TERM=xterm-256color
-
 bold()          { ansi 1 "$@"; }
 italic()        { ansi 3 "$@"; }
 underline()     { ansi 4 "$@"; }
