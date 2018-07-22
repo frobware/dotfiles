@@ -27,6 +27,7 @@ xterm-24bit|xterm with 24-bit direct color mode,
    setf24=\E[38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
 EOF
     tic -x -o $HOME/.terminfo /tmp/xterm-24bit-$$.src
+    rm /tmp/xterm-24bit-$$.src
 fi
 
 if [ ! -f $HOME/.terminfo/x/xterm-24bits ]; then
@@ -38,6 +39,7 @@ xterm-24bits|xterm with 24-bit direct color mode,
    setf24=\E[38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
 EOF
     tic -x -o $HOME/.terminfo /tmp/xterm-24bits-$$.src
+    rm /tmp/xterm-24bits-$$.src
 fi
 
 [ -f $HOME/.bcrc ] || touch $HOME/.bcrc
