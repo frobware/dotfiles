@@ -11,12 +11,20 @@ source_if_exists $BASH_HOME/.bash_bootstrap
 source_if_exists /etc/profile
 
 if [ ! -f $HOME/.terminfo/x/xterm-24bit ]; then
+# Addition of:https://github.com/syl20bnr/spacemacs/wiki/Terminal
+#
+#  sitm=\E[3m,
+#  ritm=\E[23m,
+#
+# comes from: https://github.com/syl20bnr/spacemacs/wiki/Terminal
     cat <<EOF > /tmp/xterm-24bit-$$.src
 # Use colon separators.
 xterm-24bit|xterm with 24-bit direct color mode,
    use=xterm-256color,
-   setb24=\E[48:2:%p1%{65536}%/%d:%p1%{256}%/%{255}%&%d:%p1%{255}%&%dm,
-   setf24=\E[38:2:%p1%{65536}%/%d:%p1%{256}%/%{255}%&%d:%p1%{255}%&%dm,
+   sitm=\E[3m,
+   ritm=\E[23m,
+   setb24=\E[48;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
+   setf24=\E[38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
 EOF
     tic -x -o $HOME/.terminfo /tmp/xterm-24bit-$$.src
 fi
