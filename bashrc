@@ -119,3 +119,8 @@ function cover() {
 }
 
 export PS1="\u@\h:\w\n$ "
+
+if [[ "$HOSTNAME" =~ "t470s" ]]; then
+    gpgconf --launch gpg-agent
+    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+fi
