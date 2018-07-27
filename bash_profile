@@ -97,7 +97,7 @@ trimpath LD_LIBRARY_PATH
 
 export PATH="$HOME/.cargo/bin:$PATH"
 
-if [[ "$HOSTNAME" =~ "t470s" ]]; then
+if [[ "$HOSTNAME" =~ t4[6-7]0s ]]; then
     gpgconf --launch gpg-agent
     export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 fi
