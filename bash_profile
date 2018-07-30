@@ -56,9 +56,9 @@ EOF
     rm /tmp/xterm-24bits-$$.src
 fi
 
-if [[ -z "$TMUX" ]] && [[ -f $HOME/.terminfo/x/xterm-24bit ]]; then
-    export TERM=xterm-24bit
-fi
+#if [[ -z "$TMUX" ]] && [[ -f $HOME/.terminfo/x/xterm-24bit ]]; then
+#    export TERM=xterm-24bit
+#fi
 
 [ -f $HOME/.bcrc ] || touch $HOME/.bcrc
 
@@ -101,3 +101,5 @@ if [[ "$HOSTNAME" =~ t4[6-7]0s ]]; then
     gpgconf --launch gpg-agent
     export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 fi
+
+path_prepend PATH $HOME/.local/bin
