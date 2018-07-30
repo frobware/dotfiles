@@ -47,3 +47,5 @@ dconf write /org/compiz/integrated/show-hud "['disabled']"
 
 # Add additional characters to word selection
 dconf write /org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/word-char-exceptions '@ms "-#%&+,./:=?@_~"'
+
+dconf write /org/gnome/desktop/interface/cursor-size 128
