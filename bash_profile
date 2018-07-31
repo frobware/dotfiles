@@ -12,8 +12,8 @@ source_if_exists /etc/profile
 
 # Addition of:
 #
-#  sitm=\E[3m,
-#  ritm=\E[23m,
+#  sitm=\E[3m,  // enter_italics_mode	
+#  ritm=\E[23m, // exit_italics_mode
 #
 # comes from: https://github.com/syl20bnr/spacemacs/wiki/Terminal
 if [ ! -f $HOME/.terminfo/x/xterm-24bit ]; then
