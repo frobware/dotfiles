@@ -90,15 +90,15 @@ source_if_exists '$HOME/Downloads/google-cloud-sdk/completion.bash.inc'
 # type -P: means run these helpers only if the respective binary exists.
 type -P direnv &>/dev/null && eval "$(direnv hook bash)"
 
-function kubectl_completion() {
+function source_kubectl_completion() {
     type -p kubectl 2>&1 >/dev/null && source <(kubectl completion bash)
 }
 
-function oc_completion() {
+function source_oc_completion() {
     type -p oc 2>&1 >/dev/null && source <(oc completion bash)
 }
 
-function ocadm_completion() {
+function source_ocadm_completion() {
     type -p oc adm 2>&1 >/dev/null && source <(oc adm completion bash)
 }
 
