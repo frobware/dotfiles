@@ -12,3 +12,4 @@ Emacs*font: Monospace:pixelsize=26
 gnus.font: Monospace:pixelsize=28
 !Gnus*font: Consolas:pixelsize=22
 !gnus.font: Consolas:pixelsize=22
+URxvt.font: xft:Monospace:size=18
