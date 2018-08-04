@@ -44,3 +44,11 @@ alias render_template='python -c "from jinja2 import Template; import sys; print
 alias gdb='gdb -q'
 alias rust-gdb='rust-gdb -q'
 alias kc=kubectl
+
+function emacsclient() {
+    if [[ -z "$TMUX" ]] && [[ -f $HOME/.terminfo/x/xterm-24bit ]]; then
+	command env TERM=xterm-24bit emacsclient "$@"
+    else
+	command emacsclient "$@"
+    fi
+}
