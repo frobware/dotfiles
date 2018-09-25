@@ -103,3 +103,6 @@ if [[ "$HOSTNAME" =~ t4[6-7]0s ]]; then
 fi
 
 path_prepend PATH $HOME/.local/bin
+
+# Exemplary expiration date
+export EXPIRATION_DATE=$( date -d '12 hours' --iso=minutes --utc )
