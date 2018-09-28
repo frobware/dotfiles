@@ -105,4 +105,4 @@ fi
 path_prepend PATH $HOME/.local/bin
 
 # Exemplary expiration date
-export EXPIRATION_DATE=$( date -d '12 hours' --iso=minutes --utc )
+export EXPIRATION_DATE=$( date -d '4 hours' --iso=minutes --utc )
