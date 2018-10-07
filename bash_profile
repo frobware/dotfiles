@@ -79,7 +79,9 @@ BC_ENV_ARGS="$HOME/.bcrc"
 MANWIDTH=80
 # https://serverfault.com/questions/803283/how-do-i-list-virsh-networks-without-sudo/803298
 LIBVIRT_DEFAULT_URI=qemu:///system
-RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+if type -p rustc &>/dev/null; then
+    RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+fi
 set +a
 
 if type -p emacs &>/dev/null; then
