@@ -84,7 +84,7 @@ if type -p rustc &>/dev/null; then
 fi
 set +a
 
-if type -p emacs &>/dev/null; then
+if type -p emacsclient &>/dev/null; then
     # $EDITOR should open in terminal
     export EDITOR="emacsclient -t"
 fi
