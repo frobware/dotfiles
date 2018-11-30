@@ -5,7 +5,7 @@
 
 function source_if_exists() {
     local fname=$1
-    [[ -r $(readlink $fname) ]] && source $fname
+    [[ -r $(readlink -f $fname) ]] && source $fname
 }
 
 if [ -z "$BASH_HOME" ]; then

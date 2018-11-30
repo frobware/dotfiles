@@ -2,7 +2,7 @@
 
 function source_if_exists() {
     local fname=$1
-    [[ -r $(readlink $fname) ]] && source $fname
+    [[ -r $(readlink -f $fname) ]] && source $fname
 }
 
 export BASH_HOME="$(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P)"
