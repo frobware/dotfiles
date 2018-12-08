@@ -25,7 +25,7 @@ alias dockercleandangling='docker rmi $(docker images -q --filter "dangling=true
 
 alias nukegopkg='[ -d "$GOPATH/pkg" ] && rm -rf $GOPATH/pkg'
 
-alias tmux="env TERM=tmux-24bit tmux"
+#alias tmux="env TERM=tmux-24bit tmux"
 
 alias wrap='tput smam'
 alias nowrap='tput rmam'
