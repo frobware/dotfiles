@@ -35,3 +35,6 @@ alias render_template='python -c "from jinja2 import Template; import sys; print
 alias gdb='gdb -q'
 alias rust-gdb='rust-gdb -q'
 alias kc=kubectl
+
+alias emacs="TERM=tmux-24bit command emacs"
+alias emacsclient="TERM=tmux-24bit command emacsclient"
