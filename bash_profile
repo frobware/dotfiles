@@ -89,7 +89,7 @@ set +a
 
 if type -p emacsclient &>/dev/null; then
     # $EDITOR should open in terminal
-    export EDITOR="emacsclient -t"
+    export EDITOR="env TERM=tmux-24bit emacsclient -t"
 fi
 
 if type -p emacsclient &>/dev/null; then
