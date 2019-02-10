@@ -31,7 +31,7 @@ EOF
     rm /tmp/xterm-24bit-$$.src
 fi
 
-if [ ! -f $HOME/.terminfo/x/tmux-24bit ]; then
+if [ ! -f $HOME/.terminfo/t/tmux-24bit ]; then
     cat <<EOF > /tmp/tmux-24bit-$$.src
 # Use colon separators.
 tmux-24bit|tmux with 24-bit direct color mode,
