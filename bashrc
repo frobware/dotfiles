@@ -91,15 +91,15 @@ source_if_exists '$HOME/Downloads/google-cloud-sdk/completion.bash.inc'
 type -P direnv &>/dev/null && eval "$(direnv hook bash)"
 
 function source_kubectl_completion() {
-    type -p kubectl 2>&1 >/dev/null && source <(kubectl completion bash)
+    type -P kubectl 2>&1 >/dev/null && source <(kubectl completion bash)
 }
 
 function source_oc_completion() {
-    type -p oc 2>&1 >/dev/null && source <(oc completion bash)
+    type -P oc 2>&1 >/dev/null && source <(oc completion bash)
 }
 
 function source_ocadm_completion() {
-    type -p oc adm 2>&1 >/dev/null && source <(oc adm completion bash)
+    type -P oc adm 2>&1 >/dev/null && source <(oc adm completion bash)
 }
 
 function man() {

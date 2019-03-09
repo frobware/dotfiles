@@ -41,6 +41,6 @@ export KUBECONFIG=/var/run/kubernetes/admin.kubeconfig
 export PATH=$GOPATH/src/k8s.io/kubernetes/_output/local/go/bin:$PATH
 export PATH=$GOPATH/src/k8s.io/kubernetes/third_party/etcd:${PATH}
 
-type -p kubectl >& /dev/null && source <(kubectl completion bash) 
+type -P kubectl >& /dev/null && source <(kubectl completion bash) 
 
 provide kube

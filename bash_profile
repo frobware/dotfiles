@@ -82,17 +82,17 @@ BC_ENV_ARGS="$HOME/.bcrc"
 MANWIDTH=80
 # https://serverfault.com/questions/803283/how-do-i-list-virsh-networks-without-sudo/803298
 LIBVIRT_DEFAULT_URI=qemu:///system
-if type -p rustc &>/dev/null; then
+if type -P rustc &>/dev/null; then
     RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 fi
 set +a
 
-if type -p emacsclient &>/dev/null; then
+if type -P emacsclient &>/dev/null; then
     # $EDITOR should open in terminal
     export EDITOR="env TERM=tmux-24bit emacsclient -t"
 fi
 
-if type -p emacsclient &>/dev/null; then
+if type -P emacsclient &>/dev/null; then
     # $VISUAL opens in GUI with non-daemon as alternate
     export VISUAL='emacsclient -c --alternate-editor="" --frame-parameters="((reverse . t))"'
 fi
@@ -111,3 +111,4 @@ path_prepend PATH $HOME/.local/bin
 
 # Exemplary expiration date
 export EXPIRATION_DATE=$( date -d '4 hours' --iso=minutes --utc )
+if [ -e /home/aim/.nix-profile/etc/profile.d/nix.sh ]; then . /home/aim/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

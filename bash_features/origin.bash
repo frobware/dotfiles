@@ -27,6 +27,6 @@ function os_node_start() {
     sudo "$(/usr/bin/which openshift)" start node --config=openshift.local.config/node-$(uname -n)/node-config.yaml "$@"
 }
 
-type -p trimpath && trimpath PATH
+type -P trimpath && trimpath PATH
 
 provide origin
