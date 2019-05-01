@@ -124,3 +124,5 @@ if [[ "$HOSTNAME" =~ t4[6-7]0s ]]; then
     gpgconf --launch gpg-agent
     export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
 fi
+
+source_if_exists $HOME/.nix-profile/etc/profile.d/nix.sh
