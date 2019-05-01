@@ -41,3 +41,4 @@ alias emacsclient="TERM=tmux-24bit command emacsclient"
 
 alias kn='kubectl get nodes --no-headers --sort-by=.metadata.creationTimestamp |cat -n'
 alias km='kubectl get machines --no-headers --sort-by=.metadata.creationTimestamp |cat -n'
+alias ke='kubectl get events --no-headers --sort-by=.metadata.creationTimestamp |cat -n'
