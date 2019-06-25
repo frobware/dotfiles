@@ -46,3 +46,5 @@ alias cat='bat --paging=always'
 alias wm="dtach -A /tmp/dvtm -r winch dvtm"
 
 export BAT_THEME="Monokai Extended Bright"
+
+alias disarm-the-cvo='kubectl scale deployment --replicas=0 -n openshift-cluster-version cluster-version-operator'
