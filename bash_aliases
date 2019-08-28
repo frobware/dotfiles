@@ -36,8 +36,8 @@ alias gdb='gdb -q'
 alias rust-gdb='rust-gdb -q'
 alias kc=kubectl
 
-alias emacs="TERM=tmux-24bit command emacs"
-alias emacsclient="TERM=tmux-24bit command emacsclient"
+# alias emacs="TERM=tmux-24bit command emacs"
+# alias emacsclient="TERM=tmux-24bit command emacsclient"
 
 alias kn='kubectl get nodes --no-headers --sort-by=.metadata.creationTimestamp |cat -n'
 alias km='kubectl get machines --no-headers --sort-by=.metadata.creationTimestamp |cat -n'
