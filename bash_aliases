@@ -51,4 +51,4 @@ export BAT_THEME="Monokai Extended Bright"
 alias disarm-the-cvo='kubectl scale deployment --replicas=0 -n openshift-cluster-version cluster-version-operator'
 alias eric-le-cluster='curl https://raw.githubusercontent.com/eparis/ssh-bastion/master/deploy/deploy.sh | bash'
 alias open-here='emacsclient -t -n .'
-alias .=open-here
+alias e=open-here
