@@ -126,3 +126,5 @@ if [[ "$HOSTNAME" =~ t4[6-7]0s ]]; then
 fi
 
 source_if_exists $HOME/.nix-profile/etc/profile.d/nix.sh
+
+[[ -s "/home/aim/.gvm/scripts/gvm" ]] && source "/home/aim/.gvm/scripts/gvm"

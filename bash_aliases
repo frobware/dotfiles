@@ -45,7 +45,10 @@ alias ke='kubectl get events --no-headers --sort-by=.metadata.creationTimestamp 
 alias cat='bat --paging=always'
 alias wm="dtach -A /tmp/dvtm -r winch dvtm"
 
+alias cat='bat --paging=always'
 export BAT_THEME="Monokai Extended Bright"
 
 alias disarm-the-cvo='kubectl scale deployment --replicas=0 -n openshift-cluster-version cluster-version-operator'
 alias eric-le-cluster='curl https://raw.githubusercontent.com/eparis/ssh-bastion/master/deploy/deploy.sh | bash'
+alias open-here='emacsclient -t -n .'
+alias .=open-here
