@@ -41,7 +41,7 @@ alias kc=kubectl
 
 alias kn='kubectl get nodes --no-headers --sort-by=.metadata.creationTimestamp |cat -n'
 alias km='kubectl get machines --no-headers --sort-by=.metadata.creationTimestamp |cat -n'
-alias ke='kubectl get events --no-headers --sort-by=.metadata.creationTimestamp |cat -n'
+alias ke='kubectl get events --no-headers --sort-by=.lastTimestamp |cat -n'
 alias cat='bat --paging=always'
 alias wm="dtach -A /tmp/dvtm -r winch dvtm"
 
