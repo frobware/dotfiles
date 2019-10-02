@@ -128,3 +128,6 @@ fi
 source_if_exists $HOME/.nix-profile/etc/profile.d/nix.sh
 
 [[ -s "/home/aim/.gvm/scripts/gvm" ]] && source "/home/aim/.gvm/scripts/gvm"
+source_kubectl_completion
+source_oc_completion
+source_ocadm_completion
