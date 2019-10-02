@@ -71,6 +71,8 @@ function all_paths_prepend ()
     local top="$1"
 
     path_prepend PATH "${top}/bin"
+    path_prepend MANPATH "${top}/share/man"
+    path_prepend MANPATH "${top}/man"
     path_prepend LD_LIBRARY_PATH "${top}/lib"
 
     export PATH LD_LIBRARY_PATH
