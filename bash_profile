@@ -85,6 +85,7 @@ LIBVIRT_DEFAULT_URI=qemu:///system
 if type -P rustc &>/dev/null; then
     RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 fi
+GOPACKAGESDRIVER=golist
 set +a
 
 if type -P emacsclient &>/dev/null; then
