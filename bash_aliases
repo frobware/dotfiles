@@ -53,3 +53,5 @@ alias eric-le-cluster='curl https://raw.githubusercontent.com/eparis/ssh-bastion
 alias open-here='emacsclient -t -n .'
 alias e=open-here
 alias k-alpine='kubectl run -it --rm --restart=Never alpine --image=alpine sh'
+alias disarm-openshift-ingress-operator='kubectl scale --replicas=0 -n openshift-ingress-operator deployment ingress-operator'
+alias netshoot='kubectl run --generator=run-pod/v1 tmp-shell --rm -i --tty --image nicolaka/netshoot -- /bin/bash'
