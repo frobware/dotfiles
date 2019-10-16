@@ -111,5 +111,6 @@ fi
 path_prepend PATH $HOME/.local/bin
 
 # Exemplary expiration date
-export EXPIRATION_DATE=$( date -d '4 hours' --iso=minutes --utc )
-if [ -e /home/aim/.nix-profile/etc/profile.d/nix.sh ]; then . /home/aim/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+# export EXPIRATION_DATE=$( date -d '4 hours' --iso=minutes --utc )
+# if [ -e /home/aim/.nix-profile/etc/profile.d/nix.sh ]; then . /home/aim/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+export PATH=$PATH:~/.kube/plugins/jordanwilson230
