@@ -45,7 +45,7 @@ alias ke='kubectl get events --no-headers --sort-by=.lastTimestamp |cat -n'
 #alias cat='bat --paging=always'
 alias wm="dtach -A /tmp/dvtm -r winch dvtm"
 
-alias cat='bat --paging=always'
+#alias cat='bat --paging=always'
 export BAT_THEME="Monokai Extended Bright"
 
 alias disarm-the-cvo='kubectl scale deployment --replicas=0 -n openshift-cluster-version cluster-version-operator'
