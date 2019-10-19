@@ -59,10 +59,6 @@ EOF
     rm /tmp/xterm-24bits-$$.src
 fi
 
-#if [[ -z "$TMUX" ]] && [[ -f $HOME/.terminfo/x/xterm-24bit ]]; then
-#    export TERM=xterm-24bit
-#fi
-
 [ -f $HOME/.bcrc ] || touch $HOME/.bcrc
 
 source_if_exists $HOME/.bashrc

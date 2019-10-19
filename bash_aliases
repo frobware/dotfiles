@@ -25,8 +25,6 @@ alias dockercleandangling='docker rmi $(docker images -q --filter "dangling=true
 
 alias nukegopkg='[ -d "$GOPATH/pkg" ] && rm -rf $GOPATH/pkg'
 
-#alias tmux="env TERM=tmux-24bit tmux"
-
 alias wrap='tput smam'
 alias nowrap='tput rmam'
 
@@ -35,9 +33,6 @@ alias render_template='python -c "from jinja2 import Template; import sys; print
 alias gdb='gdb -q'
 alias rust-gdb='rust-gdb -q'
 alias kc=kubectl
-
-# alias emacs="TERM=tmux-24bit command emacs"
-# alias emacsclient="TERM=tmux-24bit command emacsclient"
 
 alias kn='kubectl get nodes --no-headers --sort-by=.metadata.creationTimestamp |cat -n'
 alias km='kubectl get machines --no-headers --sort-by=.metadata.creationTimestamp |cat -n'
