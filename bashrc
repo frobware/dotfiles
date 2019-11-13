@@ -140,3 +140,5 @@ source_oc_completion
 source_ocadm_completion
 
 export GOPACKAGESDRIVER=golist
+
+unalias ls
