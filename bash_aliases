@@ -5,6 +5,7 @@ alias mkae=make
 alias h='history 10'
 alias lst='ls -trl | tail'
 alias more=less
+alias ls='ls --color=no'
 
 # ~/.bash_aliases
 # https://www.calazan.com/docker-cleanup-commands/
@@ -36,7 +37,7 @@ alias kc=kubectl
 
 alias kn='kubectl get nodes --no-headers --sort-by=.metadata.creationTimestamp |cat -n'
 alias km='kubectl get machines --no-headers --sort-by=.metadata.creationTimestamp |cat -n'
-alias ke='kubectl get events --no-headers --sort-by=.lastTimestamp |cat -n'
+alias ke='kubectl get events --no-headers --sort-by=.metadata.creationTimestamp |cat -n'
 #alias cat='bat --paging=always'
 alias wm="dtach -A /tmp/dvtm -r winch dvtm"
 
@@ -50,3 +51,4 @@ alias e=open-here
 alias k-alpine='kubectl run -it --rm --restart=Never alpine --image=alpine sh'
 alias disarm-openshift-ingress-operator='kubectl scale --replicas=0 -n openshift-ingress-operator deployment ingress-operator'
 alias netshoot='kubectl run --generator=run-pod/v1 tmp-shell --rm -i --tty --image nicolaka/netshoot -- /bin/bash'
+alias kcn='kubectl config set-context $(kubectl config current-context) --namespace'
