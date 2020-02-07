@@ -24,8 +24,6 @@ export HISTSIZE=5000000
 export HISTCONTROL=ignoredups
 export HISTIGNORE="&:ls:[bf]g:exit"
 
-export GPG_TTY=$(tty)
-
 source_if_exists /etc/bash_completion
 
 if [ -x /usr/local/bin/brew ]; then
@@ -120,14 +118,10 @@ function cover() {
 
 export PS1="\u@\h:\w\n$ "
 
-if [[ "$HOSTNAME" =~ t4[6-7]0s ]]; then
-    gpgconf --launch gpg-agent
-    export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-fi
-
-source_if_exists $HOME/.nix-profile/etc/profile.d/nix.sh
-
-[[ -s "/home/aim/.gvm/scripts/gvm" ]] && source "/home/aim/.gvm/scripts/gvm"
+# if [[ "$HOSTNAME" =~ t4[6-7]0s ]]; then
+#     gpgconf --launch gpg-agent
+#     export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+# fi
 
 PATH="/home/aim/perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="/home/aim/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
@@ -142,3 +136,18 @@ source_ocadm_completion
 export GOPACKAGESDRIVER=golist
 
 unalias ls
+
+function refresh() {
+    :
+}
+
+if [ -n "$TMUX" ]; then
+    function refresh() {
+	export $(tmux show-environment | grep "^SSH_AUTH_SOCK")
+	export $(tmux show-environment | grep "^DISPLAY")
+    }
+fi
+
+function preexec {
+    refresh
+}
