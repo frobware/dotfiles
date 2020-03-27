@@ -67,3 +67,5 @@ cmd = kdiff3 --L1 \"$MERGED (Base)\" --L2 \"$MERGED (Local)\" --L3 \"$MERGED (Re
 # GIT_COMMITTER_DATE="$(date)" git commit --amend --no-edit --date "$(date)"
 [github]
 	user = frobware
+# [credential]
+# 	helper = /usr/lib/git-core/git-credential-libsecret
