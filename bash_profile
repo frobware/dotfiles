@@ -66,6 +66,7 @@ source_if_exists $HOME/.bash_aliases
 
 path_append PATH $HOME/.cargo/bin
 path_append PATH $HOME/dotfiles/scripts
+path_prepend PATH /usr/local/emacs-27/bin
 path_prepend PATH $HOME/bin
 path_prepend PATH /usr/libexec/openssh
 
@@ -86,7 +87,7 @@ set +a
 
 if type -P emacsclient &>/dev/null; then
     # $EDITOR should open in terminal
-    export EDITOR="emacsclient -t"
+    export EDITOR="emacsclient -t --alternate-editor=''"
 fi
 
 if type -P emacsclient &>/dev/null; then

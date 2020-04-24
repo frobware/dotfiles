@@ -5,6 +5,7 @@ Xcursor.size: 128
 !emacs.reverseVideo: true
 Emacs*font: Monospace:pixelsize=26
 Emacs*font: Monospace:pixelsize=24
+Emacs*font: Monospace:pixelsize=20
 !emacs.font: Monospace:pixelsize=24
 !Emacs*font: Consolas:pixelsize=22
 !emacs.font: Consolas:pixelsize=22

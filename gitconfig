@@ -31,8 +31,6 @@ fontui = -family \"DejaVu Sans\" -size 16 -weight normal -slant roman -underline
 [alias]
 lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
 up = git pull --ff-only
-[push]
-default = simple
 
 [difftool]
 prompt = true

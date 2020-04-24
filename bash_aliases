@@ -53,3 +53,5 @@ alias disarm-openshift-ingress-operator='kubectl scale --replicas=0 -n openshift
 alias netshoot='kubectl run --generator=run-pod/v1 tmp-shell --rm -i --tty --image nicolaka/netshoot -- /bin/bash'
 alias kcn='kubectl config set-context $(kubectl config current-context) --namespace'
 alias dnf='dnf --cacheonly'
+#alias scale-router='oc scale ingresscontroller/default -n openshift-ingress-operator --replicas=${1:-0}'
+alias scale-router='oc scale deployment/router-default -n openshift-ingress --replicas=${1:-0}'
