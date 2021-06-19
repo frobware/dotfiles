@@ -1,3 +1,0 @@
-#!/bin/sh
-
-mosh --forward-agent --no-init --ssh "ssh -A -X" spicy.frobware.com -- tmux new-session -s remote-spicy -A
