@@ -1,0 +1,57 @@
+[user]
+	name = Andrew McDermott
+	email = aim@frobware.com
+[advice]
+	pushNonFastForward = false
+	statusHints = true
+[alias]
+	ol = log --pretty=oneline
+	l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[color]
+	ui = auto
+[core]
+	editor = emacs
+	excludesfile = ~/.config/git/ignore
+	whitespace = trailing-space,space-before-tab
+[diff]
+	renamelimit = 8192
+	renames = copies
+[fetch]
+	fsckobjects = false
+	prune = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[gitget]
+	root = ~/src
+{{ if or .work .personal -}}
+[http]
+	cookiefile = ~/.config/git/cookies
+{{ end -}}
+[pager]
+	branch = false
+	grep = false
+[push]
+	default = current
+[rebase]
+	autosquash = true
+	autostash = true
+[receive]
+	fsckobjects = true
+[status]
+	submoduleSummary = true
+[transfer]
+	fsckobjects = true
+[trim]
+	bases = master,gh-pages
+{{- if not (eq .chezmoi.os "windows") }}
+[includeIf "gitdir:**/openshift/*/"]
+	path = ~/.config/git/work.com
+{{- end }}
+{{- if not .transient }}
+[url "git@github.com:frobware/"]
+	insteadOf = https://github.com/frobware/
+{{- end -}}
+{{/* vim: set filetype=gitconfig: */}}
