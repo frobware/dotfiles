@@ -60,12 +60,11 @@ ZSH_DISABLE_COMPFIX=true
 plugins=(
     ag
     emacs
-    ripgrep
+    fzf
     gpg-agent
     per-directory-history
+    ripgrep
     rustup
-    #  vi-mode
-    #  zsh-syntax-highlighting
 )
 
 zstyle :omz:plugins:ssh-agent agent-forwarding on
@@ -89,3 +88,5 @@ export LC_ALL=en_US.UTF-8
 export RIPGREP_CONFIG_PATH=~/.config/ripgrep/config
 
 which direnv >/dev/null && eval "$(direnv hook zsh)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
