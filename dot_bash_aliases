@@ -1,0 +1,4 @@
+# -*- shell-script -*-
+
+alias h='history 20'
+alias more='less'

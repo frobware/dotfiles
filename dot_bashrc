@@ -1,0 +1,17 @@
+# -*- shell-script -*-
+
+# Commands that should be applied only for interactive shells.
+[[ $- == *i* ]] || return
+
+HISTFILESIZE=2000
+HISTSIZE=1000
+
+shopt -s checkwinsize
+shopt -s histappend
+shopt -s histreedit
+shopt -s hostcomplete
+
+alias h='history 20'
+alias more='less'
+
+[[ -f "$HOME/.bashrc" ]] && source "$HOME/.bashrc"
