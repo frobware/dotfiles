@@ -1,0 +1,59 @@
+{{/* boolean feature tags */}}
+{{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
+{{- $transient := false -}}{{/* true if this machine is temporary, e.g. a cloud or VM instance */}}
+{{- $work := false -}}{{/* true if this machine should have work secrets from pass */}}
+{{- $kubernetes := false -}}{{/* true if this machine is used for Kubernetes work */}}
+{{- $personal := false -}}{{/* true if this machine should have personal secrets from pass */}}
+{{- "" -}}
+
+{{/* detect GitHub codespaces and VSCode remote containers */}}
+{{- if or (env "CODESPACES") (env "REMOTE_CONTAINERS_IPC") -}}
+{{-   $headless = true -}}
+{{-   $transient = true -}}
+{{- end -}}
+
+{{/* work around unreliable hostname on darwin */}}
+{{- $hostname := .chezmoi.hostname -}}
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   $serialNumberSHA256Sum := index ioreg "IORegistryEntryChildren" 0 "IOPlatformSerialNumber" | sha256sum -}}
+{{-   if eq $serialNumberSHA256Sum "bf3fcd99228b2f67ae89292fe0c42beb3efc9af27fa2ca744ec77a095e8a43f4" -}}
+{{-     $hostname = "mba" -}}
+{{-   else if eq $serialNumberSHA256Sum "727a613f469ae20e15e2443ded26897ecb5edb076815ee15fcfe74323ee828bb" -}}
+{{-     $hostname = "amcdermo-mac" -}}
+{{-   end -}}
+{{- end -}}
+
+{{- if not $transient -}}
+{{-   if eq $hostname "spicy" -}}
+{{-     $headless = true -}}
+{{-     $work = true -}}
+{{-     $kubernetes = true -}}
+{{-   else if eq $hostname "pihole" -}}
+{{-     $headless = true -}}
+{{-   else if eq $hostname "x1c" -}}
+{{-     $personal = true -}}
+{{-   else if eq $hostname "mba" -}}
+{{-     $personal = true -}}
+{{-   else if eq $hostname "amcdermo-mac" -}}
+{{-     $work = true -}}
+{{-     $kubernetes = true -}}
+{{-   else if stdinIsATTY -}}
+{{-     $headless = promptBool "headless" -}}
+{{-     $transient = promptBool "transient" -}}
+{{-     $kubernetes = promptBool "kubernetes" -}}
+{{-   else -}}
+{{-     $headless = true -}}
+{{-     $transient = true -}}
+{{-     $kubernetes = false -}}
+{{-   end -}}
+{{- end -}}
+
+remove = true
+
+[data]
+  headless = {{ $headless }}
+  hostname = {{ $hostname | quote }}
+  transient = {{ $transient }}
+  work = {{ $work }}
+  kubernetes = {{ $kubernetes }}
+  personal = {{ $personal }}

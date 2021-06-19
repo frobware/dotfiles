@@ -1,0 +1,10 @@
+{{ if (eq .chezmoi.os "darwin") -}}
+#!/bin/bash
+
+set -eufo pipefail
+
+# https://github.com/mathiasbynens/dotfiles/blob/main/.macos
+
+defaults write NSGlobalDomain AppleInterfaceStyle Light
+
+{{ end -}}
