@@ -70,16 +70,12 @@ zstyle :omz:plugins:ssh-agent agent-forwarding on
 
 source $ZSH/oh-my-zsh.sh
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/profile.d/autojump.sh ] && . ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/profile.d/autojump.sh
+
 setopt histignorespace
 setopt rm_star_silent
 
-alias g=git
-alias gnp="git --no-pager"
-alias k=kubectl
-alias ks="kubectl --namespace=kube-system"
-
-export EDITOR="emacsclient -t -a ''"
-export VISUAL="emacsclient -c -a ''"
 export GOPATH=$HOME
 export GO111MODULE=on
 export LANG=en_US.UTF-8
@@ -108,13 +104,5 @@ unsetopt ALWAYS_LAST_PROMPT
 # Allows me to mkdir foo; cd !$
 setopt no_hist_verify
 
-if type -p oc >/dev/null 2>&1; then
-    source <(oc completion zsh)
-fi
-
-if type -p chezmoi >/dev/null 2>&1; then
-    source <(chezmoi completion zsh)
-fi
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/profile.d/autojump.sh ] && . ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/profile.d/autojump.sh
+which oc >/dev/null && eval "$(oc completion zsh)"
+which chezmoi >/dev/null && eval "$(chezmoi completion zsh)"

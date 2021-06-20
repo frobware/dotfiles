@@ -1,8 +1,15 @@
-enable-ssh-support
-no-grab
 allow-emacs-pinentry
+allow-loopback-pinentry
+
+no-grab
+enable-ssh-support
+
 {{ if eq .chezmoi.os "darwin" -}}
-pinentry-program pinentry-mac
+{{   if stat "/opt/homebrew/bin/brew" -}}
+pinentry-program /opt/homebrew/bin/pinentry-mac
+{{   else if stat "/usr/local/bin/brew" -}}
+pinentry-program /usr/local/bin/pinentry-mac
+{{   end -}}
 {{ else -}}
 pinentry-program pinentry-curses
 {{ end -}}
