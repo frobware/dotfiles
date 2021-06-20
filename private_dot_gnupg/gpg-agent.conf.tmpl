@@ -5,9 +5,9 @@ no-grab
 enable-ssh-support
 
 {{ if eq .chezmoi.os "darwin" -}}
-{{   if stat "/opt/homebrew/bin/brew" -}}
+{{   if stat "/opt/homebrew/bin/pinentry-mac" -}}
 pinentry-program /opt/homebrew/bin/pinentry-mac
-{{   else if stat "/usr/local/bin/brew" -}}
+{{   else if stat "/usr/local/bin/pinentry-mac" -}}
 pinentry-program /usr/local/bin/pinentry-mac
 {{   end -}}
 {{ else -}}
