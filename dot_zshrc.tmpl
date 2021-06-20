@@ -106,3 +106,9 @@ setopt no_hist_verify
 
 which oc >/dev/null && eval "$(oc completion zsh)"
 which chezmoi >/dev/null && eval "$(chezmoi completion zsh)"
+
+# https://github.com/MunifTanjim/scripts.sh/blob/main/bat-man
+if type bat >/dev/null 2>&1; then
+    export MANPAGER="sh -c 'col -bx | bat --language=man --style=grid'"
+    export MANROFFOPT='-c'
+fi
