@@ -1,0 +1,98 @@
+{{- if (eq .chezmoi.os "darwin") -}}
+#!/bin/bash
+
+set -eufo pipefail
+
+{{ $brews := list
+"autojump"
+"bat"
+"bazelisk"
+"bitwarden-cli"
+"chezmoi"
+"coreutils"
+"delta"
+"direnv"
+"dockutil"
+"exa"
+"ffmpeg"
+"findutils"
+"fzf"
+"gh"
+"git"
+"git-lfs"
+"gnu-units"
+"golangci-lint"
+"gopass"
+"goreleaser"
+"jq"
+"lastpass-cli"
+"libgccjit"
+"moreutils"
+"mosh"
+"mtr"
+"pass"
+"pinentry-mac"
+"railwaycat/emacsmacport/emacs-mac"
+"ripgrep"
+"sshuttle"
+"terraform"
+"the_silver_searcher"
+"tmux"
+"wakeonlan"
+"watchexec"
+"wget"
+"wimlib"
+"youtube-dl"
+"yq" -}}
+{{ $casks := list
+     "signal"
+     "spotify"
+     "balenaetcher"
+     "google-chrome"
+     "hammerspoon" -}}
+
+{{ if eq .chezmoi.arch "amd64" -}}
+{{   $brews = concat $brews (list
+       "shellcheck") -}}
+{{ end -}}
+
+{{ if .work -}}
+{{   $brews = concat $brews (list
+       "aws-iam-authenticator"
+       "awscli"
+       "azure-cli"
+       "eksctl"
+       "helm"
+       "kops"
+       "kubernetes-cli"
+       "minikube"
+       "google-cloud-sdk"
+       "packer") -}}
+{{ $casks = concat $casks (list
+       "zoom") -}}
+{{ end -}}
+
+{{ if eq .chezmoi.arch "amd64" -}}
+brew bundle --no-lock --file=/dev/stdin <<EOF
+{{ else -}}
+arch -arm64 brew bundle --no-lock --file=/dev/stdin <<EOF
+{{ end -}}
+
+{{ range ($brews | sortAlpha | uniq) -}}
+brew "{{ . }}"
+{{ end -}}
+{{ range ($casks | sortAlpha | uniq) -}}
+cask "{{ . }}"
+{{ end -}}
+EOF
+{{ end -}}
+
+# google-cloud-sdk is installed at /opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk. Add your profile:
+#   for bash users
+#     source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
+#     source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
+#   for zsh users
+#     source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+#     source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+#   for fish users
+#     source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.fish.inc"
