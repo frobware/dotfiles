@@ -1,0 +1,8 @@
+enable-ssh-support
+no-grab
+allow-emacs-pinentry
+{{ if eq .chezmoi.os "darwin" -}}
+pinentry-program pinentry-mac
+{{ else -}}
+pinentry-program pinentry-curses
+{{ end -}}

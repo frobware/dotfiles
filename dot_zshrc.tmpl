@@ -57,15 +57,14 @@ ZSH_DISABLE_COMPFIX=true
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-    ag
-    emacs
-    fzf
-    gpg-agent
-    per-directory-history
-    ripgrep
-    rustup
-)
+plugins=(ag
+	 emacs
+	 fzf
+	 gpg-agent
+	 per-directory-history
+	 ripgrep
+	 rustup
+	 zsh-syntax-highlighting)
 
 zstyle :omz:plugins:ssh-agent agent-forwarding on
 
@@ -89,4 +88,33 @@ export RIPGREP_CONFIG_PATH=~/.config/ripgrep/config
 
 which direnv >/dev/null && eval "$(direnv hook zsh)"
 
+setopt extended_glob
+
+# Bash-like navigation
+autoload -U select-word-style
+select-word-style bash
+
+setopt autocd autopushd pushdignoredups no_beep
+bindkey -e
+
+# put completions below the prompt
+unsetopt ALWAYS_LAST_PROMPT
+
+# HIST_VERIFY
+# Whenever the user enters a line with history expansion, don't
+# execute the line directly; instead, perform history expansion
+# and reload the line into the editing buffer.
+#
+# Allows me to mkdir foo; cd !$
+setopt no_hist_verify
+
+if type -p oc >/dev/null 2>&1; then
+    source <(oc completion zsh)
+fi
+
+if type -p chezmoi >/dev/null 2>&1; then
+    source <(chezmoi completion zsh)
+fi
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/profile.d/autojump.sh ] && . ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/profile.d/autojump.sh
