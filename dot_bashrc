@@ -11,7 +11,12 @@ shopt -s histappend
 shopt -s histreedit
 shopt -s hostcomplete
 
-[ -f ~/.bash_aliases ] && source ~/.bash_aliases
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+function source_if_exists() {
+    [ -f "$1" ] && source "$1"
+}
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+PATH=~/.local/bin:$PATH
+
+source_if_exists /usr/share/fzf/shell/key-bindings.bash
+source_if_exists ~/.bash_aliases
+source_if_exists ~/.cargo/env
