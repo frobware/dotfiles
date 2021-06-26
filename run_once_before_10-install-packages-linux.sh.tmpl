@@ -4,21 +4,19 @@
 set -eu
 sudo dnf install -y \
      fzf \
-     golang-x-tools-gopls \
-     golang-x-tools-goimports \
-     jq \
      golang \
+     jq \
      jq \
      pass \
      the_silver_searcher \
      wget
 
-# cd $(mktemp -d)
-# wget https://github.com/mikefarah/yq/releases/download/v4.9.6/yq_linux_amd64.tar.gz -O - |\
-#      tar xvz && mv yq_linux_amd64 ~/bin/yq
-
 go get golang.org/x/tools/cmd/goimports@latest
 go get golang.org/x/tools/gopls@latest
+
+cd $(mktemp -d)
+wget https://github.com/mikefarah/yq/releases/download/v4.9.6/yq_linux_amd64.tar.gz -O - |\
+     tar xvz && mv yq_linux_amd64 ~/bin/yq
 
 {{ end -}}
 {{ end -}}
