@@ -3,13 +3,16 @@
 #!/usr/bin/env bash
 set -eu
 sudo dnf install -y \
-     jq \
+     fzf \
      golang \
+     jq \
+     pass \
+     the_silver_searcher \
      wget
 
-cd $(mktemp -d)
-wget https://github.com/mikefarah/yq/releases/download/v4.9.6/yq_linux_amd64.tar.gz -O - |\
-     tar xvz && mv yq_linux_amd64 ~/bin/yq
+# cd $(mktemp -d)
+# wget https://github.com/mikefarah/yq/releases/download/v4.9.6/yq_linux_amd64.tar.gz -O - |\
+#      tar xvz && mv yq_linux_amd64 ~/bin/yq
 
 {{ end -}}
 {{ end -}}
