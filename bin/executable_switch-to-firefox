@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+exec /usr/bin/wmctrl -R firefox || (exec firefox &)
