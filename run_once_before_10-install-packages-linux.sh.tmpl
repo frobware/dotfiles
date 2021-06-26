@@ -6,17 +6,21 @@ sudo dnf install -y \
      fzf \
      golang \
      jq \
-     jq \
      pass \
      the_silver_searcher \
      wget
 
 go get golang.org/x/tools/cmd/goimports@latest
 go get golang.org/x/tools/gopls@latest
+go get github.com/mikefarah/yq/v4
 
-cd $(mktemp -d)
-wget https://github.com/mikefarah/yq/releases/download/v4.9.6/yq_linux_amd64.tar.gz -O - |\
-     tar xvz && mv yq_linux_amd64 ~/bin/yq
+{{- if .kubernetes -}}
+
+sudo dnf install -y \
+     kubernetes-client \
+     origin-clients
+
+{{ end -}}
 
 {{ end -}}
 {{ end -}}
