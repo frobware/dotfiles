@@ -6,6 +6,7 @@ export GOPATH=$HOME
 export GOPROXY=https://proxy.golang.org,direct
 export LESS="--no-init --quit-if-one-screen --RAW-CONTROL-CHARS"
 export MANWIDTH=80
+export RIPGREP_CONFIG_PATH=~/.config/ripgrep/config
 export RLWRAP=$HOME/.rlwrap
 
 export PATH=$GOPATH/bin:$PATH
