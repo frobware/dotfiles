@@ -1,0 +1,63 @@
+{{ if (and (eq .chezmoi.os "linux") .kubernetes) -}}
+{{   if (eq .chezmoi.osRelease.id "fedora") -}}
+#!/bin/bash
+
+set -efuo pipefail
+
+# install azure-cli, docker, google-cloud-sdk, helm, and kubectl
+# https://docs.docker.com/engine/install/ubuntu/
+# https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-apt
+# https://cloud.google.com/sdk/docs/install
+# https://kubernetes.io/docs/tasks/tools/install-kubectl/
+# https://helm.sh/docs/intro/install/
+
+###
+## azure-cli
+###
+cat <<EOF | sudo tee /etc/yum.repos.d/azure-cli.repo
+[azure-cli]
+name=Azure CLI
+baseurl=https://packages.microsoft.com/yumrepos/azure-cli
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.microsoft.com/keys/microsoft.asc"
+EOF
+
+###
+## gcloud
+###
+
+cat <<EOF | sudo tee /etc/yum.repos.d/google-cloud-sdk.repo
+[google-cloud-sdk]
+name=Google Cloud SDK
+baseurl=https://packages.cloud.google.com/yum/repos/cloud-sdk-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=0
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+       https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+
+sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+sudo rpm --import https://packages.cloud.google.com/yum/doc/yum-key.gpg \
+                  https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+
+sudo dnf update
+sudo dnf install --assumeyes azure-cli google-cloud-sdk
+
+if [ ! -x /usr/local/bin/aws ]; then
+    # install aws-cliv2
+    # https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2-linux.html
+    tmpdir=$(mktemp -d)
+    cleanup() {
+	rm -rf ${tmpdir}
+    }
+    trap cleanup EXIT
+    ( cd ${tmpdir} &&
+	  curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o awscliv2.zip &&
+	  unzip awscliv2.zip &&
+	  sudo ./aws/install{{ if lookPath "aws" }} --update{{ end }} )
+fi
+
+{{   end -}}
+{{ end -}}
