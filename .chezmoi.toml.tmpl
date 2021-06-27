@@ -4,6 +4,7 @@
 {{- $work := false -}}{{/* true if this machine should have work secrets from pass */}}
 {{- $kubernetes := false -}}{{/* true if this machine is used for Kubernetes work */}}
 {{- $personal := false -}}{{/* true if this machine should have personal secrets from pass */}}
+{{- $devbox := false -}}{{/* true if this machine should have development tools installed */}}
 {{- "" -}}
 
 {{/* detect GitHub codespaces and VSCode remote containers */}}
@@ -36,6 +37,7 @@
 {{-     $work = false -}}
 {{-   else if eq $hostname "mba" -}}
 {{-     $personal = true -}}
+{{-     $devbox = true -}}
 {{-   else if eq $hostname "amcdermo-mac" -}}
 {{-     $work = true -}}
 {{-     $kubernetes = true -}}
@@ -43,10 +45,12 @@
 {{-     $headless = promptBool "headless" -}}
 {{-     $transient = promptBool "transient" -}}
 {{-     $kubernetes = promptBool "kubernetes" -}}
+{{-     $devbox = promptBool "devbox" -}}
 {{-   else -}}
 {{-     $headless = true -}}
 {{-     $transient = true -}}
 {{-     $kubernetes = false -}}
+{{-     $devbox = false -}}
 {{-   end -}}
 {{- end -}}
 
@@ -59,3 +63,4 @@ remove = true
   work = {{ $work }}
   kubernetes = {{ $kubernetes }}
   personal = {{ $personal }}
+  devbox = {{ $devbox }}
