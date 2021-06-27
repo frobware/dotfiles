@@ -14,5 +14,5 @@ set -eufo pipefail
 
 echo dnf install --assumeyes {{ range $val := $pkgs }} {{ $val }} {{ end }} | sudo sh -x
 
-{{ end }}
-{{ end }}
+{{ end -}}
+{{ end -}}
