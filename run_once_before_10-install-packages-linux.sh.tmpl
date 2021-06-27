@@ -1,26 +1,18 @@
 {{ if (eq .chezmoi.os "linux") -}}
 {{ if (eq .chezmoi.osRelease.id "fedora") -}}
 #!/usr/bin/env bash
-set -eu
-sudo dnf install -y \
-     fzf \
-     golang \
-     jq \
-     pass \
-     the_silver_searcher \
-     wget
 
-go get golang.org/x/tools/cmd/goimports@latest
-go get golang.org/x/tools/gopls@latest
-go get github.com/mikefarah/yq/v4
+set -eufo pipefail
 
-{{- if .kubernetes -}}
+{{- $pkgs := list
+     "fzf"
+     "golang"
+     "jq"
+     "pass"
+     "the_silver_searcher"
+     "wget" }}
 
-sudo dnf install -y \
-     kubernetes-client \
-     origin-clients
+echo dnf install --assumeyes {{ range $val := $pkgs }} {{ $val }} {{ end }} | sudo sh -x
 
-{{ end -}}
-
-{{ end -}}
-{{ end -}}
+{{ end }}
+{{ end }}
