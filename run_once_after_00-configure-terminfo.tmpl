@@ -1,0 +1,12 @@
+{{ if (eq .chezmoi.os "darwin" "linux") -}}
+#!/usr/bin/env bash
+set -eufo pipefail
+tmpdir=$(mktemp -d)
+cleanup() {
+    rm -rf ${tmpdir}
+}
+trap cleanup EXIT
+pushd $tmpdir
+curl -OfsSL https://github.com/alacritty/alacritty/raw/master/extra/alacritty.info
+/usr/bin/tic -o "$HOME/.terminfo" -x $tmpdir/alacritty.info
+{{ end -}}
