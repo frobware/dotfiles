@@ -1,0 +1,23 @@
+{{ if (eq .chezmoi.os "linux") -}}
+{{ if (eq .hostname "x1c") -}}
+#!/usr/bin/env bash
+
+sudo dnf install --assumeyes nfsv4-client-utils autofs
+
+cat <<EOF | sudo tee /etc/auto.master.d/extra.autofs
+/r	file:/etc/autofs.r
+/u	file:/etc/autofs.u
+EOF
+
+cat <<EOF | sudo tee /etc/autofs.r
+aim    192.168.7.64:/export/r/aim
+EOF
+
+cat <<EOF | sudo tee /etc/autofs.u
+aim    192.168.7.64:/export/home/aim
+EOF
+
+sudo systemctl restart autofs.service
+
+{{ end -}}
+{{ end -}}
