@@ -19,5 +19,30 @@ EOF
 
 sudo systemctl restart autofs.service
 
+{{ else if (eq .hostname "mba") -}}
+
+cat <<EOF | sudo tee /etc/auto_master
+#
+# Automounter master map
+#
+#+auto_master		# Use directory service
+/net			-hosts		-nobrowse,hidefromfinder,nosuid
+/home			auto_home	-nobrowse,hidefromfinder
+/Network/Servers	-fstab
+/-			-static
+/u			auto_u		-nobrowse,hidefromfinder,nosuid
+/r			auto_r          -nobrowse,hidefromfinder,nosuid
+EOF
+
+cat <<EOF | sudo tee /etc/auto_u
+aim    -fstype=nfs,vers=3,async,noatime,locallocks,resvport,hard,bg,intr,rw,tcp,nfc,rsize=65536,wsize=65536 nfs://192.168.7.64:/export/home/&
+EOF
+
+cat <<EOF | sudo tee /etc/auto_r
+aim    -fstype=nfs,vers=3,async,noatime,locallocks,resvport,hard,bg,intr,rw,tcp,nfc,rsize=65536,wsize=65536 nfs://192.168.7.64:/export/r/&
+EOF
+
+automount -vc
+
 {{ end -}}
 {{ end -}}
