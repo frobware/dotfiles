@@ -1,0 +1,5 @@
+{{ if (eq .chezmoi.os "darwin" "linux") -}}
+#!/usr/bin/env bash
+set -eufo pipefail
+mkdir -p "$HOME/.local/share/bash-completions/completions"
+{{ end -}}
