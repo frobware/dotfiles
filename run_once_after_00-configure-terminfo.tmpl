@@ -2,19 +2,10 @@
 #!/usr/bin/env bash
 set -eufo pipefail
 
-tmpdir=$(mktemp -d)
-pushd $tmpdir
-
-cleanup() {
-    rm -rf ${tmpdir}
-}
-
-trap cleanup EXIT
-
 curl -OfsSL https://github.com/alacritty/alacritty/raw/master/extra/alacritty.info
-/usr/bin/tic -x -o "$HOME/.terminfo" -x $tmpdir/alacritty.info
+/usr/bin/tic -x -o "$HOME/.terminfo" alacritty.info
 
-cat <<EOF > $tmpdir/xterm-24bit.info
+cat <<EOF > xterm-24bit.info
 # Use colon separators.
 xterm-24bit|xterm with 24-bit direct color mode,
   use=xterm-256color,
@@ -27,6 +18,6 @@ xterm-24bits|xterm with 24-bit direct color mode,
   setf24=\E[38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
 EOF
 
-/usr/bin/tic -x -o "$HOME/.terminfo" $tmpdir/xterm-24bit.info
+/usr/bin/tic -x -o "$HOME/.terminfo" xterm-24bit.info
 
 {{ end -}}
