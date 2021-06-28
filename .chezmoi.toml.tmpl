@@ -35,12 +35,14 @@
 {{-     $kubernetes = true -}}
 {{-     $personal = true -}}
 {{-     $work = false -}}
+{{-     $devbox = true -}}
 {{-   else if eq $hostname "mba" -}}
 {{-     $personal = true -}}
 {{-     $devbox = true -}}
 {{-   else if eq $hostname "amcdermo-mac" -}}
 {{-     $work = true -}}
 {{-     $kubernetes = true -}}
+{{-     $devbox = true -}}
 {{-   else if stdinIsATTY -}}
 {{-     $headless = promptBool "headless" -}}
 {{-     $transient = promptBool "transient" -}}
