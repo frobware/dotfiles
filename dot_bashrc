@@ -16,9 +16,6 @@ function source_if_exists() {
 }
 
 source_if_exists /etc/bashrc
-
-PATH=~/.local/bin:$PATH
-
 source_if_exists /usr/share/fzf/shell/key-bindings.bash
 source_if_exists ~/.bash_aliases
 source_if_exists ~/.cargo/env

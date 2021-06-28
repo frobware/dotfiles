@@ -9,10 +9,10 @@ export MANWIDTH=80
 export RIPGREP_CONFIG_PATH=~/.config/ripgrep/config
 export RLWRAP=$HOME/.rlwrap
 
-export PATH=$GOPATH/bin:$PATH
+export PATH=~/.local/bin:$GOPATH/bin:$PATH
 
 function source_if_exists() {
     [ -f "$1" ] && source "$1"
 }
 
-source_if_exists $HOME/.bashrc
+source_if_exists ~/.bashrc
