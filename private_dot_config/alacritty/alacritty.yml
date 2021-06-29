@@ -50,7 +50,11 @@
       "y": 0
     },
     "size": 20,
-    "use_thin_strokes": false
+    "use_thin_strokes": true,
+    "normal": {
+      "family": "JetBrains Mono",
+      "style": "Light",
+    },
   },
   "key_bindings": [
     {
