@@ -24,7 +24,7 @@ cleanup() {
 trap cleanup EXIT
 wget https://download.jetbrains.com/fonts/JetBrainsMono-2.225.zip
 unzip -d $tmpdir -x JetBrainsMono-2.225.zip
-cp -a $PWD/fonts/ttf/JetBrainsMono*.ttf ~/.local/share/fonts
+cp -a $tmpdir/fonts/ttf/JetBrainsMono*.ttf ~/.local/share/fonts
 fc-cache -fv
 {{ end -}}
 
