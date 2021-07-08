@@ -53,7 +53,7 @@
     "use_thin_strokes": true,
     "normal": {
       "family": "JetBrains Mono",
-      "style": "Light",
+      # "style": "Thin",
     },
   },
   "key_bindings": [
