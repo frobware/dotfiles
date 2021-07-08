@@ -30,6 +30,7 @@ pathmunge () {
 }
 
 pathmunge $HOME/.local/bin
+pathmunge $HOME/bin
 
 source_if_exists $HOME/.bashrc
 source_if_exists $HOME/.cargo/env
