@@ -24,6 +24,7 @@ set -eufo pipefail
 "golangci-lint"
 "gopass"
 "goreleaser"
+"gopls"
 "jq"
 "lastpass-cli"
 "libgccjit"
@@ -31,6 +32,7 @@ set -eufo pipefail
 "moreutils"
 "mosh"
 "mtr"
+"notmuch"
 "pass"
 "pinentry-mac"
 "railwaycat/emacsmacport/emacs-mac"
@@ -41,6 +43,7 @@ set -eufo pipefail
 "tmux"
 "wakeonlan"
 "watchexec"
+"virtualenv"
 "wget"
 "wimlib"
 "youtube-dl"
@@ -88,8 +91,8 @@ cask "{{ . }}"
 {{ end -}}
 EOF
 
-go get golang.org/x/tools/cmd/goimports@latest
-go get golang.org/x/tools/gopls@latest
+# go get golang.org/x/tools/cmd/goimports@latest
+# go get golang.org/x/tools/gopls@latest
 
 {{ end -}}
 
