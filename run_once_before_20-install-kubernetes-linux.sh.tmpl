@@ -41,7 +41,7 @@ sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
 sudo rpm --import https://packages.cloud.google.com/yum/doc/yum-key.gpg \
                   https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 
-sudo dnf update
+sudo dnf update --assumeyes
 sudo dnf install --assumeyes azure-cli google-cloud-sdk
 
 if [ ! -x /usr/local/bin/aws ]; then
