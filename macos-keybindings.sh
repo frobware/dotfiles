@@ -117,7 +117,7 @@ defaults write "$bundleid" NSUserKeyEquivalents '{
     "Split Horizontally..."				= "\0";
     "Split Vertically with Current Profile"		= "\0";
     "Split Vertically..."				= "\0";
-    "Start Dictation..."					= "\0";
+    "Start Dictation..."				= "\0";
     "Start Instant Replay"				= "\0";
     "Stop Coprocess"					= "\0";
     "Toggle Broadcast Input to Current Session"		= "\0";
