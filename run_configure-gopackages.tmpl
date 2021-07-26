@@ -11,7 +11,7 @@ if ! which go >/dev/null 2>&1; then
    echo "go is not installed"
    exit 1
 fi
-   
+
 {{ $pkgs := list
      "golang.org/x/tools/cmd/goimports@v0.1.4"
      "golang.org/x/tools/gopls@v0.7.0"
