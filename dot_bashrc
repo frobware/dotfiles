@@ -24,4 +24,24 @@ source_if_exists /etc/bashrc
 source_if_exists /usr/share/fzf/shell/key-bindings.bash
 source_if_exists ~/.bash_aliases
 
+vterm_printf ()
+{
+    if [ -n "$TMUX" ] && ( [ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
+	printf "\ePtmux;\e\e]%s\007\e\\" "$1";
+    else
+	if [ "${TERM%%-*}" = "screen" ]; then
+	    printf "\eP\e]%s\007\e\\" "$1";
+	else
+	    printf "\e]%s\e\\" "$1";
+	fi;
+    fi
+}
+
+if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
+    function clear(){
+	vterm_printf "51;Evterm-clear-scrollback";
+	tput clear;
+    }
+fi
+
 unalias ls
