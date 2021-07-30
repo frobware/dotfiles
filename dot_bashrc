@@ -45,5 +45,7 @@ if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
     }
 fi
 
+unalias ls			# just no with colours
+
 eval "$(direnv hook bash)"
 
