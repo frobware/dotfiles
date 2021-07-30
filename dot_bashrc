@@ -38,10 +38,15 @@ vterm_printf ()
 }
 
 if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
-    function clear(){
+    function clear () 
+    { 
 	vterm_printf "51;Evterm-clear-scrollback";
-	tput clear;
+	tput clear
     }
 fi
 
 unalias ls
+alias l='ls -trl'
+
+eval "$(direnv hook bash)"
+
