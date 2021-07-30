@@ -45,8 +45,5 @@ if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
     }
 fi
 
-unalias ls
-alias l='ls -trl'
-
 eval "$(direnv hook bash)"
 
