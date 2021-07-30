@@ -37,3 +37,7 @@ pathmunge $HOME/bin
 
 source_if_exists $HOME/.bashrc
 source_if_exists $HOME/.cargo/env
+
+if type -P oc 2>/dev/null; then
+    source <(oc completion bash)
+fi
