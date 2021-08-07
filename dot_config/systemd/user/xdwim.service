@@ -1,0 +1,10 @@
+[Unit]
+Description=xdwim
+PartOf=graphical-session.target
+
+[Service]
+ExecStart=/home/aim/.local/bin/rxdwim
+Restart=always
+
+[Install]
+WantedBy=xsession.target
