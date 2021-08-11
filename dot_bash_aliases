@@ -2,3 +2,4 @@
 
 alias h='history 20'
 alias more='less'
+alias ls='ls --color=never'
