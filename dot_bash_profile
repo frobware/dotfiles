@@ -46,6 +46,6 @@ function_exists() {
 
 if ! function_exists __oc_get_namespaces; then
     if type -P oc >/dev/null 2>&1; then
-	source <(oc completion bash)
+	eval "$(oc completion bash)"
     fi
 fi
