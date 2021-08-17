@@ -4,30 +4,30 @@
 set -eufo pipefail
 
 {{ $brews := list
+"ansible"
 "autojump"
 "bat"
-"bazelisk"
-"bitwarden-cli"
 "chezmoi"
+"cmake"
 "coreutils"
 "delta"
 "direnv"
 "dockutil"
 "exa"
-"ffmpeg"
 "findutils"
 "fzf"
+"gcc"
 "gh"
 "git"
 "git-lfs"
 "gnu-units"
 "golangci-lint"
 "gopass"
-"goreleaser"
 "gopls"
+"goreleaser"
 "jq"
-"lastpass-cli"
 "libgccjit"
+"llvm"
 "markdown"
 "moreutils"
 "mosh"
@@ -41,27 +41,29 @@ set -eufo pipefail
 "terraform"
 "the_silver_searcher"
 "tmux"
-"wakeonlan"
-"watchexec"
 "virtualenv"
+"wakeonlan"
+"watch"
+"watchexec"
 "wget"
 "wimlib"
-"youtube-dl"
 "yq" -}}
 {{ $casks := list
-     "homebrew/cask-fonts/font-jetbrains-mono"
-     "signal"
-     "spotify"
-     "balenaetcher"
-     "google-chrome"
-     "hammerspoon" -}}
+"balenaetcher"
+"google-chrome"
+"hammerspoon"
+"homebrew/cask-fonts/font-jetbrains-mono"
+"karabiner-elements"
+"signal"
+"spotify"
+-}}
 
 {{ if eq .chezmoi.arch "amd64" -}}
 {{   $brews = concat $brews (list
        "shellcheck") -}}
 {{ end -}}
 
-{{ if .work -}}
+{{ if .kubernetes -}}
 {{   $brews = concat $brews (list
        "aws-iam-authenticator"
        "awscli"
@@ -69,6 +71,7 @@ set -eufo pipefail
        "eksctl"
        "helm"
        "kops"
+       "openshift-cli"
        "kubernetes-cli"
        "minikube"
        "google-cloud-sdk"
@@ -80,7 +83,7 @@ set -eufo pipefail
 {{ if eq .chezmoi.arch "amd64" -}}
 brew bundle --no-lock --file=/dev/stdin <<EOF
 {{ else -}}
-arch -arm64 brew bundle --no-lock --file=/dev/stdin <<EOF
+brew bundle --no-lock --file=/dev/stdin <<EOF
 {{ end -}}
 
 {{ range ($brews | sortAlpha | uniq) -}}
@@ -90,9 +93,6 @@ brew "{{ . }}"
 cask "{{ . }}"
 {{ end -}}
 EOF
-
-# go get golang.org/x/tools/cmd/goimports@latest
-# go get golang.org/x/tools/gopls@latest
 
 {{ end -}}
 
