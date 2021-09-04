@@ -22,13 +22,14 @@ echo dnf install --assumeyes {{ range $val := $pkgs }} {{ $val }} {{ end }} | su
 
 {{ if (not .headless) -}}
 version=2.242
-if [ ! -f "$HOME/JetBrainsMono-${version}.zip" ]; then
+if [ ! -f "$HOME/.local/share/fonts/JetBrainsMono-Bold.ttf" ]; then
    mkdir -p ~/.local/share/fonts
    tmpdir=$(mktemp -d)
    cleanup() {
        rm -rf ${tmpdir}
    }
    trap cleanup EXIT
+   cd $tmpdir
    wget https://download.jetbrains.com/fonts/JetBrainsMono-${version}.zip
    unzip -d $tmpdir -x JetBrainsMono-${version}.zip
    cp -a $tmpdir/fonts/ttf/JetBrainsMono*.ttf ~/.local/share/fonts
