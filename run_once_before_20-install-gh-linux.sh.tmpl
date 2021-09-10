@@ -4,11 +4,14 @@
 
 set -euo pipefail
 
-GH_VERSION=1.14.0
-ARCH={{ .chezmoi.arch }}
-BASENAME=gh_${GH_VERSION}_linux_${ARCH}
+sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+sudo dnf install gh
 
-mkdir -p "${HOME}/bin"
-curl -fsSL https://github.com/cli/cli/releases/download/v${GH_VERSION}/${BASENAME}.tar.gz | tar xz -C "${HOME}/bin" --strip-components=2 ${BASENAME}/bin/gh
+# GH_VERSION=1.14.0
+# ARCH={{ .chezmoi.arch }}
+# BASENAME=gh_${GH_VERSION}_linux_${ARCH}
+# mkdir -p "${HOME}/bin"
+# curl -fsSL https://github.com/cli/cli/releases/download/v${GH_VERSION}/${BASENAME}.tar.gz | tar xz -C "${HOME}/bin" --strip-components=2 ${BASENAME}/bin/gh
+
 {{   end -}}
 {{ end -}}
