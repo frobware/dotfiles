@@ -16,7 +16,7 @@ export RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/config
 export RLWRAP=$HOME/.rlwrap
 export EDITOR='emacsclient -t -a ""'
 export VISUAL='emacsclient -c -a "" -n'
-export GOOGLE_CREDENTIALS=~/src/github.com/openshift/shared-secrets/gce/aos-serviceaccount.json
+export GOOGLE_APPLICATION_CREDENTIALS=~/src/github.com/openshift/shared-secrets/gce/aos-serviceaccount.json
 
 unset LS_COLORS
 
