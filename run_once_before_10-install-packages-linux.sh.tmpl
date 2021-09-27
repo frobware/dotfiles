@@ -14,13 +14,15 @@ set -euo pipefail
      "mosh"
      "notmuch"
      "pass"
+     "pip"
      "sshfs"
      "the_silver_searcher"
      "wget" }}
 
-echo dnf install --assumeyes {{ range $val := $pkgs }} {{ $val }} {{ end }} | sudo sh -x
+sudo dnf install --assumeyes {{ range $val := $pkgs }} {{ $val }} {{ end }}
 
 {{ if (not .headless) -}}
+# Latest version https://download.jetbrains.com/fonts/JetBrainsMono-2.242.zip
 version=2.242
 if [ ! -f "$HOME/.local/share/fonts/JetBrainsMono-Bold.ttf" ]; then
    mkdir -p ~/.local/share/fonts
@@ -35,6 +37,8 @@ if [ ! -f "$HOME/.local/share/fonts/JetBrainsMono-Bold.ttf" ]; then
    cp -a $tmpdir/fonts/ttf/JetBrainsMono*.ttf ~/.local/share/fonts
    fc-cache -fv
 fi
+pip install pipx
+type -P gmi >/dev/null 2>&1 || pipx install lieer
 {{ end -}}
 
 {{ end -}}
