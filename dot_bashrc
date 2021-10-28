@@ -11,6 +11,18 @@ shopt -s histappend
 shopt -s histreedit
 shopt -s hostcomplete
 
+export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$"\n"}history -a; history -c; history -r"
+#HISTTIMEFORMAT='%F %T '
+
+# Set no limit for history file size
+HISTFILESIZE=-1		# no limits
+
+# Set no limit for history file size
+HISTSIZE=-1
+
+# Do not store a duplicate of the last entered command
+HISTCONTROL=ignoredups
+
 function source_if_exists() {
     [ -f "$1" ] && source "$1"
 }
