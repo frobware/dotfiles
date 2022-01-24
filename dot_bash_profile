@@ -17,6 +17,7 @@ export RLWRAP=$HOME/.rlwrap
 export EDITOR='emacsclient -t -a ""'
 export VISUAL='emacsclient -c -a "" -n'
 export GOOGLE_APPLICATION_CREDENTIALS=~/src/github.com/openshift/shared-secrets/gce/aos-serviceaccount.json
+export REGISTRY_AUTH_FILE=$HOME/.docker/config.json
 
 unset LS_COLORS
 
