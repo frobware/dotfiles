@@ -57,9 +57,9 @@ if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
     }
 fi
 
-if which direnv >/dev/null 2>&1; then
-    eval "$(direnv hook bash)"
-fi
+# if which direnv >/dev/null 2>&1; then
+#     eval "$(direnv hook bash)"
+# fi
 
 random_macaddr() {
     # https://serverfault.com/questions/299556/how-to-generate-a-random-mac-address-from-the-linux-command-line
