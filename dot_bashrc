@@ -36,6 +36,8 @@ source_if_exists /etc/bashrc
 source_if_exists /usr/share/fzf/shell/key-bindings.bash
 source_if_exists ~/.bash_aliases
 
+unset PROMPT_COMMAND
+
 vterm_printf ()
 {
     if [ -n "$TMUX" ] && ( [ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
