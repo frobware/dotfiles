@@ -35,6 +35,7 @@ pathmunge () {
     esac
 }
 
+pathmunge /usr/share/bcc/tools
 pathmunge $HOME/.local/bin
 pathmunge $HOME/bin
 
