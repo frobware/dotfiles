@@ -13,9 +13,6 @@ export PATH=$HOME/bin:$PATH
 [ -d $HOME/.cargo/bin ] && export PATH=$HOME/.cargo/bin:$PATH
 [ -d $HOME/.local/bin ] && export PATH=$HOME/.local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
-
 # Uncomment the following line to use hyphen-insensitive completion. Case
 # sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
@@ -52,23 +49,6 @@ HIST_STAMPS="yyyy-mm-dd"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 ZSH_DISABLE_COMPFIX=true
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(ag
-	 emacs
-	 fzf
-	 gpg-agent
-	 per-directory-history
-	 ripgrep
-	 rustup
-	 zsh-syntax-highlighting)
-
-zstyle :omz:plugins:ssh-agent agent-forwarding on
-
-source $ZSH/oh-my-zsh.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/profile.d/autojump.sh ] && . ${HOMEBREW_PREFIX:-/opt/homebrew}/etc/profile.d/autojump.sh

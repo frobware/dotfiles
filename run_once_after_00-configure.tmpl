@@ -3,3 +3,8 @@
 set -eufo pipefail
 mkdir -p "$HOME/.local/share/bash-completions/completions"
 {{ end -}}
+
+{{ if (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+timedatectl set-timezone Europe/London
+{{ end -}}
