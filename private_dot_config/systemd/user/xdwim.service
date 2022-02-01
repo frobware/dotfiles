@@ -3,7 +3,7 @@ Description=xdwim
 PartOf=graphical-session.target
 
 [Service]
-ExecStart=/home/aim/.local/bin/rxdwim
+ExecStart=/home/aim/.local/bin/xdwim
 Restart=always
 
 [Install]
