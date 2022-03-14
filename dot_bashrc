@@ -67,3 +67,5 @@ random_macaddr() {
     # https://serverfault.com/questions/299556/how-to-generate-a-random-mac-address-from-the-linux-command-line
     openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/:$//'
 }
+
+PATH=$HOME/go1.17/bin:$PATH
