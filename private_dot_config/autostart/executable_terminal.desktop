@@ -1,0 +1,13 @@
+[Desktop Entry]
+Icon=/home/aim/.local/share/JetBrains/Toolbox/toolbox.svg
+Exec=gnome-terminal
+Version=1.0
+Type=Application
+Categories=Development
+Name=Terminal
+Terminal=false
+X-GNOME-Autostart-enabled=true
+StartupNotify=false
+X-GNOME-Autostart-Delay=10
+X-MATE-Autostart-Delay=10
+X-KDE-autostart-after=panel
