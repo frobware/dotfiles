@@ -58,12 +58,10 @@ if which direnv >/dev/null 2>&1; then
     eval "$(direnv hook bash)"
 fi
 
-set -x
 pathmunge /usr/share/bcc/tools
 pathmunge $HOME/.cargo/bin
 pathmunge $HOME/.local/bin
 pathmunge $HOME/bin
-set +x
 
 if [ -n "${USE_NIX-}" ]; then
     source_if_exists "$HOME/.nix-profile/etc/profile.d/nix.sh"
