@@ -1,7 +1,13 @@
-# -*- shell-script -*-
+#!/usr/bin/env bash
 
 # Commands that should be applied only for interactive shells.
 [[ $- == *i* ]] || return
+
+function source_if_exists() {
+    [ -f "$1" ] && source "$1"
+}
+
+source_if_exists /etc/bashrc
 
 HISTFILESIZE=2000
 HISTSIZE=1000
@@ -23,23 +29,18 @@ HISTSIZE=-1
 # Do not store a duplicate of the last entered command
 HISTCONTROL=ignoredups
 
-function source_if_exists() {
-    [ -f "$1" ] && source "$1"
-}
-
 function cover() {
     local t="/tmp/go-cover.$$.tmp"
-    go test -coverprofile=$t $@ && go tool cover -html=$t && unlink $t
+    go test -coverprofile=$t "$@" && go tool cover -html=$t && unlink $t
 }
 
-source_if_exists /etc/bashrc
-source_if_exists /usr/share/fzf/shell/key-bindings.bash
-source_if_exists ~/.bash_aliases
+if [ "$TERM" != "dumb" ]; then
+    source_if_exists /usr/share/fzf/shell/key-bindings.bash
+fi
 
 unset PROMPT_COMMAND
 
-vterm_printf ()
-{
+vterm_printf() {
     if [ -n "$TMUX" ] && ( [ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
 	printf "\ePtmux;\e\e]%s\007\e\\" "$1";
     else
@@ -52,15 +53,10 @@ vterm_printf ()
 }
 
 if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
-    function clear ()
-    {
+    function clear () {
 	vterm_printf "51;Evterm-clear-scrollback";
 	tput clear
     }
-fi
-
-if which direnv >/dev/null 2>&1; then
-    eval "$(direnv hook bash)"
 fi
 
 random_macaddr() {
@@ -68,4 +64,5 @@ random_macaddr() {
     openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/:$//'
 }
 
-PATH=$HOME/go1.17/bin:$PATH
+source_if_exists ~/.bash_aliases
+

@@ -1,5 +1,6 @@
-# -*- shell-script -*-
+#!/usr/bin/env bash
 
 alias h='history 20'
 alias more='less'
 alias ls='ls --color=never'
+alias oc='TERM=xterm-256color oc'

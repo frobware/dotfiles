@@ -1,8 +1,14 @@
-# -*- shell-script -*-
+#!/usr/bin/env bash
 
 function source_if_exists() {
-    [ -f "$1" ] && source "$1"
+    local path=$1; shift
+
+    if [ -f "$path" ]; then
+        source "$path"
+    fi
 }
+
+export -f source_if_exists
 
 source_if_exists /etc/profile
 
@@ -18,37 +24,49 @@ export EDITOR='emacsclient -t -a ""'
 export VISUAL='emacsclient -c -a "" -n'
 export GOOGLE_APPLICATION_CREDENTIALS=~/src/github.com/openshift/shared-secrets/gce/aos-serviceaccount.json
 export REGISTRY_AUTH_FILE=$HOME/.docker/config.json
-export LIBVIRT_DEFAULT_URI=qemu:///system
+export FREETYPE_PROPERTIES=truetype:interpreter-version=35
 
 unset LS_COLORS
 
 # pathmunge: copied from /etc/profile
 pathmunge () {
     case ":${PATH}:" in
-	*:"$1":*)
-	;;
-	*)
-	    if [ "$2" = "after" ]; then
-		PATH=$PATH:$1
-	    else
-		PATH=$1:$PATH
-	    fi
+        *:"$1":*)
+        ;;
+        *)
+            if [ "$2" == "after" ]; then
+                PATH=$PATH:$1
+            else
+                PATH=$1:$PATH
+            fi
     esac
 }
-
-pathmunge /usr/share/bcc/tools
-pathmunge $HOME/.local/bin
-pathmunge $HOME/bin
-
-source_if_exists $HOME/.bashrc
-source_if_exists $HOME/.cargo/env
 
 function_exists() {
     declare -F "$1" > /dev/null;
 }
 
+export -f function_exists
+
 if ! function_exists __oc_get_namespaces; then
     if type -P oc >/dev/null 2>&1; then
-	eval "$(oc completion bash)"
+        eval "$(oc completion bash)"
     fi
 fi
+
+if which direnv >/dev/null 2>&1; then
+    eval "$(direnv hook bash)"
+fi
+
+set -x
+pathmunge /usr/share/bcc/tools
+pathmunge $HOME/.cargo/bin
+pathmunge $HOME/.local/bin
+pathmunge $HOME/bin
+set +x
+
+if [ -n "${USE_NIX-}" ]; then
+    source_if_exists "$HOME/.nix-profile/etc/profile.d/nix.sh"
+fi
+
+source_if_exists ~/.bashrc
