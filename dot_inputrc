@@ -4,3 +4,9 @@ set bell-style none
 set input-meta on
 set output-meta on
 set convert-meta off
+
+$if term=dumb
+# Don't bind Control-J or it messes up TRAMP.
+$else
+"\C-j": next-history
+$endif
