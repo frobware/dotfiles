@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -eu
+
+GO111MODULE=off go get -d -u ${1#*//}
