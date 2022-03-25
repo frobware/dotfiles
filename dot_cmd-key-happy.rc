@@ -1,0 +1,30 @@
+swap_cmdalt "alacritty"
+swap_cmdalt "Alacritty"
+
+swap_cmdalt "JetBrains Client"
+
+swap_cmdalt "Terminal"
+swap_cmdalt "Terminal" cmd-3
+swap_cmdalt "Terminal" shift-cmd-e
+swap_cmdalt "Terminal" cmd-1
+swap_cmdalt "Terminal" shift-cmd-[
+swap_cmdalt "Terminal" cmd-8
+swap_cmdalt "Terminal" cmd-t
+swap_cmdalt "Terminal" shift-cmd-]
+swap_cmdalt "Terminal" cmd-6
+swap_cmdalt "Terminal" cmd-v
+swap_cmdalt "Terminal" cmd-4
+swap_cmdalt "Terminal" cmd-w
+swap_cmdalt "Terminal" cmd-9
+swap_cmdalt "Terminal" cmd-2
+swap_cmdalt "Terminal" cmd-`
+swap_cmdalt "Terminal" cmd-7
+swap_cmdalt "Terminal" cmd-n
+swap_cmdalt "Terminal" cmd-5
+swap_cmdalt "Terminal" cmd-c
+swap_cmdalt "AppCode"
+swap_cmdalt "Xcode"
+swap_cmdalt "Xcode" cmd-`
+swap_cmdalt "IntelliJ IDEA"
+swap_cmdalt "IntelliJ IDEA" cmd-`
+swap_cmdalt "GoLand" cmd-`
