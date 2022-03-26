@@ -36,7 +36,8 @@ set -eufo pipefail
 curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path --quiet --profile default --default-toolchain stable
 
 source $HOME/.cargo/env
-cargo install git-delta
-cargo install ripgrep
+
+# cargo install git-delta
+# cargo install ripgrep
 
 {{ end -}}
