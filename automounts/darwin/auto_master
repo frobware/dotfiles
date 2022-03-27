@@ -1,0 +1,10 @@
+#
+# Automounter master map
+#
++auto_master		# Use directory service
+#/net			-hosts		-nobrowse,hidefromfinder,nosuid
+#/home			auto_home	-nobrowse,hidefromfinder
+/Network/Servers	-fstab
+/-			-static
+/u			auto_u		-nobrowse,hidefromfinder,nosuid
+/r			auto_r          -nobrowse,hidefromfinder,nosuid
