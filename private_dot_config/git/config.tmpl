@@ -1,59 +1,60 @@
 [user]
-	name = Andrew McDermott
-	email = aim@frobware.com
+        name = Andrew McDermott
+        email = aim@frobware.com
 [advice]
-	pushNonFastForward = false
-	statusHints = true
+        pushNonFastForward = false
+        statusHints = true
 [alias]
-	ol = log --pretty=oneline
-	l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+        ol = log --pretty=oneline
+        l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 [color]
-	ui = auto
+        ui = auto
 [core]
-	editor = emacs
-	excludesfile = ~/.config/git/ignore
-	whitespace = trailing-space,space-before-tab
+        editor = emacs
+        excludesfile = ~/.config/git/ignore
+        whitespace = trailing-space,space-before-tab
 [diff]
-	renamelimit = 8192
-	renames = copies
+        renamelimit = 8192
+        renames = copies
 [merge]
-	ff = only
+        ff = only
 [fetch]
-	fsckobjects = false
-	prune = true
+        fsckobjects = false
+        prune = true
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+        clean = git-lfs clean -- %f
+        smudge = git-lfs smudge -- %f
+        process = git-lfs filter-process
+        required = true
 [gitget]
-	root = ~/src
+        root = ~/src
 {{ if or .work .personal -}}
 [http]
-	cookiefile = ~/.config/git/cookies
+        cookiefile = ~/.config/git/cookies
 {{ end -}}
 [pager]
-	branch = false
-	grep = false
+        branch = false
+        grep = false
 [push]
-	default = current
+        default = current
 [rebase]
-	autosquash = true
-	autostash = true
+        autosquash = true
+        autostash = true
 [receive]
-	fsckobjects = true
+        fsckobjects = true
 [status]
-	submoduleSummary = true
+        submoduleSummary = true
 [transfer]
-	fsckobjects = true
+        fsckobjects = true
 [trim]
-	bases = master,gh-pages
+        bases = master,gh-pages
 {{- if not (eq .chezmoi.os "windows") }}
 [includeIf "gitdir:**/openshift/*/"]
-	path = ~/.config/git/work.com
+        path = ~/.config/git/work.com
 {{- end }}
-{{- if not .transient }}
 [url "git@github.com:frobware/"]
-	insteadOf = https://github.com/frobware/
-{{- end -}}
-{{/* vim: set filetype=gitconfig: */}}
+        insteadOf = https://github.com/frobware/
+[credential "https://github.com"]
+        helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+        helper = !/usr/bin/gh auth git-credential
