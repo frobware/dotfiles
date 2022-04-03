@@ -1,0 +1,12 @@
+[Desktop Entry]
+Exec=emacs --fg-daemon
+Version=1.0
+Type=Application
+Categories=Development
+Name=Emacs
+Terminal=false
+X-GNOME-Autostart-enabled=true
+StartupNotify=false
+X-GNOME-Autostart-Delay=10
+X-MATE-Autostart-Delay=10
+X-KDE-autostart-after=panel
