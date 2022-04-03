@@ -5,3 +5,5 @@ alias more='less'
 alias ls='ls --color=never'
 alias oc='TERM=xterm-256color oc'
 alias json2yaml='ruby -ryaml -rjson -e "puts YAML.dump(JSON.parse(STDIN.read))"'
+alias alacritty='alacritty --class Gnome-terminal,gnome-terminal'
+
