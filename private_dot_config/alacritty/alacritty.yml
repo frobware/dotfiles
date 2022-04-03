@@ -1,6 +1,5 @@
 {
     "alt_send_esc": true,
-    "background_opacity": 1,
     "colors": {
         "bright": {
             "black": "0x555753",
@@ -654,6 +653,7 @@
             "y": 5
         },
         "startup_mode": "Maximized",
-        "title": "Terminal"
+        "title": "Terminal",
+        "opacity": 1
     }
 }
