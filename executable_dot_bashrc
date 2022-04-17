@@ -70,3 +70,24 @@ if which direnv >/dev/null 2>&1; then
     eval "$(direnv hook bash)"
 fi
 
+# usage: dedupe_path <COLON-SEPARATED-PATH>
+# Examples:
+#   export PATH=$(dedupe_path "$PATH")
+#   export LD_LIBRARY_PATH=$(dedupe_path "$LD_LIBRARY_PATH")
+#   export MANPATH=$(dedupe_path "$MANPATH")
+function dedupe_path() {
+    declare -A seen
+    local deduped=
+    local IFS=:
+    for x in $1; do
+        # -v was added to bash-4.2 but support for checking array
+        # indexes was only added to bash-4.3.
+        if [[ -n $x && ! -v seen[$x] ]]; then
+            deduped=${deduped:+$deduped:}$x
+            seen[$x]=1
+        fi
+    done
+    echo "$deduped"
+}
+
+export PATH=$(dedupe_path "$PATH")
