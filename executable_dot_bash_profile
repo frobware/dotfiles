@@ -24,7 +24,9 @@ export EDITOR='emacsclient -t -a ""'
 export VISUAL='emacsclient -c -a "" -n'
 export GOOGLE_APPLICATION_CREDENTIALS=~/src/github.com/openshift/shared-secrets/gce/aos-serviceaccount.json
 export REGISTRY_AUTH_FILE=$HOME/.docker/config.json
+export LIBVIRT_DEFAULT_URI=qemu:///system
 export FREETYPE_PROPERTIES=truetype:interpreter-version=35
+export GOPROXY=https://proxy.golang.org,direct
 
 unset LS_COLORS
 
@@ -58,9 +60,12 @@ pathmunge /usr/share/bcc/tools
 pathmunge $HOME/.cargo/bin
 pathmunge $HOME/.local/bin
 pathmunge $HOME/bin
+pathmunge /usr/local/emacs-28/bin
 
 if [ -n "${USE_NIX-}" ]; then
     source_if_exists "$HOME/.nix-profile/etc/profile.d/nix.sh"
 fi
 
 source_if_exists ~/.bashrc
+
+pathmunge $HOME/go1.17/bin
