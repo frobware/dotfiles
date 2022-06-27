@@ -1,3 +1,20 @@
 #!/usr/bin/env bash
 
-[ -f ~/.bash_profile ] && source ~/.bash_profile
+set -a
+BC_ENV_ARGS="$HOME/.bcrc"
+GO111MODULE=auto
+GOPATH=$HOME
+GOPROXY=https://proxy.golang.org,direct
+LESS="--no-init --quit-if-one-screen --RAW-CONTROL-CHARS"
+MANWIDTH=80
+RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/config
+RLWRAP=$HOME/.rlwrap
+EDITOR='emacsclient -t -a ""'
+VISUAL='emacsclient -c -a "" -n'
+GOOGLE_APPLICATION_CREDENTIALS=~/src/github.com/openshift/shared-secrets/gce/aos-serviceaccount.json
+REGISTRY_AUTH_FILE=$HOME/.docker/config.json
+LIBVIRT_DEFAULT_URI=qemu:///system
+FREETYPE_PROPERTIES=truetype:interpreter-version=35
+GOPROXY=https://proxy.golang.org,direct
+PATH=$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:/usr/share/bcc/tools:$PATH
+set +a

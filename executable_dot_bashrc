@@ -3,11 +3,21 @@
 # Commands that should be applied only for interactive shells.
 [[ $- == *i* ]] || return
 
-function source_if_exists() {
-    [ -f "$1" ] && source "$1"
+# pathmunge: copied from /etc/profile
+pathmunge () {
+    case ":${PATH}:" in
+        *:"$1":*)
+        ;;
+        *)
+            if [ "$2" == "after" ]; then
+                PATH=$PATH:$1
+            else
+                PATH=$1:$PATH
+            fi
+    esac
 }
 
-source_if_exists /etc/bashrc
+[[ -f /etc/bashrc ]] && source /etc/bashrc
 
 HISTFILESIZE=2000
 HISTSIZE=1000
@@ -35,27 +45,27 @@ function cover() {
 }
 
 if [ "$TERM" != "dumb" ]; then
-    source_if_exists /usr/share/fzf/shell/key-bindings.bash
+    [[ -f /usr/share/fzf/shell/key-bindings.bash ]] && source  /usr/share/fzf/shell/key-bindings.bash
 fi
 
 unset PROMPT_COMMAND
 
 vterm_printf() {
     if [ -n "$TMUX" ] && ( [ "${TERM%%-*}" = "tmux" ] || [ "${TERM%%-*}" = "screen" ] ); then
-	printf "\ePtmux;\e\e]%s\007\e\\" "$1";
+        printf "\ePtmux;\e\e]%s\007\e\\" "$1";
     else
-	if [ "${TERM%%-*}" = "screen" ]; then
-	    printf "\eP\e]%s\007\e\\" "$1";
-	else
-	    printf "\e]%s\e\\" "$1";
-	fi;
+        if [ "${TERM%%-*}" = "screen" ]; then
+            printf "\eP\e]%s\007\e\\" "$1";
+        else
+            printf "\e]%s\e\\" "$1";
+        fi;
     fi
 }
 
 if [[ "$INSIDE_EMACS" =~ 'vterm' ]]; then
     function clear () {
-	vterm_printf "51;Evterm-clear-scrollback";
-	tput clear
+        vterm_printf "51;Evterm-clear-scrollback";
+        tput clear
     }
 fi
 
@@ -63,8 +73,6 @@ random_macaddr() {
     # https://serverfault.com/questions/299556/how-to-generate-a-random-mac-address-from-the-linux-command-line
     openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/:$//'
 }
-
-source_if_exists ~/.bash_aliases
 
 if which direnv >/dev/null 2>&1; then
     eval "$(direnv hook bash)"
@@ -90,6 +98,21 @@ function dedupe_path() {
     echo "$deduped"
 }
 
+function_exists() {
+    declare -F "$1" > /dev/null;
+}
+
+export -f function_exists
+
+if ! function_exists __oc_get_namespaces; then
+    if type -P oc >/dev/null 2>&1; then
+        eval "$(oc completion bash)"
+    fi
+fi
+
 export PATH=$(dedupe_path "$PATH")
 export GPG_TTY=$(tty)
 
+[[ -f ~/.bash_aliases ]]  && . ~/.bash_aliases
+
+unset LS_COLORS
