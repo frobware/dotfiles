@@ -60,7 +60,7 @@ pathmunge /usr/share/bcc/tools
 pathmunge $HOME/.cargo/bin
 pathmunge $HOME/.local/bin
 pathmunge $HOME/bin
-pathmunge /usr/local/emacs-28/bin
+# pathmunge /usr/local/emacs-28/bin
 
 if [ -n "${USE_NIX-}" ]; then
     source_if_exists "$HOME/.nix-profile/etc/profile.d/nix.sh"
