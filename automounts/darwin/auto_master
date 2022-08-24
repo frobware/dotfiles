@@ -2,7 +2,7 @@
 # Automounter master map
 #
 +auto_master		# Use directory service
-/net			-hosts		-nobrowse,hidefromfinder,nosuid,resvport,vers=4
+/net			-hosts		-nobrowse,hidefromfinder,nosuid,vers=4,async,noatime,localtime,resvport,hard,bg,intr,rw 
 #/home			auto_home	-nobrowse,hidefromfinder
 /Network/Servers	-fstab
 /-			-static
