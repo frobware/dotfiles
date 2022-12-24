@@ -1,1 +1,1 @@
-aim    -fstype=nfs,vers=3,async,noatime,locallocks,resvport,hard,bg,intr,rw,tcp,nfc,rsize=65536,wsize=65536 nfs://192.168.7.64:/export/home/&
+aim    -fstype=nfs,vers=3,async,noatime,locallocks,resvport,soft,bg,intr,rw,tcp,nfc,rsize=65536,wsize=65536 nfs://192.168.7.64:/export/home/&
