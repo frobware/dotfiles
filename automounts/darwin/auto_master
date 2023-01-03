@@ -7,4 +7,3 @@
 /Network/Servers	-fstab
 /-			-static
 /u			auto_u		-nobrowse,hidefromfinder,nosuid
-/r			auto_r          -nobrowse,hidefromfinder,nosuid
